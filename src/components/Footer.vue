@@ -89,7 +89,7 @@
                             关注小米：
                             <a href="" class="iconfont icon-weibo"></a>
                             <a href="" class="iconfont icon-weixin" id="follow-a-weixn">
-                                <img src="../assets/images/contact-erweima.png" alt="" id="follow-img-weixin">
+                                <img src="images/contact-erweima.png" alt="" id="follow-img-weixin">
                             </a>
                             
                         </div>
@@ -144,10 +144,10 @@
                     
                 </div>
                 <div class="info-links">
-                    <a href=""><img src="../assets/images/info-links1.png" alt=""></a>
-                    <a href=""><img src="../assets/images/info-links2.png" alt=""></a>
-                    <a href=""><img src="../assets/images/info-links3.png" alt=""></a>
-                    <a href=""><img src="../assets/images/info-links4.png" alt=""></a>
+                    <a href=""><img src="images/info-links1.png" alt=""></a>
+                    <a href=""><img src="images/info-links2.png" alt=""></a>
+                    <a href=""><img src="images/info-links3.png" alt=""></a>
+                    <a href=""><img src="images/info-links4.png" alt=""></a>
                 </div>
                 <div class="slogan ir">探索黑科技，小米为发烧而生</div>
             </div>

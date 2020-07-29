@@ -25,7 +25,7 @@
                     <span class="sep">|</span>
                     <a href="javascriot:void(0);" class="topbar-download">下载app
                         <span class="appcode">
-                            <img src="../assets/images/download.png" alt="">
+                            <img src="images/download.png" alt="">
                             小米商城APP
                         </span>
                     </a>
