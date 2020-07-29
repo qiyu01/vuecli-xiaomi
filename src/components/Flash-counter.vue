@@ -31,11 +31,11 @@
                         7x4iTALjhcgVQSIl3v87w5vePcY/AQYAFYR6skFSqBUAAAAASUVORK5CYII=" alt="">
                         <div class="desc">{{over?"本场已结束":"距离结束还有"}}</div>
                         <div class="countdown clearfix">
-                            <span>{{timebefore.hour}}</span>
+                            <span>{{over?"00":timebefore.hour}}</span>
                             <i>:</i>
-                            <span>{{timebefore.minute}}</span>
+                            <span>{{over?"00":timebefore.minute}}</span>
                             <i>:</i>
-                            <span>{{timebefore.seconds}}</span>
+                            <span>{{over?"00":timebefore.seconds}}</span>
                         </div>
                     </div>
 </template>
@@ -44,9 +44,10 @@ export default {
   name: 'Flash-counter',
   data(){
 	    return {
+            //期限时间，以后可能服务器会返回多个时间戳，这里先用假的时间代替。
             timeline:{
-                hour:"13",
-                minute:"51"
+                hour:"23",
+                minute:"08"
             },
             timebefore:{
                 hour:"00",
@@ -61,41 +62,117 @@ export default {
     msg: String
   },
   mounted() {
-      var _this=this,
-      hour=this.timebefore.hour,
-      minute=this.timebefore.minute,
-      seconds=this.timebefore.seconds,
-      time=new Date();
-      
-    //   init time
-    // console.log(this.timeline.hour-(new Date().getHours())-1);
-      hour=this.timeline.hour-(new Date().getHours())-1;
-      hour=this.timebefore.hour<0?0:this.timebefore.hour;
-      hour=this.timebefore.hour<10?("0"+this.timebefore.hour):this.timebefore.hour;
-
-      this.timebefore.minute=59-(new Date().getMinutes())+parseInt(this.timeline.minute);
-      this.timebefore.seconds=60-(new Date().getSeconds());
-      this.timer=setInterval(function(){
-
-            _this.timebefore.hour=_this.timeline.hour-(new Date().getHours())-1;
-            _this.timebefore.hour=_this.timebefore.hour<0?0:_this.timebefore.hour;
-            _this.timebefore.hour=_this.timebefore.hour<10?("0"+_this.timebefore.hour):_this.timebefore.hour;
-
-            if(_this.timebefore.hour==0){
-                _this.timebefore.minute=_this.timeline.minute-1-(new Date().getMinutes());
-               _this.timebefore.minute=_this.timebefore.minute<0?0:_this.timebefore.minute
+    //   先储存vue的this值，以便在后面的函数里面调用
+      var _this=this;
+    //   期限时间和期限分钟，太长了赋值给变量后面好做计算。
+      var minuteL=_this.timeline.minute;
+      var hourL=_this.timeline.hour;
+    //   距离的时间，分钟，小时，最终结果赋值给_this.timebefore
+      var hour,minute,seconds;   
+    
+    // 主函数
+    function refresh(){
+        var time=new Date();
+        // 如果当前小时大于期限小时，或者（当前小时等于期限小时 而且 当前分钟大于或等于期限分钟）说明该当前时间已经超过期限时间，直接清除计算器。同时设置over属性为true(该活动过期),return返回函数，后面代码不再执行。
+        if(time.getHours()>hourL || (time.getHours()==hourL && time.getMinutes()>=minuteL)){
+            clearInterval(_this.timer);
+            _this.over=true;
+            return false;
+        }
+        
+        //设置距离的小时和分钟
+        if((time.getHours()==hourL) && (time.getMinutes()<minuteL)){
+            //比如：当前时间12:20:00 ，期限时间12：30:00，直接赋值距离时间为“00”
+            _this.timebefore.hour=hour="00";
+            minute=minuteL-time.getMinutes();
+            
+            // 期限秒数一般固定是00，不会有公司设置12:30:11这种沙比秒数时间点吧,那样再需要增加一点点判断。           
+            if(time.getSeconds()==0){
+                // 当前秒数为00的时候，期限秒数也是00，这时候距离的秒数为0
+                seconds=0;
+            }else{
+                // 当前秒数不为00的时候，比如12，距离秒数为60-12，前面这个60是向分钟借位的，所以分钟-1
+                seconds=60-time.getSeconds();
+                minute=minute-1
             }
-            // _this.timebefore.minute=59-(new Date().getMinutes())+parseInt(_this.timeline.minute);
-            _this.timebefore.minute=_this.timebefore.minute<10?("0"+_this.timebefore.minute):_this.timebefore.minute;
 
-            _this.timebefore.seconds=60-(new Date().getSeconds());
-            _this.timebefore.seconds=_this.timebefore.seconds<10?("0"+_this.timebefore.seconds):_this.timebefore.seconds;
+            //所有距离的小时，分钟和秒数小于10的时候都要在前面加个“0”凑成两位数的格式
+            _this.timebefore.minute=minute<10?("0"+minute):minute;
+            _this.timebefore.seconds=seconds<10?("0"+seconds):seconds;
 
-            if(parseInt(_this.timebefore.hour)==0 && parseInt(_this.timebefore.minute)==0 && parseInt(_this.timebefore.seconds)==0){
-                clearInterval(_this.timer)
+        }else if((time.getHours()<hourL) && time.getMinutes()<minuteL){
+            //比如：当前时间11:20:00 ，期限时间12：30:00
+            hour=hourL-(time.getHours());
+            minute=minuteL-time.getMinutes();
+                    
+            if(time.getSeconds()==0){
+                // 当前秒数为00的时候，期限秒数也是00，这时候距离的秒数为0
+                seconds=0;
+            }else{
+                // 当前秒数不为00的时候，比如12，距离秒数为60-12，前面这个60是向分钟借位的，所以分钟-1
+                seconds=60-time.getSeconds();
+                minute=minute-1
             }
 
-      },1000)
+            //所有距离的小时，分钟和秒数小于10的时候都要在前面加个“0”凑成两位数的格式
+            _this.timebefore.hour=hour<10?("0"+hour):hour;
+            _this.timebefore.minute=minute<10?("0"+minute):minute;
+            _this.timebefore.seconds=seconds<10?("0"+seconds):seconds;
+            
+        }else if((time.getHours()<hourL) && (time.getMinutes()==minuteL)){
+            //比如：当前时间11:30:00 ，期限时间12：30:00
+            //小时先不借位
+            hour=hourL-(time.getHours());
+            //分钟也不借位
+            minute=0;
+  
+            if(time.getSeconds()==0){
+                // 当前秒数为00的时候，期限秒数也是00，这时候距离的秒数为0,也就是当前时间11:30:00 ，期限时间12：30:00这类情况
+                //分钟和秒数全部为0
+                seconds=0;
+            }else{
+                // 当前秒数变成11:30:01后，秒数需要向分数借位，而分数没位借了，就去跟小时借位，所以小时-1，借给分钟60，然后分钟-1再借60给秒数
+                hour=hour-1;
+                //分钟为59   其实是minute=minuteL-time.getMinutes()+60-1（注意这里前面的条件前提是minuteL==time.getMinutes()所以分钟数结果一定是59），
+                minute=59;
+                // 秒数为60-time.getSeconds()
+                seconds=60-time.getSeconds();
+                
+                
+            }
+
+            //所有距离的小时，分钟和秒数小于10的时候都要在前面加个“0”凑成两位数的格式
+            _this.timebefore.hour=hour<10?("0"+hour):hour;
+            _this.timebefore.minute=minute<10?("0"+minute):minute;
+            _this.timebefore.seconds=seconds<10?("0"+seconds):seconds;
+        }else{
+            //剩下的(time.getHours()<hourL) && time.getMinutes()>minuteL)这种情况
+            // 比如：当前时间11:31:00 ，期限时间12：30:00,距离小时-1给距离分钟借位结果为00:50:00
+            //小时-1借位给分钟。
+            hour=hourL-(time.getHours())-1;
+            // 分钟得到小时的借位+60
+            minute=minuteL-time.getMinutes()+60;
+                       
+            if(time.getSeconds()==0){
+                // 当前秒数为00的时候，期限秒数也是00，这时候距离的秒数为0
+                seconds=0;
+            }else{
+                // 当前秒数不为00的时候，比如12，距离秒数为60-12，前面这个60是向分钟借位的，所以分钟-1
+                seconds=60-time.getSeconds();
+                minute=minute-1
+            }
+
+            //所有距离的小时，分钟和秒数小于10的时候都要在前面加个“0”凑成两位数的格式
+            _this.timebefore.hour=hour<10?("0"+hour):hour;
+            _this.timebefore.minute=minute<10?("0"+minute):minute;
+            _this.timebefore.seconds=seconds<10?("0"+seconds):seconds;
+        }
+        
+    }
+    // 先初始化一次
+    refresh();
+    // 1s后开始执行，后面每隔1s执行一次
+     _this.timer=setInterval(refresh,1000)
       
   },
   components: {
