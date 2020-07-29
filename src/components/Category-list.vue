@@ -1,0 +1,150 @@
+<template>
+    <div class="home-hero-list-category">
+                <ul class="list-category">
+                    <li v-for="(item,index) in result" :key="index">
+                        <a href="#">{{item.cname}}
+                            <span class="fa fa-angle-right"></span>
+                        </a>
+                        <ul class="children-list" v-bind:style="{ width:listWidth(item.cid)}">
+                            <li class="children-list-item" v-for="(r,i) in result2" :key="i" v-if="r.clid==item.cid">
+                                <a href="#">
+                                    <img v-bind:src="r.img_sr" alt="">
+                                    <span>{{r.lname}}</span>
+                                </a>
+                            </li>
+                        </ul>                                             
+                    </li>                                    
+                </ul>
+
+    </div>
+</template>
+
+<script>
+export default {
+  name: 'Category-list',
+  data: function () {
+    return { 
+        a: 1,
+        result:{},
+        result2:{}
+    }
+  },
+  props: {
+    msg: String
+  },
+  methods: {
+                listWidth(cid){
+                    var n=0;
+                    for(var i=0;i<this.result2.length;i++){
+                        if(this.result2[i].clid==cid){
+                            n++
+                        }
+                    }
+                    console.log(n);
+                    return Math.ceil(n/6)*248+"px";
+                    
+                }
+            },
+   mounted() {
+                
+            }
+  
+}
+</script>
+<style>
+ .home-hero-list-category{
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 999;
+}
+ul.list-category{
+    position: absolute;
+    /* z-index: 0; */
+    top: 0;
+    left: 0;
+    width: 234px; height: 420px;
+    padding: 20px 0;
+    background-color: rgba(105,101,101,.6);
+
+}
+
+ul.list-category>li>a{
+    display: block;
+    width: 100%;
+    color: #fff;
+    height: 42px;
+    line-height: 42px;
+    padding: 0 23px 0 30px;
+    box-sizing: border-box;
+
+}
+ul.list-category>li>a:hover{
+    background-color: #ff6700;
+}
+ul.list-category>li>a>span{
+    float: right;
+    font-size: 20px;
+    height: 42px;
+    line-height: 42px;
+    font-weight: bold;
+
+}
+ul.children-list{
+    position: absolute;
+    width: 992px;
+    /* max-width: 972px; */
+    height: 456px;
+    left: 234px;
+    top: 0;
+    background-color: #fff;
+    border-top: 1px solid #e0e0e0;
+    border-bottom: 1px solid #e0e0e0;
+    border-right: 1px solid #e0e0e0;
+    box-shadow: 0 1px 5px #e0e0e0;
+    padding: 1px 0px 1px 0px;
+    /* display: flex; */
+    display: none;
+    flex-direction: column;  
+    /* flex-direction: row; */
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    /* align-items: flex-start; */
+    align-content: flex-start;
+    /* overflow: hidden; */
+}
+/* 鼠标移入ul.list-category>li时添加.active，然后有这个类名的li后面的ul.children-list的显示 */
+ul.list-category>li:hover ul.children-list{
+    display: flex;
+    /* z-index: 999; */
+}
+/* .home-hero ul.children-list li{
+    /* width: 265px;height: 76px; */
+    /* position: relative; */
+/* } */ 
+ul.children-list li a img{
+    width: 40px;height: 40px;
+}
+ul.children-list li a{
+    display: block;
+    height: 40px;width: 208px;
+    line-height: 40px;
+    padding: 18px 20px;
+    
+}
+ul.children-list li a span{
+    display: inline-block;
+    width: 150px;
+    vertical-align: top;
+    color: #000;
+    text-overflow: ellipsis;
+    /* color: #b0b0b0; */
+    overflow: hidden;
+    white-space: nowrap;
+    border: 1px solid transparent;
+}
+ul.children-list li a span:hover{
+    color: #ff6700;
+}
+
+</style>
