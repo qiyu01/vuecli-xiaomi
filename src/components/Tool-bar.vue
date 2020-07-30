@@ -47,28 +47,54 @@
             <span class="text">购物车</span>
             
         </a>
-        <a href="" class="item backtop">
+        <template>
+            <el-backtop target=".page-main"></el-backtop>
+        </template>
+        <!-- <a href="javascript:void(0);" class="item backtop">
+
+            <template>
+            <el-backtop target=".page-main"></el-backtop>
+            </template>
+
             <div class="icon">
                 <img src="images/tool-bar6.png" alt="">
                 <img src="images/tool-bar6y.png" alt="">
             </div>
             <span class="text">回顶部</span>
-            <!-- <div class="popcontent">
+            <div class="popcontent">
                 <img src="images/tool-bar-erweima.png" alt="">
                 <span class="desc">
                     
                     扫码领取新人百元礼包
                 
                 </span>
-            </div> -->
+            </div>
             
-        </a>
+        </a> -->
         
     </div>
 </template>
 
 <style>
 /* 右侧导航条 */
+
+
+.el-backtop {
+    position: relative;
+    display: block;
+    width: 82px;
+    height: 90px;
+    margin-top: -1px;
+    background-color: #fff;
+    border: 1px solid #f5f5f5;
+    text-align: center;
+    cursor: default;
+}
+
+.el-backtop:hover {
+    background-color: blue
+}
+
 .home-tool-bar{
     position: fixed;
     bottom: 70px;

@@ -4,6 +4,8 @@ import router from './router'
 import store from './store'
 import $ from 'jquery'
 import axios from 'axios'
+import ElementUI from 'element-ui';
+import 'element-ui/lib/theme-chalk/index.css';
 // import 'swiper/dist/css/swiper.css'
 // import VueAwesomeSwiper from 'vue-awesome-swiper'
 // Vue.use(VueAwesomeSwiper)
@@ -18,6 +20,7 @@ import '../public/css/base.css'
 
 Vue.config.productionTip = false
 
+Vue.use(ElementUI);
 axios.defaults.baseURL="http://127.0.0.1"
 Vue.prototype.axios=axios
 Vue.prototype.$=$

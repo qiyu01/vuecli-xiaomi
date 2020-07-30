@@ -40,7 +40,7 @@ export default {
                             n++
                         }
                     }
-                    console.log(n);
+                    
                     return Math.ceil(n/6)*248+"px";
                     
                 }
@@ -52,7 +52,6 @@ export default {
                  params: {}
                 }).then(res => {
                 this.result=res.data;
-                console.log(this.result)
                 })
 
               this.axios({
@@ -61,7 +60,6 @@ export default {
                  params: {}
                 }).then(res => {
                 this.result2=res.data;
-                console.log(this.result2)
                 })
               
 

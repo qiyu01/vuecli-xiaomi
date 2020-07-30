@@ -46,8 +46,8 @@ export default {
 	    return {
             //期限时间，以后可能服务器会返回多个时间戳，这里先用假的时间代替。
             timeline:{
-                hour:"23",
-                minute:"08"
+                hour:"22",
+                minute:"00"
             },
             timebefore:{
                 hour:"00",
