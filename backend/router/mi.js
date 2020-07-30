@@ -25,6 +25,7 @@ router.get("/v1/category_restful", (req, res) => {
 });
 router.get("/v1/category_list", (req, res) => {
     // console.log(_uname + "~~~~~" + _upwd);
+    res.header("Access-Control-Allow-Origin","http://127.0.0.1:8081");
     var sql = "select * from category_list";
     pool.query(sql, [], (err, result) => {
         if (err) throw err;

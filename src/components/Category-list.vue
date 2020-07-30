@@ -1,9 +1,9 @@
 <template>
     <div class="home-hero-list-category">
-                <ul class="list-category">
+                <ul class="list-category" id="app">
                     <li v-for="(item,index) in result" :key="index">
                         <a href="#">{{item.cname}}
-                            <span class="fa fa-angle-right"></span>
+                            <span class="iconfont icon-xiaoyuhao2"></span>
                         </a>
                         <ul class="children-list" v-bind:style="{ width:listWidth(item.cid)}">
                             <li class="children-list-item" v-for="(r,i) in result2" :key="i" v-if="r.clid==item.cid">
@@ -51,7 +51,17 @@ export default {
                  method: "get",
                  params: {}
                 }).then(res => {
-                console.log(res)
+                this.result=res.data;
+                console.log(this.result)
+                })
+
+              this.axios({
+                 url: "http://127.0.0.1:8080/mi/v1/category_list",
+                 method: "get",
+                 params: {}
+                }).then(res => {
+                this.result2=res.data;
+                console.log(this.result2)
                 })
               
 
@@ -83,8 +93,9 @@ ul.list-category>li>a{
     color: #fff;
     height: 42px;
     line-height: 42px;
-    padding: 0 23px 0 30px;
+    padding: 0 18px 0 30px;
     box-sizing: border-box;
+    text-align: left;
 
 }
 ul.list-category>li>a:hover{
@@ -96,6 +107,7 @@ ul.list-category>li>a>span{
     height: 42px;
     line-height: 42px;
     font-weight: bold;
+    transform: rotate(180deg) scale(0.88);
 
 }
 ul.children-list{
