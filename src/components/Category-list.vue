@@ -46,7 +46,15 @@ export default {
                 }
             },
    mounted() {
-                
+              this.axios({
+                 url: "http://127.0.0.1:8080/mi/v1/category_restful",
+                 method: "get",
+                 params: {}
+                }).then(res => {
+                console.log(res)
+                })
+              
+
             }
   
 }

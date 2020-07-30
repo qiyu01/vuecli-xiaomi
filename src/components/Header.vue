@@ -15,7 +15,7 @@
                     <span class="sep">|</span>
                     <a href="javascriot:void(0);">有品</a>
                     <span class="sep">|</span>
-                    <a href="javascriot:void(0);">小爱开发平台</a>
+                    <a href="javascriot:void(0);">小爱开放平台</a>
                     <span class="sep">|</span>
                     <a href="javascriot:void(0);">企业团购</a>
                     <span class="sep">|</span>
@@ -99,7 +99,7 @@ export default {
     color: #fff;
 }
 .site-topbar .topbar-nav .sep{
-    margin: 0.3em;
+    margin: 6.6px;
     color: #424242;
     font-family: sans-serif;
 }

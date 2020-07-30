@@ -2256,6 +2256,7 @@
     </div>
 
   <Footer></Footer>
+  <Tool-bar></Tool-bar>
 </div>
   
 </template>
@@ -2265,6 +2266,7 @@
 import Swiper from 'swiper'
 import Footer from '@/components/Footer.vue'
 import Header from '@/components/Header.vue'
+import ToolBar from '@/components/Tool-bar.vue'
 import CategoryList from '@/components/Category-list.vue'
 import FlashCounter from '@/components/Flash-counter.vue'
 import SwiperFade from '@/components/Swiper-fade.vue'
@@ -2273,7 +2275,7 @@ import SwiperSlide from '@/components/Swiper-slide.vue'
 export default {
   name: 'Home',
   components: {
-    Footer,Header,CategoryList,FlashCounter,SwiperFade,SwiperSlide
+    Footer,Header,CategoryList,FlashCounter,SwiperFade,SwiperSlide,ToolBar
   },
   mounted() {
       

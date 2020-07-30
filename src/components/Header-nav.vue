@@ -23,7 +23,7 @@
                         </li>
                         <li class="nav-item">
                             <a href="#">
-                            <span>Redmi红米</span>
+                            <span>Redmi 红米</span>
                             </a>
                         </li>
                         <li class="nav-item">
