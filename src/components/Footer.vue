@@ -295,7 +295,7 @@ export default {
     overflow: hidden;
 }
 .site-info .sites span.sep{
-    margin: 0 .25em;
+    margin: 0 5.8px;
     font-family: sans-serif;
 }
 .site-info .info-text p{

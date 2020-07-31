@@ -47,15 +47,10 @@
             <span class="text">购物车</span>
             
         </a>
-        <template>
-            <el-backtop target=".page-main"></el-backtop>
-        </template>
+        
         <!-- <a href="javascript:void(0);" class="item backtop">
 
-            <template>
-            <el-backtop target=".page-main"></el-backtop>
-            </template>
-
+        
             <div class="icon">
                 <img src="images/tool-bar6.png" alt="">
                 <img src="images/tool-bar6y.png" alt="">
@@ -79,7 +74,7 @@
 /* 右侧导航条 */
 
 
-.el-backtop {
+/* .el-backtop {
     position: relative;
     display: block;
     width: 82px;
@@ -93,13 +88,14 @@
 
 .el-backtop:hover {
     background-color: blue
-}
+} */
 
 .home-tool-bar{
     position: fixed;
-    bottom: 70px;
-    right: 0;
-    z-index: 99;
+    bottom: 176px;
+    right: 17px;
+    z-index: 999;
+    
 }
 .home-tool-bar .item{
     position: relative;
@@ -111,6 +107,8 @@
     border: 1px solid #f5f5f5;
     text-align: center;
     cursor: default;
+    font-size: 14px;
+    
 }
 .home-tool-bar .backtop{
     margin-top: 14px;
@@ -144,6 +142,7 @@
     color: #757575;
     -webkit-transition: color .3s;
     transition: color .3s;
+    
 }
 .home-tool-bar .item:hover .text{
     color: #ff6700;

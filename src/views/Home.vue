@@ -1,24 +1,11 @@
 <template>
 <div class="wraper">
-    <el-backtop target=".wraper">
-                <div
-                    style="{
-                        height: 100%;
-                        width: 100%;
-                        background-color: #f2f5f6;
-                        box-shadow: 0 0 6px rgba(0,0,0, .12);
-                        text-align: center;
-                        line-height: 40px;
-                        color: #1989fa;
-                    }"
-                    >
-                    UP
-                </div>
-</el-backtop>
-  <Header></Header>
+    
+  <Header>
+      
+  </Header>
   <div class="home-hero container">
     <div class="home-hero-swiper-container">
-      <Category-list></Category-list>
       <Swiper-fade></Swiper-fade>
     </div>
     <div class="home-hero-sub clearfix">
@@ -468,8 +455,20 @@
     </div>
 
   <Footer></Footer>
-  <!-- <Tool-bar></Tool-bar> -->
+  <Tool-bar></Tool-bar>
+    <el-backtop target=".wraper" class="el-backtop">
+        <a href="javascript:void(0);" class="item backtop">
 
+        
+            <div class="icon">
+                <img src="images/tool-bar6.png" alt="">
+                <img src="images/tool-bar6y.png" alt="">
+            </div>
+            <span class="text">回顶部</span>
+            
+        </a>
+
+    </el-backtop>
   
 </div>
   
@@ -478,11 +477,8 @@
 <script>
 // @ is an alias to /src
 import Swiper from 'swiper'
-import Footer from '@/components/Footer.vue'
-import Header from '@/components/Header.vue'
 import HomeBrick from '@/components/Home-brick.vue'
 import ToolBar from '@/components/Tool-bar.vue'
-import CategoryList from '@/components/Category-list.vue'
 import FlashCounter from '@/components/Flash-counter.vue'
 import SwiperFade from '@/components/Swiper-fade.vue'
 import SwiperSlide from '@/components/Swiper-slide.vue'
@@ -490,7 +486,7 @@ import SwiperSlide from '@/components/Swiper-slide.vue'
 export default {
   name: 'Home',
   components: {
-    Footer,Header,CategoryList,FlashCounter,SwiperFade,SwiperSlide,ToolBar,HomeBrick
+    FlashCounter,SwiperFade,SwiperSlide,ToolBar,HomeBrick
   },
   mounted() {
       
@@ -498,6 +494,72 @@ export default {
 }
 </script>
 <style>
+/* 防止样式穿透的方法scoped */
+    .wraper {
+        height: 100vh;
+        overflow-x: hidden;
+    }
+
+.el-backtop{
+    position: fixed;
+    width: 82px!important;
+    height: 90px!important;
+    bottom: 78px!important;
+    right: 18px!important;
+    z-index: 99!important;
+}
+.el-backtop .item{
+    position: relative;
+    display: block;
+    width: 82px;
+    height: 90px;
+    margin-top: -1px;
+    background-color: #fff;
+    border: 1px solid #f5f5f5;
+    text-align: center;
+    cursor: default;
+    font-size: 14px;
+}
+.el-backtop .backtop{
+    margin-top: 14px;
+    border-top: 1px solid #f5f5f5;
+    visibility: visible;
+}
+.el-backtop .item .icon{
+    position: relative;
+    width: 30px;
+    height: 30px;
+    margin: 0 auto 8px;
+    padding-top: 18px;
+}
+.el-backtop .item .icon img{
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 30px;
+    height: 30px;
+    -webkit-transition: opacity .3s;
+    transition: opacity .3s;
+}
+.el-backtop .item .icon img:last-child{
+    display: none;
+}
+.el-backtop .item:hover .icon img:last-child{
+    display: inline-block;
+}
+.el-backtop .item .icon img:last-child
+.el-backtop .item .text{
+    color: #757575;
+    -webkit-transition: color .3s;
+    transition: color .3s;
+}
+.el-backtop .item:hover .text{
+    color: #ff6700;
+}
+
+  
+    
+
   .home-hero{
     position: relative;
     margin-bottom: 26px!important;

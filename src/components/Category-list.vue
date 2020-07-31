@@ -70,11 +70,11 @@ export default {
 <style>
  .home-hero-list-category{
     position: absolute;
-    top: 0;
-    left: 0;
+    top: 88px;
+    left: -92px;
     z-index: 999;
 }
-ul.list-category{
+.home-hero-list-category ul.list-category{
     position: absolute;
     /* z-index: 0; */
     top: 0;
@@ -85,7 +85,7 @@ ul.list-category{
 
 }
 
-ul.list-category>li>a{
+.home-hero-list-category ul.list-category>li>a{
     display: block;
     width: 100%;
     color: #fff;
@@ -94,12 +94,13 @@ ul.list-category>li>a{
     padding: 0 18px 0 30px;
     box-sizing: border-box;
     text-align: left;
+    font-size: 14px;
 
 }
-ul.list-category>li>a:hover{
+.home-hero-list-category ul.list-category>li>a:hover{
     background-color: #ff6700;
 }
-ul.list-category>li>a>span{
+.home-hero-list-category ul.list-category>li>a>span{
     float: right;
     font-size: 20px;
     height: 42px;
@@ -108,7 +109,7 @@ ul.list-category>li>a>span{
     transform: rotate(180deg) scale(0.88);
 
 }
-ul.children-list{
+.home-hero-list-category ul.children-list{
     position: absolute;
     width: 992px;
     /* max-width: 972px; */
@@ -132,7 +133,7 @@ ul.children-list{
     /* overflow: hidden; */
 }
 /* 鼠标移入ul.list-category>li时添加.active，然后有这个类名的li后面的ul.children-list的显示 */
-ul.list-category>li:hover ul.children-list{
+.home-hero-list-category ul.list-category>li:hover ul.children-list{
     display: flex;
     /* z-index: 999; */
 }
@@ -140,17 +141,18 @@ ul.list-category>li:hover ul.children-list{
     /* width: 265px;height: 76px; */
     /* position: relative; */
 /* } */ 
-ul.children-list li a img{
+.home-hero-list-category ul.children-list li a img{
     width: 40px;height: 40px;
 }
-ul.children-list li a{
+.home-hero-list-category ul.children-list li a{
     display: block;
     height: 40px;width: 208px;
     line-height: 40px;
     padding: 18px 20px;
+    font-size: 14px;
     
 }
-ul.children-list li a span{
+.home-hero-list-category ul.children-list li a span{
     display: inline-block;
     width: 150px;
     vertical-align: top;
@@ -161,7 +163,7 @@ ul.children-list li a span{
     white-space: nowrap;
     border: 1px solid transparent;
 }
-ul.children-list li a span:hover{
+.home-hero-list-category ul.children-list li a span:hover{
     color: #ff6700;
 }
 

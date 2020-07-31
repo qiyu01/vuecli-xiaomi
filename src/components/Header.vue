@@ -36,8 +36,9 @@
                 </div>
                 <div class="topbar-cart">
                     <a href="#">
-                        <em class="fa fa-cart"></em>
-                        购物车
+                        <em class="iconfont icon-gouwuchekong"></em>
+                       
+                        <span> 购物车</span>
                         <span>(0)</span>
                     </a>
                     <div class="topbar-cart-menu">
@@ -56,16 +57,16 @@
 
         </div>
         
-        <Header-nav></Header-nav>
+        <Header-nav :navcategory="navcategory">
+            
+        </Header-nav>
     </div>
 </template>
 <script>
 import HeaderNav from './Header-nav.vue'
 export default {
   name: 'Header',
-  props: {
-    msg: String
-  },
+  props: ["navcategory"],//是否显示“全部商品分类”
   components: {
     HeaderNav
   }
@@ -173,7 +174,18 @@ export default {
 }
 
 .site-topbar .topbar-cart a span{
+    display: inline-block;
     margin-left: 5px;
+    height: 40px;line-height: 40px;
+    transform: translateY(-2px);
+    
+}
+.site-topbar .topbar-cart a em{
+    display: inline-block;
+    height: 40px;line-height: 40px;
+    font-size: 17px;
+    transform: translateX(-2px) scaleX(1.1);
+    
 }
 .site-topbar .topbar-cart .topbar-cart-menu{
     position: absolute;

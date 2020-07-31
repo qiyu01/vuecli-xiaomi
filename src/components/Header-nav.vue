@@ -12,9 +12,15 @@
                 </div>
                 <div class="header-nav">
                     <ul class="nav-list clearfix">
-                        <!-- nav-category是小米本身官网的结构，本来是作为详细分类列表菜单的，这里将其功能实现放到banner模块里面的list-category（在大轮播图那里），这里只有剩下占据空间功能。 -->
-                        <!-- 在其他页面又会出现在这里，it`s a mistake -->
-                        <li class="nav-category"></li>
+                        
+                        <li class="nav-category">
+                            
+                                <a href="" >
+                                    <span v-if="navcategory">全部商品分类</span>
+                                </a>
+                            
+                                <Category-list></Category-list>
+                        </li>
                         <li class="nav-item">
                             <a href="#">
                             <span>小米手机</span>
@@ -63,7 +69,7 @@
                         </li>
                         
                     </ul>
-
+                    
                     <div class="item-children">
                         <div class="container">
                             <!-- <div class="test">
@@ -196,7 +202,7 @@
                         <a href="#">
                             <input type="search" class="search-text" id="search" name="keyword" autocomplete="off" placeholder="穿戴">
                         </a>
-                        <a href="#" class="search-btn fa fa-search">
+                        <a href="#" class="search-btn iconfont icon-sousuo1">
                             
                         </a>
                         <div class="keyword-list">
@@ -218,11 +224,11 @@
         </div>
 </template>
 <script>
+import CategoryList from './Category-list.vue'
 export default {
   name: 'Headernav',
-  props: {
-    msg: String
-  },
+  props: ["navcategory"],
+  components: {CategoryList},
   mounted() {
       var that=this;
        that.$(".header-nav .nav-item").hover(
@@ -329,26 +335,38 @@ export default {
     /* border: 1px solid black; */
 }
 .site-header .header-nav .nav-list{
-    /* position: relative; */
+    position: relative;
     float: left;
     width: 1100px;
     height: 88px;
     margin: 0;
     padding: 12px 0 0 30px;
     font-size: 16px;
+    z-index: 0;
     /* border: 1px solid red; */
 }
 .site-header .nav-category{
+    display: block;
     position: relative;
     float: left;
-    width: 127px;height: 1px;
+    width: 127px;
     padding-right: 15px;
-    visibility: hidden;
 }
+
 .site-header .nav-item{
+    position: relative;
     float: left;
+    z-index: 1;
     /* position: relative; */
 }
+.site-header .nav-category>a{
+    display: block;
+    padding: 26px 0px 38px;
+    text-align: right;
+    color: #333;
+    transition: color .2s;
+}
+
 .site-header .nav-item>a{
     display: block;
     padding: 26px 10px 38px;

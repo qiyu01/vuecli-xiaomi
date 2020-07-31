@@ -5,6 +5,8 @@ import store from './store'
 import $ from 'jquery'
 import axios from 'axios'
 import ElementUI from 'element-ui';
+import Footer from './components/Footer.vue'
+import Header from './components/Header.vue'
 import 'element-ui/lib/theme-chalk/index.css';
 // import 'swiper/dist/css/swiper.css'
 // import VueAwesomeSwiper from 'vue-awesome-swiper'
@@ -21,6 +23,8 @@ import '../public/css/base.css'
 Vue.config.productionTip = false
 
 Vue.use(ElementUI);
+Vue.component("Header",Header);
+Vue.component("Footer",Footer);
 axios.defaults.baseURL="http://127.0.0.1"
 Vue.prototype.axios=axios
 Vue.prototype.$=$
