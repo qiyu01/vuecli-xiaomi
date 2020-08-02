@@ -29,7 +29,9 @@
     <div class="page">
       <div class="product-box container">
         <div class="img-left">
-          <Swiper-product></Swiper-product>
+          {{swiperColor}}
+          <!-- swiperColor是传给子组件swiper的次数，用来切换轮播图的颜色（更改图片） -->
+          <Swiper-product :swiperColor="swiperColor"></Swiper-product>
         </div>
         <div class="product-con">
           <h2>小米10</h2>
@@ -91,17 +93,9 @@
             <div class="buy-box-child">
               <div class="title">选择颜色</div>
               <ul class="clearfix">
-                <li class="active">
-                  <a href>国风雅灰</a>
-                </li>
-                <li>
-                  <a href>钛银黑</a>
-                </li>
-                <li>
-                  <a href>冰海蓝</a>
-                </li>
-                <li>
-                  <a href>蜜桃金</a>
+                <li v-for="(item,i) in color" :key="i" :class="[item.isselected ? 'active' : '', 'clearfix']" 
+                @click="colorSelect(item)">
+                  <a href="Javascript:void(0);">{{item.name}}</a>
                 </li>
               </ul>
             </div>
@@ -307,12 +301,13 @@ export default {
       navcategory: true,//是否显示导航栏的"全部商品分类" 该参数将作为props传给子组件，在子组件里面控制插槽slot是否显示
       // 版本参数
       version:[
-        {id:1,isselected:false,name:"8GB+128GB",price:3799,delprice:3999,gift:false,color:{id:1,name:"国风雅灰",id:1,name:"钛银黑",id:1,name:"冰海蓝",id:1,name:"蜜桃金"}},
-        {id:2,isselected:true,name:"8GB+256GB",price:3999,delprice:4299,gift:true,color:{id:1,name:"国风雅灰",id:1,name:"钛银黑",id:1,name:"冰海蓝",id:1,name:"蜜桃金"}},
-        {id:3,isselected:false,name:"12GB+256GB",price:4299,delprice:4699,gift:true,color:{id:1,name:"国风雅灰",id:1,name:"钛银黑",id:1,name:"冰海蓝",id:1,name:"蜜桃金"}}
+        {id:1,isselected:false,name:"8GB+128GB",price:3799,delprice:3999,gift:false,color:[{id:1,name:"国风雅灰",isselected:true},{id:2,name:"钛银黑",isselected:false},{id:3,name:"冰海蓝",isselected:false},{id:4,name:"蜜桃金",isselected:false}]},
+        {id:2,isselected:true,name:"8GB+256GB",price:3999,delprice:4299,gift:true,color:[{id:1,name:"国风雅灰",isselected:true},{id:2,name:"钛银黑",isselected:false},{id:3,name:"冰海蓝",isselected:false},{id:4,name:"蜜桃金",isselected:false}]},
+        {id:3,isselected:false,name:"12GB+256GB",price:4299,delprice:4699,gift:false,color:[{id:1,name:"国风雅灰",isselected:true},{id:2,name:"钛银黑",isselected:false},{id:3,name:"冰海蓝",isselected:false},{id:4,name:"蜜桃金",isselected:false}]}
       ],
-      // 颜色,通过watch 参数version的值得的
+      // 颜色,通过watch 参数version的值得到
       color:[],
+      swiperColor:1,
       // 服务选择参数
       serviceOption:[
         {id:1,selected:false,name:"意外保障服务",price:349,desc:"手机意外碎屏/进水/碾压等损坏",prov:"https://api.jr.mi.com/insurance/document/phone_accidentIns.html?insuranceSku=28006&couponFrom=rule",tips:"https://api.jr.mi.com/insurance/document/phone_accidentIns.html?insuranceSku=28006&couponFrom=question"},
@@ -323,6 +318,7 @@ export default {
       repairOption:[
         {id:1,selected:false,name:"延长保修服务",price:159,desc:"厂保延一年，性能故障免费维修",prov:"https://api.jr.mi.com/insurance/document/phone_accidentIns.html?insuranceSku=28006&couponFrom=rule",tips:"https://api.jr.mi.com/insurance/document/phone_accidentIns.html?insuranceSku=28006&couponFrom=question"}
       ],
+      // 额外选择的服务（前面选择的service和repair），如果有，就在总金额上方列出这两条信息，没有就为空不显示
       extra:[{},{}]
     };
   },
@@ -334,6 +330,13 @@ export default {
           v.isselected=false;
         }
         item.isselected=true;
+    },
+    colorSelect(item){
+      for(let c of this.color){
+          c.isselected=false;
+        }
+        item.isselected=true;
+        this.swiperColor=item.id;
     },
     // 服务选择
     serviceSelect(item){
@@ -391,6 +394,14 @@ export default {
       }
         
     },
+    //根据选择的版本设置颜色
+    // color(){
+    //   for(let v of this.version){
+    //     if(v.isselected){
+    //         return v.color;
+    //       }
+    //     }
+    // },
     // 总价
     totalprice(){
       var totalprice=this.price.price;
@@ -408,13 +419,18 @@ export default {
     }
   },
   watch: {
-    version(){
-      for(let v of this.version){
+    version:{
+      handler() {
+        for(let v of this.version){
         if(v.isselected){
             this.color=v.color;
-            console.log(this.color)
           }
         }
+      
+      
+    },
+    deep: true,
+    immediate: true
     }
   },
   
