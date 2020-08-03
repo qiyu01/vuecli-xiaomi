@@ -94,7 +94,7 @@
               <div class="title">选择颜色</div>
               <ul class="clearfix">
                 <li v-for="(item,i) in color" :key="i" :class="[item.isselected ? 'active' : '', 'clearfix']" 
-                @click="colorSelect(item)">
+                @click="colorSelect(item,i)">
                   <a href="Javascript:void(0);">{{item.name}}</a>
                 </li>
               </ul>
@@ -299,27 +299,29 @@ export default {
   data() {
     return {
       navcategory: true,//是否显示导航栏的"全部商品分类" 该参数将作为props传给子组件，在子组件里面控制插槽slot是否显示
-      // 版本参数
+      // 版本参数，服务器返回
       version:[
         // {id:1,isselected:false,name:"8GB+128GB",price:3799,delprice:3999,gift:false},
         // {id:2,isselected:true,name:"8GB+256GB",price:3999,delprice:4299,gift:true},
         // {id:3,isselected:false,name:"12GB+256GB",price:4299,delprice:4699,gift:false}
       ],
+      // 当前选中的版本
       selectVersion:{},
-      // 颜色,通过watch 参数version的值得到
-      color:[{id:1,name:"国风雅灰",isselected:true},{id:2,name:"钛银黑",isselected:false},{id:3,name:"冰海蓝",isselected:false},{id:4,name:"蜜桃金",isselected:false}],
+      // 当前选中的版本对应的颜色
+      color:[],
 
+      // 该product所有的颜色（虽然目前是每种版本有4种相同的颜色，但也可能出现不同的版本拥有的颜色数不相同），服务器返回
+      allColor:[],
 
-      allColor:[{id:1,name:"国风雅灰",isselected:true},{id:2,name:"钛银黑",isselected:false},{id:3,name:"冰海蓝",isselected:false},{id:4,name:"蜜桃金",isselected:false},{id:1,name:"国风雅灰",isselected:true},{id:2,name:"钛银黑",isselected:false},{id:3,name:"冰海蓝",isselected:false},{id:4,name:"蜜桃金",isselected:false},{id:1,name:"国风雅灰",isselected:true},{id:2,name:"钛银黑",isselected:false},{id:3,name:"冰海蓝",isselected:false},{id:4,name:"蜜桃金",isselected:false}],
-
+      // 选择颜色后传入颜色对应的id，作为props属性传给子组件swiper，改变对应的颜色图片
       swiperColor:1,
-      // 服务选择参数
+      // 服务选择参数,暂时用假数据
       serviceOption:[
         {id:1,selected:false,name:"意外保障服务",price:349,desc:"手机意外碎屏/进水/碾压等损坏",prov:"https://api.jr.mi.com/insurance/document/phone_accidentIns.html?insuranceSku=28006&couponFrom=rule",tips:"https://api.jr.mi.com/insurance/document/phone_accidentIns.html?insuranceSku=28006&couponFrom=question"},
         {id:1,selected:false,name:"一年碎屏保",price:249,desc:"手机意外碎屏",prov:"https://api.jr.mi.com/insurance/document/phone_accidentIns.html?insuranceSku=28007&couponFrom=rule",tips:"https://api.jr.mi.com/insurance/document/phone_accidentIns.html?insuranceSku=28007&couponFrom=question"}
         
       ],
-      // 保修选择参数
+      // 保修选择参数,暂时用假数据
       repairOption:[
         {id:1,selected:false,name:"延长保修服务",price:159,desc:"厂保延一年，性能故障免费维修",prov:"https://api.jr.mi.com/insurance/document/phone_accidentIns.html?insuranceSku=28006&couponFrom=rule",tips:"https://api.jr.mi.com/insurance/document/phone_accidentIns.html?insuranceSku=28006&couponFrom=question"}
       ],
@@ -334,19 +336,39 @@ export default {
                  method: "get",
                  params: {}
                 }).then(res => {
-                console.log(res.data);
-                console.log(this.version);
+                // console.log(res.data);
+                // console.log(this.version);
                 this.version=res.data;
                 for(let v of this.version){
-                  // 给全部version对象添加新属性，必须使用$set方法，vue才能监测到数据变化
+                  // 给version里面的全部对象添加新属性isselected，必须使用$set方法，vue才能监测到数据变化
                     this.$set(v, "isselected", false)
                 }
-                // 默认选中第二个版本，以后可以根据需求更改
+                // 默认选中第二个版本，可以根据需求更改
                 this.version[1].isselected=true;
-                // selectVersion存储当前选中的版本的属性
+                // selectVersion存储当前选中的版本（默认第二个）
                 this.selectVersion=this.version[1];
 
                 });
+       this.axios({
+                 url: "http://127.0.0.1:8080/mi/v1/product_color",
+                 method: "get",
+                 params: {}
+                }).then(res => {
+                this.allColor=res.data;
+                //默认版本sid=2（前面version中第二个版本所对应的颜色）的颜色存入this.color作为第一次页面加载时显示的颜色选项
+                for(let c of this.allColor){
+                // 给allcolor里的全部对象添加isselected属性作为是否被选中的颜色。
+                  this.$set(c, "isselected", false);
+                    if(c.sid==2){
+                      this.color.push(c);                      
+                    }
+                }
+                  // 默认选中第一个颜色
+                this.color[0].isselected=true;
+                // 默认选中颜色的图片，这个1是自定义的参数， 1代表第一个颜色，2代表第二个颜色...这个参数将作为props属性传给子组件swiper查询颜色对应的图片，数据库里对应的是product_img表里的cid。
+                this.swiperColor=1;
+
+                })         
   },
   methods: {
     // 选择版本
@@ -356,15 +378,26 @@ export default {
         }
         item.isselected=true;
         this.selectVersion=item;
-        console.log(this.selectVersion)
+        // 现清空color数组里的对象选项
+        this.color=[];
+        // 去allcolor里找到对应版本所拥有的颜色添加进color里面
+        for(let c of this.allColor){
+                    if(c.sid==item.id){
+                      this.color.push(c);                      
+                    }
+                }
+          // 默认选中第一个颜色
+          this.color[0].isselected=true;
+          this.swiperColor=1;
 
     },
-    colorSelect(item){
+    colorSelect(item,i){
       for(let c of this.color){
           c.isselected=false;
         }
         item.isselected=true;
-        this.swiperColor=item.id;
+        // 这里用下表来获取swipercolor对应的cid，1代表第一个颜色，2代表第二个颜色...
+        this.swiperColor=i+1;
     },
     // 服务选择
     serviceSelect(item){

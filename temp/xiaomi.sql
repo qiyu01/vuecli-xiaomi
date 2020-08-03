@@ -45,8 +45,11 @@ CREATE TABLE product_color(
 CREATE TABLE product_img(
   id INT PRIMARY KEY AUTO_INCREMENT,
   img_src VARCHAR(256),
+  /**cid为自定义的颜色id，1代表product页面颜色列表里面的第一个颜色**/
+  /**切换颜色时会拿到对应下表i来查询对应的颜色图片**/
   cid INT,
-  FOREIGN KEY(cid) REFERENCES product_color(id)
+  pid INT,
+  FOREIGN KEY(pid) REFERENCES product(id)
 );
 
 

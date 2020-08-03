@@ -64,26 +64,26 @@ insert into product_color values
 
 
 insert into product_img values 
-(null,'../assets/images/product-color/product1.webp',1),
-(null,'../assets/images/product-color/product2.webp',1),
-(null,'../assets/images/product-color/product3.webp',1),
-(null,'../assets/images/product-color/product4.webp',1),
-(null,'../assets/images/product-color/product5.webp',1),
-(null,'../assets/images/product-color/product11.webp',2),
-(null,'../assets/images/product-color/product12.webp',2),
-(null,'../assets/images/product-color/product13.webp',2),
-(null,'../assets/images/product-color/product14.webp',2),
-(null,'../assets/images/product-color/product15.webp',2),
-(null,'../assets/images/product-color/product21.webp',3),
-(null,'../assets/images/product-color/product22.webp',3),
-(null,'../assets/images/product-color/product23.webp',3),
-(null,'../assets/images/product-color/product24.webp',3),
-(null,'../assets/images/product-color/product25.webp',3),
-(null,'../assets/images/product-color/product31.webp',4),
-(null,'../assets/images/product-color/product32.webp',4),
-(null,'../assets/images/product-color/product33.webp',4),
-(null,'../assets/images/product-color/product34.webp',4),
-(null,'../assets/images/product-color/product35.webp',4);
+(null,'../assets/images/product-color/product1.webp',1,1),
+(null,'../assets/images/product-color/product2.webp',1,1),
+(null,'../assets/images/product-color/product3.webp',1,1),
+(null,'../assets/images/product-color/product4.webp',1,1),
+(null,'../assets/images/product-color/product5.webp',1,1),
+(null,'../assets/images/product-color/product11.webp',2,1),
+(null,'../assets/images/product-color/product12.webp',2,1),
+(null,'../assets/images/product-color/product13.webp',2,1),
+(null,'../assets/images/product-color/product14.webp',2,1),
+(null,'../assets/images/product-color/product15.webp',2,1),
+(null,'../assets/images/product-color/product21.webp',3,1),
+(null,'../assets/images/product-color/product22.webp',3,1),
+(null,'../assets/images/product-color/product23.webp',3,1),
+(null,'../assets/images/product-color/product24.webp',3,1),
+(null,'../assets/images/product-color/product25.webp',3,1),
+(null,'../assets/images/product-color/product31.webp',4,1),
+(null,'../assets/images/product-color/product32.webp',4,1),
+(null,'../assets/images/product-color/product33.webp',4,1),
+(null,'../assets/images/product-color/product34.webp',4,1),
+(null,'../assets/images/product-color/product35.webp',4,1);
 
 
 

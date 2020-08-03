@@ -19,16 +19,32 @@ import Swiper from "swiper";
 export default {
   data() {
     return {
-      arrItem: []
+      arrItem: [],
+      colorImg:[]
     };
   },
   props: ["swiperColor"],
+  beforeCreate(){
+    this.axios({
+                 url: "http://127.0.0.1:8080/mi/v1/product_img",
+                 method: "get",
+                 params: {}
+                }).then(res => {
+                console.log(res.data);
+                // console.log(this.version);
+                this.colorImg=res.data;
+                
+
+                });
+  },
   watch: {
     swiperColor: {
       handler() {
         // this.swiper.destroy();
         // console.log(this.swiperColor);
         
+
+        console.log(true);
         switch (this.swiperColor) {
         case 1:
         this.arrItem = [
@@ -135,9 +151,6 @@ export default {
       deep: true,
       immediate: true,
     },
-  },
-  created() {
-    
   },
   mounted() {
     

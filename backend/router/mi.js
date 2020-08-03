@@ -64,6 +64,20 @@ router.get("/v1/product_color", (req, res) => {
         }
     });
 });
+// 根id返回所颜色的图片
+router.get("/v1/product_img", (req, res) => {
+    // console.log(_uname + "~~~~~" + _upwd);
+    res.header("Access-Control-Allow-Origin","http://127.0.0.1:8081");
+    var sql = "select * from product_img where pid=1";
+    pool.query(sql, [], (err, result) => {
+        if (err) throw err;
+        if (result.length > 0) {
+            res.send(result);
+        } else {
+            res.send("0");
+        }
+    });
+});
 
 
 
