@@ -50,13 +50,13 @@
           >小米自营</p>
           <div class="price-info">
             <span>
-              {{selectVersion.price}}元
-              <del>{{selectVersion.delprice}} 元</del>
+              {{version.price}}元
+              <del>{{version.delprice}} 元</del>
             </span>
           </div>
-          <div class="line" v-show="selectVersion.hasgift"></div>
+          <div class="line" v-show="version.hasgift"></div>
           <div class="activity-box">
-            <div class="flow-box" v-show="selectVersion.hasgift">
+            <div class="flow-box" v-show="version.hasgift">
               <div class="flow-tag">赠完即止</div>
               <div class="flow-name">赠冰封散热背夹</div>
             </div>
@@ -84,7 +84,7 @@
             <div class="buy-box-child">
               <div class="title">选择版本</div>
               <ul class="clearfix">
-                <li v-for="(item,i) in version" :key="i" :class="[item.isselected ? 'active' : '', 'clearfix']" @click="versionSelect(item)">
+                <li v-for="(item,i) in allVersion" :key="i" :class="[item.isselected ? 'active' : '', 'clearfix']" @click="versionSelect(item)">
                   <a href="javascript:void(0)">{{item.name}}</a>
                 </li>
                 
@@ -182,8 +182,8 @@
               <li>
                 小米10 全网通版 8GB+256GB 国风雅灰
                 <span>
-                  {{selectVersion.price}}元
-                  <del>{{selectVersion.delprice}}元</del>
+                  {{version.price}}元
+                  <del>{{version.delprice}}元</del>
                 </span>
               </li>
             </ul>
@@ -300,18 +300,11 @@ export default {
     return {
       navcategory: true,//是否显示导航栏的"全部商品分类" 该参数将作为props传给子组件，在子组件里面控制插槽slot是否显示
       // 版本参数
-      version:[
-        // {id:1,isselected:false,name:"8GB+128GB",price:3799,delprice:3999,gift:false},
-        // {id:2,isselected:true,name:"8GB+256GB",price:3999,delprice:4299,gift:true},
-        // {id:3,isselected:false,name:"12GB+256GB",price:4299,delprice:4699,gift:false}
-      ],
-      selectVersion:{},
+      version:{},
+      allVersion:[],
       // 颜色,通过watch 参数version的值得到
-      color:[{id:1,name:"国风雅灰",isselected:true},{id:2,name:"钛银黑",isselected:false},{id:3,name:"冰海蓝",isselected:false},{id:4,name:"蜜桃金",isselected:false}],
-
-
-      allColor:[{id:1,name:"国风雅灰",isselected:true},{id:2,name:"钛银黑",isselected:false},{id:3,name:"冰海蓝",isselected:false},{id:4,name:"蜜桃金",isselected:false},{id:1,name:"国风雅灰",isselected:true},{id:2,name:"钛银黑",isselected:false},{id:3,name:"冰海蓝",isselected:false},{id:4,name:"蜜桃金",isselected:false},{id:1,name:"国风雅灰",isselected:true},{id:2,name:"钛银黑",isselected:false},{id:3,name:"冰海蓝",isselected:false},{id:4,name:"蜜桃金",isselected:false}],
-
+      color:[],
+      allColor:[],
       swiperColor:1,
       // 服务选择参数
       serviceOption:[
@@ -327,44 +320,63 @@ export default {
       extra:[{},{}]
     };
   },
-  components: { CategoryList, SwiperProduct },
   mounted() {
     this.axios({
                  url: "http://127.0.0.1:8080/mi/v1/product_version",
                  method: "get",
                  params: {}
                 }).then(res => {
-                console.log(res.data);
-                console.log(this.version);
-                this.version=res.data;
-                for(let v of this.version){
-                  // 给全部version对象添加新属性，必须使用$set方法，vue才能监测到数据变化
-                    this.$set(v, "isselected", false)
+                this.allVersion=res.data;
+              // 默认选中第二个版本，以后可以根据需求更改
+                for(let v of this.allVersion){
+                    if(v.id==2){
+                      v.isselected=true;
+                      this.version=v;
+                    }
                 }
-                // 默认选中第二个版本，以后可以根据需求更改
-                this.version[1].isselected=true;
-                // selectVersion存储当前选中的版本的属性
-                this.selectVersion=this.version[1];
 
                 });
+    this.axios({
+                 url: "http://127.0.0.1:8080/mi/v1/product_color",
+                 method: "get",
+                 params: {}
+                }).then(res => {
+                this.allColor=res.data;
+                //默认版本sid=2的所有颜色存入this.color
+                for(let c of this.allColor){
+                    if(c.sid==2){
+                      this.color.push(c);
+                       // 默认选中第一个颜色
+                      this.color[0].isselected=true;
+                    }
+                }
+                })
   },
+  components: { CategoryList, SwiperProduct },
   methods: {
     // 选择版本
     versionSelect(item){
-        for(let v of this.version){
-          v.isselected=false;
+      // console.log(item)
+      
+        for(let v in this.allversion){
+          
+          console.log(v)
         }
-        item.isselected=true;
-        this.selectVersion=item;
-        console.log(this.selectVersion)
-
+        // for(let i=0;i<this.allVersion.length;i++){
+        //   this.allVersion[i].isselected=false;
+        // }
+        // item.isselected=true;
+        // this.version=item;
+        // console.log(this.allVersion)
+      //  this.$set(item,'isselected',true)
     },
     colorSelect(item){
       for(let c of this.color){
           c.isselected=false;
+          this.color[1].isselected=true;
         }
-        item.isselected=true;
-        this.swiperColor=item.id;
+        
+        console.log(this.color)
     },
     // 服务选择
     serviceSelect(item){
@@ -403,14 +415,6 @@ export default {
     }
   },
   computed: {
-    // 价格
-    price(){
-      for(let v of this.version){
-        if(v.isselected){
-          return {price:v.price,delprice:v.delprice}
-        }
-      }
-    },
     // 是否有礼物
     hasgift:{
       get(){
@@ -432,7 +436,7 @@ export default {
     // },
     // 总价
     totalprice(){
-      var totalprice=this.selectVersion.price;
+      var totalprice=this.version.price;
       for(let s of this.serviceOption){
         if(s.selected){
           totalprice+=s.price

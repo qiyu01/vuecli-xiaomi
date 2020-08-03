@@ -8,7 +8,7 @@
                         <ul class="children-list" v-bind:style="{ width:listWidth(item.cid)}">
                             <li class="children-list-item" v-for="(r,i) in result2" :key="i" v-if="r.clid==item.cid">
                                 <a href="#">
-                                    <img v-bind:src="r.img_sr" alt="">
+                                    <img v-bind:src="r.img_src" alt="">
                                     <span>{{r.lname}}</span>
                                 </a>
                             </li>
@@ -51,6 +51,7 @@ export default {
                  method: "get",
                  params: {}
                 }).then(res => {
+                    
                 this.result=res.data;
                 })
 
