@@ -78,34 +78,34 @@ export default {
 /* 顶部黑色导航栏--site-topbar-- */
 
 
-.site-topbar{
+.header .site-topbar{
     color: #b0b0b0;
     font-size: 12px;
     background-color: #333;
     height: 40px;
 }
-.topbar-nav {
+.header .topbar-nav {
     float: left;
     height: 40px;
     line-height: 40px;
 }
-.site-topbar .topbar-nav a{
+.header .site-topbar .topbar-nav a{
     display: inline-block;
     line-height: 40px;
     color: #b0b0b0;
     position: relative;
     /* text-align: center; */
 }
-.site-topbar .topbar-nav a:hover{
+.header .site-topbar .topbar-nav a:hover{
     color: #fff;
 }
-.site-topbar .topbar-nav .sep{
+.header .site-topbar .topbar-nav .sep{
     margin: 6.6px;
     color: #424242;
     font-family: sans-serif;
 }
 /* topbar-download */
-.site-topbar .topbar-nav a.topbar-download:hover::before{
+.header .site-topbar .topbar-nav a.topbar-download:hover::before{
     content: "";
     display: inline-block;
     position: absolute;
@@ -116,7 +116,7 @@ export default {
     transform: rotate(45deg);
 
 }
-.site-topbar .topbar-nav a>span{
+.header .site-topbar .topbar-nav a>span{
     position: absolute;
     top: 40px;
     left: 50%;
@@ -134,11 +134,11 @@ export default {
     
     
 }
-.site-topbar .topbar-nav a:hover>span{
+.header .site-topbar .topbar-nav a:hover>span{
     height: 148px;
 }
 
-.site-topbar .topbar-nav .appcode img{
+.header .site-topbar .topbar-nav .appcode img{
     display: block;
     margin: 18px auto 12px;
     border: 0;
@@ -148,7 +148,7 @@ export default {
 
 
 /* 购物车 */
-.site-topbar .topbar-cart{
+.header .site-topbar .topbar-cart{
     position: relative;
     float: right;
     width: 120px;
@@ -157,7 +157,7 @@ export default {
     transition: all .2s;
     background-color: #424242;
 }
-.site-topbar .topbar-cart a{
+.header .site-topbar .topbar-cart a{
     display: block;
     height: 40px;
     line-height: 40px;
@@ -165,29 +165,29 @@ export default {
     color: #b0b0b0;
     
 }
-.site-topbar .topbar-cart:hover{
+.header .site-topbar .topbar-cart:hover{
     background-color: #fff;
    
 }
-.site-topbar .topbar-cart:hover a{
+.header .site-topbar .topbar-cart:hover a{
     color: #ff6700;
 }
 
-.site-topbar .topbar-cart a span{
+.header .site-topbar .topbar-cart a span{
     display: inline-block;
     margin-left: 5px;
     height: 40px;line-height: 40px;
     transform: translateY(-2px);
     
 }
-.site-topbar .topbar-cart a em{
+.header .site-topbar .topbar-cart a em{
     display: inline-block;
     height: 40px;line-height: 40px;
     font-size: 17px;
     transform: translateX(-2px) scaleX(1.1);
     
 }
-.site-topbar .topbar-cart .topbar-cart-menu{
+.header .site-topbar .topbar-cart .topbar-cart-menu{
     position: absolute;
     right: 0;
     top: 40px;
@@ -201,30 +201,30 @@ export default {
     line-height: 100px;
     z-index: 2;
 }
-.site-topbar .topbar-cart:hover .topbar-cart-menu{
+.header .site-topbar .topbar-cart:hover .topbar-cart-menu{
     height: 100px;
 }
 
-.site-topbar .topbar-info{
+.header .site-topbar .topbar-info{
     float: right;
     height: 40px;
     line-height: 40px;
     font-size: 12px;
 }
-.site-topbar .topbar-info a{
+.header .site-topbar .topbar-info a{
     float: left;
     color: #b0b0b0;
     padding: 0 5px;
     text-align: center;
     font-size: 12px;
 }
-.site-topbar .topbar-info a.message{
+.header .site-topbar .topbar-info a.message{
     padding: 0 10PX;
 }
-.site-topbar .topbar-info a:hover{
+.header .site-topbar .topbar-info a:hover{
     color: #fff;
 }
-.site-topbar .topbar-info .sep{
+.header .site-topbar .topbar-info .sep{
     float: left;
     color: #424242;
 }

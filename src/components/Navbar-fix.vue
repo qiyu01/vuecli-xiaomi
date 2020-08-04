@@ -80,7 +80,7 @@ export default {
 .navbar_fix{
   position: fixed;
   /* display: none; */
-  top: -63px;
+  top: -65px;
   left: 0px;
   z-index: 999;
   width: 100%;
