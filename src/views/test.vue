@@ -80,18 +80,12 @@
     </div>
 </template>
 <script>
-import test from '@/store/test.js'
-
 export default {
     data(){
         return{
  
         }
-    },
-    mounted() {
-        console.log(new test().isDesktop())
-    },
-
+    }
 }
 </script>
 <style scoped>

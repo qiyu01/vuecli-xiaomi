@@ -26,12 +26,13 @@
         </div>
       </div>
     </div>
+    <Navbar-fix></Navbar-fix>
     <div class="page">
       <div class="product-box container">
         <div class="img-left">
-          {{swiperColor}}
+          <!-- {{swiperColor}} -->
           <!-- swiperColor是传给子组件swiper的次数，用来切换轮播图的颜色（更改图片） -->
-          <Swiper-product :swiperColor="swiperColor"></Swiper-product>
+          <Swiper-product :swiperColor="swiperColor" ref="swiper"></Swiper-product>
         </div>
         <div class="product-con">
           <h2>小米10</h2>
@@ -295,11 +296,12 @@
 <script>
 import CategoryList from "@/components/Category-list.vue";
 import SwiperProduct from "@/components/Swiper-product.vue";
+import NavbarFix from "@/components/Navbar-fix.vue";
 export default {
   data() {
     return {
       navcategory: true,//是否显示导航栏的"全部商品分类" 该参数将作为props传给子组件，在子组件里面控制插槽slot是否显示
-      // 版本参数，服务器返回
+      // 所有版本参数，服务器返回
       version:[
         // {id:1,isselected:false,name:"8GB+128GB",price:3799,delprice:3999,gift:false},
         // {id:2,isselected:true,name:"8GB+256GB",price:3999,delprice:4299,gift:true},
@@ -329,7 +331,7 @@ export default {
       extra:[{},{}]
     };
   },
-  components: { CategoryList, SwiperProduct },
+  components: { CategoryList, SwiperProduct,NavbarFix},
   mounted() {
     this.axios({
                  url: "http://127.0.0.1:8080/mi/v1/product_version",
@@ -378,17 +380,20 @@ export default {
         }
         item.isselected=true;
         this.selectVersion=item;
+        // 调用子组件swiper里的方法重置滚动位置。
+        this.$refs.swiper.slideReset();
+
         // 现清空color数组里的对象选项
-        this.color=[];
+        // this.color=[];
         // 去allcolor里找到对应版本所拥有的颜色添加进color里面
-        for(let c of this.allColor){
-                    if(c.sid==item.id){
-                      this.color.push(c);                      
-                    }
-                }
+        // for(let c of this.allColor){
+        //             if(c.sid==item.id){
+        //               this.color.push(c);                      
+        //             }
+        //         }
           // 默认选中第一个颜色
-          this.color[0].isselected=true;
-          this.swiperColor=1;
+          // this.color[0].isselected=true;
+          // this.swiperColor=1;
 
     },
     colorSelect(item,i){
@@ -396,7 +401,7 @@ export default {
           c.isselected=false;
         }
         item.isselected=true;
-        // 这里用下表来获取swipercolor对应的cid，1代表第一个颜色，2代表第二个颜色...
+        // 这里用下标来获取swipercolor对应的cid，1代表第一个颜色，2代表第二个颜色...
         this.swiperColor=i+1;
     },
     // 服务选择
