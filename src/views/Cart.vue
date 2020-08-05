@@ -1,5 +1,6 @@
 <template>
     <div class="cart-wraper">
+        <div class="cart-header">
                 <div class="container">
                     <div class="header-logo">
                         <router-link to="/" class="logo">
@@ -18,7 +19,7 @@
                             <span class="user">
                                 <router-link to="/" class="user-name">
                                     <span class="name">2438958951</span>
-                                    <i class="iconfont"></i>
+                                    <i class="iconfont icon-tubiaozhizuo-"></i>
                                 </router-link>
                                 <div class="user-menu-wrapper">
                                     <ul class="user-menu">
@@ -47,8 +48,332 @@
                         </div>
                     </div> 
                 </div>
+        </div>    
+        <div class="page-main">
+            <div class="container">
+                <div class="cart-container">
+                    <div class="loading"></div>
+                    <div class="cart-main">
+                        <div class="cart-goods-list">
+                            <div class="list-head clearfix">
+                                <div class="cart-col col-check">
+                                    <div>
+                                        <i class="iconfont	icon-gou"></i>
+                                    </div>
+                                    全选
+                                </div>
+                                <div class="cart-col col-img">null</div>
+                                <div class="cart-col col-name">商品名称</div>
+                                <div class="cart-col col-price">单价</div>
+                                <div class="cart-col col-num">数量</div>
+                                <div class="cart-col col-total">小计</div>
+                                <div class="cart-col col-action">操作</div>
 
+                            </div>
+                            <div class="list-body">
+                                <div class="list-item">
+                                    <div class="item-main clearfix">
+                                        <div class="cart-col col-check">
+                                            <div>
+                                             <i class="iconfont	icon-gou"></i>
+                                            </div>
+                                            
+                                         </div>
+                                        <div class="cart-col col-img">
+                                            <router-link to="/">
+                                                <img :src="img[0].src" alt="">
+                                            </router-link></div>
+                                        <div class="cart-col col-name">
+                                            <div class="tags"></div>
+                                            <h3 class="name">
+                                                <router-link to="/">
+                                                    小米10 全网通版 8GB+256GB 钛银黑
+                                                </router-link>
+                                            </h3>
+                                        </div>
+                                        <div class="cart-col col-price">3999元
+                                            <p class="pre-info"></p>
+                                        </div>
+                                        <div class="cart-col col-num">
+                                            <div class="change-goods-num clearfix">
+                                                <a href="javascript:void(0)">-</a>
+                                                <input type="text" class="goods-num" value="1">
+                                                <a href="javascript:void(0)">+</a>
+                                            </div>
+                                        </div>
+                                        <div class="cart-col col-total">3999元</div>
+                                        <div class="cart-col col-action">
+                                                <div>
+                                                    <i class="iconfont	icon-cha"></i>
+                                                </div>
 
+                                        </div>
+
+                                    </div>
+                                    <div class="service-info-content">
+                                        <div class="service-info">
+                                            <div class="item-box clearfix">
+                                                <div class="item service-img">
+                                                    <router-link to="/">
+                                                    <img src="../static/images/bao.jpg" alt="">
+                                                    </router-link>
+                                                </div>
+                                                <div class="item service-name">
+                                                    
+                                                    <h3 class="name">
+                                                        <router-link to="/">
+                                                        意外保障服务
+                                                        </router-link>
+                                                    </h3>
+                                                    <p class="desc">手机意外碎屏/进水/碾压等损坏</p>
+                                                </div>
+                                                <div class="item service-price">349元
+                                                <p class="pre-info"></p>
+                                                </div>
+                                                <div class="item service-num">
+                                                    <div class="change-goods-num clearfix">
+                                                    1
+                                                    </div>
+                                                </div>
+                                                <div class="item service-total">349元</div>
+                                                <div class="item service-action">
+                                                    <div>
+                                                    <i class="iconfont	icon-cha"></i>
+                                                    </div>
+                                                </div>
+                                                
+                                              
+                                            </div>
+                                        </div>
+                                        <div class="service-info">
+                                            <div class="item-box clearfix">
+                                                <div class="item service-img">
+                                                    <router-link to="/">
+                                                    <img src="../static/images/bao.jpg" alt="">
+                                                    </router-link>
+                                                </div>
+                                                <div class="item service-name">
+                                                    
+                                                    <h3 class="name">
+                                                        <router-link to="/">
+                                                        延长保修服务
+                                                        </router-link>
+                                                    </h3>
+                                                    <p class="desc">厂保延一年，性能故障免费维修</p>
+                                                </div>
+                                                <div class="item service-price">159元
+                                                <p class="pre-info"></p>
+                                                </div>
+                                                <div class="item service-num">
+                                                    <div class="change-goods-num clearfix">
+                                                    1
+                                                    </div>
+                                                </div>
+                                                <div class="item service-total">159元</div>
+                                                <div class="item service-action">
+                                                    <div>
+                                                    <i class="iconfont	icon-cha"></i>
+                                                    </div>
+                                                </div>
+                                                
+                                              
+                                            </div>
+                                        </div>
+                                        <div class="service-add-box">
+                                            <div class="add-item">
+                                                <span class="add-btn">
+                                                    <i class="iconfont	icon-iconfonticon02"></i>
+                                                </span>
+                                                一年碎屏保
+                                                <span>249元</span>
+                                                <router-link to="/" class="more">了解意外保护 > </router-link>
+                                            </div>
+                                        </div>
+                                        <div class="service-add-box">
+                                        </div>
+                                    </div>
+                                    
+                                </div>
+
+                                <div class="list-item">
+                                    <div class="item-main clearfix">
+                                        <div class="cart-col col-check">
+                                            <div>
+                                             <i class="iconfont	icon-gou"></i>
+                                            </div>
+                                            
+                                         </div>
+                                        <div class="cart-col col-img">
+                                            <router-link to="/">
+                                                <img :src="img[1].src" alt="">
+                                            </router-link></div>
+                                        <div class="cart-col col-name">
+                                            <div class="tags"></div>
+                                            <h3 class="name">
+                                                <router-link to="/">
+                                                    小米10 Pro 全网通版 8GB+256GB 钛银黑
+                                                </router-link>
+                                            </h3>
+                                        </div>
+                                        <div class="cart-col col-price">3999元
+                                            <p class="pre-info"></p>
+                                        </div>
+                                        <div class="cart-col col-num">
+                                            <div class="change-goods-num clearfix">
+                                                <a href="javascript:void(0)">-</a>
+                                                <input type="text" class="goods-num" value="1">
+                                                <a href="javascript:void(0)">+</a>
+                                            </div>
+                                        </div>
+                                        <div class="cart-col col-total">3999元</div>
+                                        <div class="cart-col col-action">
+                                                <div>
+                                                    <i class="iconfont	icon-cha"></i>
+                                                </div>
+
+                                        </div>
+
+                                    </div>
+                                    <div class="service-info-content">
+                                        <div class="service-info">
+                                            <div class="item-box clearfix">
+                                                <div class="item service-img">
+                                                    <router-link to="/">
+                                                    <img src="../static/images/bao.jpg" alt="">
+                                                    </router-link>
+                                                </div>
+                                                <div class="item service-name">
+                                                    
+                                                    <h3 class="name">
+                                                        <router-link to="/">
+                                                        意外保障服务
+                                                        </router-link>
+                                                    </h3>
+                                                    <p class="desc">手机意外碎屏/进水/碾压等损坏</p>
+                                                </div>
+                                                <div class="item service-price">349元
+                                                <p class="pre-info"></p>
+                                                </div>
+                                                <div class="item service-num">
+                                                    <div class="change-goods-num clearfix">
+                                                    1
+                                                    </div>
+                                                </div>
+                                                <div class="item service-total">349元</div>
+                                                <div class="item service-action">
+                                                    <div>
+                                                    <i class="iconfont	icon-cha"></i>
+                                                    </div>
+                                                </div>
+                                                
+                                              
+                                            </div>
+                                        </div>
+                                        <div class="service-info">
+                                            <div class="item-box clearfix">
+                                                <div class="item service-img">
+                                                    <router-link to="/">
+                                                    <img src="../static/images/bao.jpg" alt="">
+                                                    </router-link>
+                                                </div>
+                                                <div class="item service-name">
+                                                    
+                                                    <h3 class="name">
+                                                        <router-link to="/">
+                                                        延长保修服务
+                                                        </router-link>
+                                                    </h3>
+                                                    <p class="desc">厂保延一年，性能故障免费维修</p>
+                                                </div>
+                                                <div class="item service-price">159元
+                                                <p class="pre-info"></p>
+                                                </div>
+                                                <div class="item service-num">
+                                                    <div class="change-goods-num clearfix">
+                                                    1
+                                                    </div>
+                                                </div>
+                                                <div class="item service-total">159元</div>
+                                                <div class="item service-action">
+                                                    <div>
+                                                    <i class="iconfont	icon-cha"></i>
+                                                    </div>
+                                                </div>
+                                                
+                                              
+                                            </div>
+                                        </div>
+                                        <div class="service-add-box">
+                                            <div class="add-item">
+                                                <span class="add-btn">
+                                                    <i class="iconfont	icon-iconfonticon02"></i>
+                                                </span>
+                                                一年碎屏保
+                                                <span>249元</span>
+                                                <router-link to="/" class="more">了解意外保护 > </router-link>
+                                            </div>
+                                            <div class="add-item">
+                                                <span class="add-btn">
+                                                    <i class="iconfont	icon-iconfonticon02"></i>
+                                                </span>
+                                                一年碎屏保
+                                                <span>249元</span>
+                                                <router-link to="/" class="more">了解意外保护 > </router-link>
+                                            </div>
+                                        </div>
+                                        <div class="service-add-box">
+                                        
+                                            <div class="add-item">
+                                                <span class="add-btn">
+                                                    <i class="iconfont	icon-iconfonticon02"></i>
+                                                </span>
+                                                一年碎屏保
+                                                <span>249元</span>
+                                                <router-link to="/" class="more">了解意外保护 > </router-link>
+                                            </div>
+                                        </div>
+                                        <div class="service-add-box">
+                                        
+                                            <div class="add-item" v-for="i of 10" :key="i">
+                                                <span class="add-btn">
+                                                    <i class="iconfont	icon-iconfonticon02"></i>
+                                                </span>
+                                                一年碎屏保
+                                                <span>249元</span>
+                                                <router-link to="/" class="more">了解意外保护 > </router-link>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="cart-bar">
+                            <div class="section-left">
+                                <router-link to="/">继续购物</router-link>
+                                <span class="cart-total">
+                                    共
+                                    <i>5</i> 
+                                    件商品，已选择
+                                    <i>5</i>
+                                     件
+                                </span>
+                            </div>
+                            <div class="total-price">
+                                合计：<em>10105</em>
+                                元
+                                <router-link to="/">
+                                去结算
+                                </router-link>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="cart-recommend"></div>
+                </div>
+            </div>
+        </div>
 
         <Footer></Footer>
     </div>
@@ -58,18 +383,19 @@
 export default {
     data(){
         return{
- 
+            img:[{id:1,src:"product2.jpg"},{id:2,src:"product1.jpg"}]
         }
     },
     components:[],
     mounted() {
-        console.log(true)
+        this.img[0].src=require("../assets/images/product/product80/"+this.img[0].src)
+        this.img[1].src=require("../assets/images/product/product80/"+this.img[1].src)
     },
 
 }
 </script>
 <style scoped>
-.cart-wraper{
+.cart-wraper .cart-header{
     font-size: 12px;
     border-bottom: 2px solid #ff6700;
     background: #fff;
@@ -104,5 +430,463 @@ export default {
 }
  .cart-wraper .header-logo a:hover span{
     left: -1px;
+}
+
+.header-title{
+    height: 48px;
+    float: left;
+    margin-top: 26px;
+}
+.header-title h2{
+    float: left;
+    line-height: 48px;
+    margin-bottom: 0;
+    font-size: 28px;
+    font-weight: 400;
+    color: #424242;
+}
+.header-title p{
+    float: left;
+    height: 20px;
+    line-height: 20px;
+    margin-top: 20px;
+    margin-left: 15px;
+    color: #757575;
+}
+.site-topbar .topbar-info{
+    position: relative;
+    float: right;
+    height: 40px;
+    line-height: 40px;
+    margin-top: 30px;
+}
+.site-topbar .topbar-info .user{
+    float: left;
+    position: relative;
+    width: 110px;
+    padding: 0;
+    white-space: nowrap;
+    line-height: 40px;
+}
+.site-topbar .user .user-name{
+    position: relative;
+    z-index: 5;
+    display: block;
+    width: 110px;
+    height: 40px;
+    text-align: center;
+}
+.site-topbar .user-name .name{
+    display: inline-block;
+    width: auto;
+    max-width: 75px;
+    text-overflow: ellipsis;
+    vertical-align: text-bottom;
+    overflow: hidden;
+}
+.site-topbar .user-name i{
+    font-size: 13px;
+    line-height: 13px;
+    vertical-align: 13px;
+    margin: 0 5px 0 6px;
+    -webkit-text-stroke-width: .2px;
+}
+.site-topbar .user .user-menu-wrapper{
+    position: absolute;
+    height: 0;
+    left: 0;top: 40px;
+    z-index: 3;
+    overflow: hidden;
+    background-color: #fff;
+    transition:height .3s;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, .15);
+}
+.site-topbar .user:hover .user-menu-wrapper{
+    height: 164px;
+}
+.site-topbar .user:hover>a{
+    color: #ff6700;
+}
+.site-topbar .user-menu{
+    width: 110px;
+    margin: 0;
+    padding: 7px 0;
+}
+.site-topbar .user-menu a{
+    display: block;
+    padding: 3px 30px;
+    line-height: 2;
+    color: #424242;
+}
+.site-topbar .user-menu a:hover{
+    color: #ff6700;
+}
+.site-topbar .topbar-info .sep{
+    float: left;
+    font-size: 15px;
+    margin-right: 15px;
+}
+.site-topbar .topbar-info .link:hover{
+    color: #ff6700;
+}
+
+/* page-main */
+
+.page-main{
+    padding: 38px 0;
+    background: #f5f5f5;
+}
+.page-main .cart-main .cart-goods-list{
+    background-color: #fff;
+}
+/* head */
+.cart-main .cart-goods-list .list-head{
+    height: 70px;
+    line-height: 70px;
+    padding-right: 26px;
+    color: #424242;
+}
+.cart-main .cart-col{
+    float: left;
+}
+.cart-main .col-check{
+    width: 110px;
+}
+.cart-main .col-check div{
+    display: inline-block;
+    width: 18px;height: 18px;
+    line-height: 18px;
+    border: 1px solid #e0e0e0;
+    margin: 0 11px 0 24px;
+    cursor: pointer;
+}
+.cart-main .col-check div i{
+    line-height: 18px;
+    margin-left: 3px;
+    font-size: 13px;
+    color: #fff;
+    vertical-align: top;
+}
+.cart-main .col-check div:hover i{
+    color: #757575;
+}
+.cart-main .col-img{
+    width: 120px;
+    color: #fff;
+}
+.cart-main .col-name{
+    width: 380px;
+}
+.cart-main .col-price{
+    width: 140px;
+    padding-right: 18px;
+    text-align: center;
+}
+.cart-main .col-num{
+        width: 150px;
+    text-align: center;
+}
+.cart-main .col-total{
+    width: 120px;
+    padding-right: 81px;
+    text-align: right;
+}
+.cart-main .col-action{
+    width: 80px;
+    text-align: center;
+}
+/* body */
+.cart-main .list-item{
+    padding: 15px 26px 15px 0;
+    border-top: 1px solid #e0e0e0;
+}
+.cart-main .list-item .item-main{
+    height: 86px;
+    line-height: 86px;
+    overflow: hidden;
+}
+.cart-main  .item-main .col-name h3{
+    /* line-height: 1; */
+    /* margin-top: 8px; */
+    margin-bottom: 8px;
+    font-size: 18px;
+    font-weight: 400;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}
+.cart-main  .item-main .col-name h3 a{
+    color: #424242;
+}
+.cart-main  .item-main .col-price,
+.cart-main  .item-main .col-num,
+.cart-main  .item-main .col-total{
+    font-size: 16px;
+}
+
+.cart-main  .item-main .change-goods-num{
+    display: inline-block;
+    width: 148px;
+    height: 38px;
+    line-height: 38px;
+    border: 1px solid #e0e0e0;
+    text-align: center;
+    background-color: #fff;
+    position: relative;
+    vertical-align: -14px;
+    zoom: 1;
+}
+.cart-main  .item-main .change-goods-num a{
+    float: left;
+    width: 38px;
+    height: 38px;
+    line-height: 38px;
+    color: #757575;
+    font-size: 20px;
+    -webkit-transition: all .3s;
+    transition: all .3s;
+}
+.cart-main  .item-main .change-goods-num a:hover{
+    background-color: #e0e0e0;
+}
+.cart-main  .item-main .change-goods-num a:first-child{
+    font-size: 28px;
+    line-height: 34px;
+}
+.cart-main  .item-main .change-goods-num input{
+    float: left;
+    width: 72px;
+    height: 38px;
+    line-height: 38px;
+    padding: 0;
+    border-width: 0;
+    color: #424242;
+    font-size: 16px;
+    text-align: center;
+    outline: none;
+}
+.cart-main  .item-main .col-total{
+    color: #ff6700;
+}
+.cart-main  .item-main .col-action div{
+    display: inline-block;
+        height: 24px;width: 23px;
+        border-radius: 50%;
+        line-height: 24px;
+        color: #757575;
+        background-color: #fff;
+        text-align: center;
+        padding-left: 1px;
+        transition: all .3s;
+    
+}
+.cart-main  .item-main .col-action div:hover{
+        background-color: #e53935;
+        cursor: pointer;
+
+}
+.cart-main  .item-main .col-action div i{
+    display: inline-block;
+    vertical-align: 1px;
+    font-weight: bolder;
+    font-size: 8px;
+    line-height: 8px;
+    color: #757575;
+    transform: scale(0.92);
+    -webkit-font-smoothing:antialiased;/*设置字体的光滑度属性，也就是CSS3用于webkit引擎(chrome),设置字体抗锯齿属性*/
+-webkit-text-stroke-width:.2px;/*设置文字边框*/
+-moz-osx-font-smoothing:grayscale；/*该属性是为了让字体显示的更清晰的作用*/
+
+}
+.cart-main  .item-main .col-action div:hover i{
+    color: #fff;
+}
+.cart-main .service-info-content .service-info{
+   margin-top: 2px;
+}
+.cart-main .service-info .item-box{
+    height: 96px;
+    overflow: hidden;
+    margin-left: 100px;
+     background-color: #f5f5f5;
+}
+.cart-main .service-info .item-box .item{
+    float: left;
+}
+
+.cart-main .service-info-content .service-img img{
+    width: 60px;height: 60px;
+    margin: 15px 52px 15px 20px;
+}
+.cart-main .service-info-content .service-name{
+    width: 380px;
+}
+.cart-main .service-name h3{
+    margin-top: 27px;
+    margin-bottom: 4px;
+    font-size: 16px;
+    font-weight: 400;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}
+.cart-main .service-name .desc{
+    font-size: 12px;
+    color: #757575;
+}
+.cart-main .service-name h3 a{
+    color: #424242;
+}
+.cart-main .service-info-content .service-price{
+    width: 139px;
+    padding-right: 18px;
+    height: 97px;
+    line-height: 97px;
+    text-align: center;
+    font-size: 16px;
+}
+.cart-main .service-info-content .service-num{
+    width: 150px;
+    height: 97px;
+    line-height: 97px;
+    font-size: 16px;
+    text-align: center;
+}
+.cart-main .service-info-content .service-total{
+    width: 120px;
+    padding-right: 81px;
+    height: 97px;
+    line-height: 97px;
+    color: #ff6700;
+    font-size: 16px;
+    text-align: right;
+}
+.cart-main .service-info-content .service-action{
+    width: 80px;
+    height: 97px;
+    line-height: 97px;
+    text-align: center;
+}
+.cart-main  .service-action div{
+    display: inline-block;
+        height: 24px;width: 23px;
+        border-radius: 50%;
+        line-height: 24px;
+        color: #757575;
+        background-color: #f5f5f5;
+        text-align: center;
+        padding-left: 1px;
+        transition: all .3s;
+    
+}
+.cart-main  .service-action div:hover{
+        background-color: #e53935;
+        cursor: pointer;
+
+}
+.cart-main  .service-action div i{
+    display: inline-block;
+    vertical-align: 1px;
+    font-weight: bolder;
+    font-size: 8px;
+    line-height: 8px;
+    color: #757575;
+    transform: scale(0.92);
+    -webkit-font-smoothing:antialiased;/*设置字体的光滑度属性，也就是CSS3用于webkit引擎(chrome),设置字体抗锯齿属性*/
+-webkit-text-stroke-width:.2px;/*设置文字边框*/
+-moz-osx-font-smoothing:grayscale；/*该属性是为了让字体显示的更清晰的作用*/
+
+}
+.cart-main  .service-action div:hover i{
+    color: #fff;
+}
+.cart-main .service-add-box{
+    margin-left: 100px;
+    padding-top: 15px;
+}
+.cart-main .service-add-box .add-item{
+    height: 48px;
+    line-height: 48px;
+    border: 1px solid #e0e0e0;
+    padding-left: 20px;
+    margin-bottom: -1px;
+    color: #424242;
+    transition: all .4s;
+    cursor: pointer;
+}
+.cart-main .service-add-box .add-item .add-btn{
+    display: inline-block;
+    width: 22px;height: 22px;
+    line-height: 22px;
+    border-radius: 50%;
+    background-color: #ff6700;
+    vertical-align: -2px;
+    margin-right: 11px;
+}
+.cart-main  .add-item .add-btn i{
+    color: #fff;
+    margin-left: 3px;
+}
+.cart-main  .add-item .more{
+    color: #ff6700;
+    margin-left: 20px;
+}
+
+/* cart-bar  */
+.cart-bar{
+    height: 50px;
+    text-align: right;
+    background-color: #fff;
+    transition: background .3s ease,top .3s ease;
+    position: relative;
+    margin-top: 20px;
+}
+.cart-bar .section-left{
+    float: left;
+    line-height: 50px;
+}
+.cart-bar .section-left a{
+    margin-left: 32px;
+    transition: color .3s;
+}
+.cart-bar .section-left a:hover{
+    color: #ff6700;
+}
+.cart-bar .section-left span{
+    margin-left: 16px;
+    padding-left: 16px;
+    border-left: 1px solid #eee;
+    color: #757575;
+}
+.cart-bar .section-left span i{
+    font-style: normal;
+    color: #ff6700;
+}
+.cart-bar .total-price{
+    text-align: right;
+    padding-left: 13px;
+    color: #ff6700;
+}
+.cart-bar .total-price em{
+    font-style: normal;
+    font-size: 30px;
+}
+.cart-bar .total-price a{
+    display: inline-block;
+        width: 200px;
+    height: 48px;
+    line-height: 48px;
+    font-size: 18px;
+    margin-left: 50px;
+    vertical-align: top;
+    background-color: #ff6700;
+    color: #fff;
+    text-align: center;
+    transition: color .3s;
+}
+.cart-bar .total-price a:hover{
+    background-color: #f25807;
+    border-color: #f25807;
+    color: #fff;
 }
 </style>

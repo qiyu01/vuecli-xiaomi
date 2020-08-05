@@ -6,6 +6,27 @@
   "description": "",
   "glyphs": [
     {
+      "icon_id": "576404",
+      "name": "加号",
+      "font_class": "iconfonticon02",
+      "unicode": "e607",
+      "unicode_decimal": 58887
+    },
+    {
+      "icon_id": "386337",
+      "name": "叉",
+      "font_class": "cha",
+      "unicode": "e61a",
+      "unicode_decimal": 58906
+    },
+    {
+      "icon_id": "6235949",
+      "name": "下箭头",
+      "font_class": "tubiaozhizuo-",
+      "unicode": "e604",
+      "unicode_decimal": 58884
+    },
+    {
       "icon_id": "3069808",
       "name": "勾",
       "font_class": "tick",
