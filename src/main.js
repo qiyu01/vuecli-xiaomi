@@ -19,13 +19,16 @@ import 'element-ui/lib/theme-chalk/index.css';
 // import '../src/assets/iconfont/iconfont.css'
 import '../public/css/base.css'
 
+import http from './util/request.js'
+//将方法挂载到Vue原型上
+Vue.prototype.http = http;
 
 Vue.config.productionTip = false
 
 Vue.use(ElementUI);
 Vue.component("Header",Header);
 Vue.component("Footer",Footer);
-axios.defaults.baseURL="http://127.0.0.1"
+axios.defaults.baseURL="http://127.0.0.1:8080"
 Vue.prototype.axios=axios
 Vue.prototype.$=$
 

@@ -370,7 +370,36 @@
                         </div>
 
                     </div>
-                    <div class="cart-recommend"></div>
+                    <div class="cart-recommend">
+                        <div class="recommend-title">
+                            <span>买购物车中商品的人还买了</span>
+                        </div>
+                        <div class="recommend-bd">
+                            <ul class="recommend-list">
+                                <li class="recommend-item">
+                                    <a href="javascript:void(0)" class="recommend-ad">
+                                        <img :src="img[3].src" alt="">
+                                    </a>
+                                </li>
+                                <Rec-brick v-for="i of 9" :key="i"></Rec-brick>
+                                <!-- <li class="recommend-item" v-for="i of 9" :key="i">
+                                    <router-link to="/">
+                                        <img :src="img[2].src" alt="">
+                                        <div class="recommend-name">米家多功能电煮壶</div>
+                                        <div class="recommend-price">399元</div>
+                                        <div class="recommend-tips">461人好评</div>
+                                    </router-link>
+                                    <div class="recommend-action">
+                                        <a href="javascript:void(0)">加入购物车</a>
+                                    </div>
+                                    <div class="recommend-notice">
+                                        <a href="javascript:void(0)" class="btn">成功加入购物车</a>
+                                    </div>
+                                </li> -->
+                                
+                            </ul>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -379,17 +408,66 @@
     </div>
 </template>
 <script>
-
+import RecBrick from '@/components/Recommend-brick.vue'
+import qs from 'qs'
 export default {
     data(){
         return{
-            img:[{id:1,src:"product2.jpg"},{id:2,src:"product1.jpg"}]
+            img:[{id:1,src:"product2.jpg"},{id:2,src:"product1.jpg"},{id:3,src:"product1.jpg"},{id:4,src:"recommend-ad1.jpg"}],
+            cart:[],
+            pid:[],
+            product:[]
         }
     },
-    components:[],
+    components:{RecBrick},
     mounted() {
+        // this.axios({
+        //          url: "/mi/v1/cart",
+        //          method: "get",
+        //          params: {}
+        //         }).then(res => {
+        //         // console.log(res.data)
+        //         this.cart=res.data
+        //         var pid=[];
+        //         for(let i of this.cart){
+        //             pid.push(i.pid)
+        //         }
+        //         })
+
+        this.http.get("/mi/v1/cart").then((data)=>{
+            this.cart=data;
+            
+            for(let i of this.cart){
+                    this.pid.push(i.pid)
+                }
+                // console.log(pid)
+                // pid=qs.stringify(pid);
+                // console.log(pid)
+                // pid=[1]
+            return this.http.get("/mi/v1/cart_product/"+this.pid)
+        }).then((data)=>{
+            // 因为服务器查询的商品数据的顺序是按照数据库里商品的id排列的。我们需要按照购物车的pid的顺序进行排列，以便在v-for插入dom时的顺序是按照加入购物车的顺序插入的。
+            for(let i of this.pid){
+                var pid=i;
+                for(let j of data){
+                    if(j.id==pid){
+                        this.product.push(j)
+                    }
+                }
+            }
+            console.log(this.product)
+        })
+
+        
+
+
+
+
+
         this.img[0].src=require("../assets/images/product/product80/"+this.img[0].src)
         this.img[1].src=require("../assets/images/product/product80/"+this.img[1].src)
+        this.img[2].src=require("../assets/images/product/product180/"+this.img[2].src)
+        this.img[3].src=require("../assets/images/product/product180/"+this.img[3].src)
     },
 
 }
@@ -888,5 +966,50 @@ export default {
     background-color: #f25807;
     border-color: #f25807;
     color: #fff;
+}
+
+/* cart-recommend  */
+.cart-recommend{
+    margin: 60px 0 0 0;
+}
+.cart-recommend .recommend-title{
+    position: relative;
+    margin: 0;
+    height: 50px;
+    font-size: 30px;
+    font-weight: 400;
+    color: #757575;
+    border-top: 1px solid #e0e0e0;
+}
+.cart-recommend .recommend-title span{
+        position: absolute;
+    top: -20px;
+    left: 372px;
+    height: 40px;
+    width: 482px;
+    line-height: 40px;
+    text-align: center;
+    display: block;
+    background-color: #f5f5f5;
+}
+.cart-recommend .recommend-list{
+    margin-left: -14px;
+}
+.cart-recommend .recommend-list .recommend-item{
+        float: left;
+    width: 234px;
+    height: 300px;
+    margin: 0 0 14px 14px;
+    position: relative;
+    overflow: hidden;
+    list-style: none;
+    background-color: #fff;
+    text-align: center;
+} 
+
+.cart-recommend .recommend-item .recommend-ad img{
+    width: 100%;
+    height: 100%;
+    margin: 0;
 }
 </style>

@@ -78,6 +78,43 @@ router.get("/v1/product_img", (req, res) => {
         }
     });
 });
+// 根用户id返回购物车所有商品
+router.get("/v1/cart", (req, res) => {
+    // console.log(_uname + "~~~~~" + _upwd);
+    res.header("Access-Control-Allow-Origin","http://127.0.0.1:8081");
+    var sql = "select * from cart where uid=1";
+    pool.query(sql, [], (err, result) => {
+        if (err) throw err;
+        if (result.length > 0) {
+            res.send(result);
+        } else {
+            res.send("0");
+        }
+    });
+});
+// 根用购物车里的商品id返回商品信息
+router.get("/v1/cart_product/:pid", (req, res) => {
+    res.header("Access-Control-Allow-Origin","http://127.0.0.1:8081");
+    var _pid = req.params.pid;
+    var pid=_pid.split(",");
+    var value=[];
+    for(let i of pid){
+        value.push("id="+i)
+    }
+    value=value.join(" or ")
+    console.log(value)
+    // console.log(_uname + "~~~~~" + _upwd);
+    var sql = "select * from product where "+value;
+    pool.query(sql, [], (err, result) => {
+        if (err) throw err;
+       console.log(result)
+        if (result.length > 0) {
+            res.send(result);
+        } else {
+            res.send("0");
+        }
+    });
+});
 
 
 
