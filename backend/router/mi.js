@@ -102,9 +102,31 @@ router.get("/v1/cart_product/:pid", (req, res) => {
         value.push("id="+i)
     }
     value=value.join(" or ")
-    console.log(value)
     // console.log(_uname + "~~~~~" + _upwd);
     var sql = "select * from product where "+value;
+    pool.query(sql, [], (err, result) => {
+        if (err) throw err;
+        if (result.length > 0) {
+            res.send(result);
+        } else {
+            res.send("0");
+        }
+    });
+});
+
+// 根据购物车里的商品id返回这些商品所有的服务
+router.get("/v1/service/:pid", (req, res) => {
+    res.header("Access-Control-Allow-Origin","http://127.0.0.1:8081");
+    var _pid = req.params.pid;
+    var pid=_pid.split(",");
+    var value=[];
+    for(let i of pid){
+        value.push("pid="+i)
+    }
+    value=value.join(" or ")
+    console.log(value)
+    // console.log(_uname + "~~~~~" + _upwd);
+    var sql = "select * from service where "+value;
     pool.query(sql, [], (err, result) => {
         if (err) throw err;
        console.log(result)
@@ -115,7 +137,6 @@ router.get("/v1/cart_product/:pid", (req, res) => {
         }
     });
 });
-
 
 
 //使用用户名登录

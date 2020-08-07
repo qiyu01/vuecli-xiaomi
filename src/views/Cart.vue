@@ -71,7 +71,7 @@
 
                             </div>
                             <div class="list-body">
-                                <div class="list-item">
+                                <div class="list-item" v-for="(item,i) of product" :key="i">
                                     <div class="item-main clearfix">
                                         <div class="cart-col col-check">
                                             <div>
@@ -81,23 +81,23 @@
                                          </div>
                                         <div class="cart-col col-img">
                                             <router-link to="/">
-                                                <img :src="img[0].src" alt="">
+                                                <img :src="item.img_src" alt="">
                                             </router-link></div>
                                         <div class="cart-col col-name">
                                             <div class="tags"></div>
                                             <h3 class="name">
                                                 <router-link to="/">
-                                                    小米10 全网通版 8GB+256GB 钛银黑
+                                                    {{item.name}}
                                                 </router-link>
                                             </h3>
                                         </div>
-                                        <div class="cart-col col-price">3999元
+                                        <div class="cart-col col-price">{{item.price}}元
                                             <p class="pre-info"></p>
                                         </div>
                                         <div class="cart-col col-num">
                                             <div class="change-goods-num clearfix">
                                                 <a href="javascript:void(0)">-</a>
-                                                <input type="text" class="goods-num" value="1">
+                                                <input type="text" class="goods-num" v-model="item.num">
                                                 <a href="javascript:void(0)">+</a>
                                             </div>
                                         </div>
@@ -111,28 +111,30 @@
 
                                     </div>
                                     <div class="service-info-content">
-                                        <div class="service-info">
-                                            <div class="item-box clearfix">
+                                        <div class="service-info" v-for="(type,t) of reserveType" :key="t+type">
+                                             
+                                            <div class="item-box clearfix" v-for="(select,s) of selectFilter(item.id,type.type)" :key="s+type+1">
                                                 <div class="item service-img">
                                                     <router-link to="/">
                                                     <img src="../static/images/bao.jpg" alt="">
                                                     </router-link>
                                                 </div>
+                                                
                                                 <div class="item service-name">
                                                     
                                                     <h3 class="name">
                                                         <router-link to="/">
-                                                        意外保障服务
+                                                        {{select.name}}
                                                         </router-link>
                                                     </h3>
-                                                    <p class="desc">手机意外碎屏/进水/碾压等损坏</p>
+                                                    <p class="desc">{{select.tips?select.tips:""}}</p>
                                                 </div>
-                                                <div class="item service-price">349元
+                                                <div class="item service-price">{{select.price}}元
                                                 <p class="pre-info"></p>
                                                 </div>
                                                 <div class="item service-num">
                                                     <div class="change-goods-num clearfix">
-                                                    1
+                                                    {{item.num}}
                                                     </div>
                                                 </div>
                                                 <div class="item service-total">349元</div>
@@ -145,7 +147,7 @@
                                               
                                             </div>
                                         </div>
-                                        <div class="service-info">
+                                        <!-- <div class="service-info">
                                             <div class="item-box clearfix">
                                                 <div class="item service-img">
                                                     <router-link to="/">
@@ -178,19 +180,19 @@
                                                 
                                               
                                             </div>
-                                        </div>
-                                        <div class="service-add-box">
-                                            <div class="add-item">
+                                        </div> -->
+                                        <div class="service-add-box" v-for="(type,j) of serviceType" :key="j">
+                                            <!-- <span>{{item.id}}{{type.type}}</span> -->
+                                            <div class="add-item" v-for="(service,k) of servicefilter(item.id,type.type)" :key="k" @click="serviceSelect(service,item.id,type)">
                                                 <span class="add-btn">
                                                     <i class="iconfont	icon-iconfonticon02"></i>
                                                 </span>
-                                                一年碎屏保
-                                                <span>249元</span>
+                                                {{service.name}}
+                                                <span>{{service.price}}元</span>
                                                 <router-link to="/" class="more">了解意外保护 > </router-link>
                                             </div>
                                         </div>
-                                        <div class="service-add-box">
-                                        </div>
+                                        
                                     </div>
                                     
                                 </div>
@@ -334,7 +336,7 @@
                                         </div>
                                         <div class="service-add-box">
                                         
-                                            <div class="add-item" v-for="i of 10" :key="i">
+                                            <div class="add-item" v-for="i of 3" :key="i">
                                                 <span class="add-btn">
                                                     <i class="iconfont	icon-iconfonticon02"></i>
                                                 </span>
@@ -416,59 +418,121 @@ export default {
             img:[{id:1,src:"product2.jpg"},{id:2,src:"product1.jpg"},{id:3,src:"product1.jpg"},{id:4,src:"recommend-ad1.jpg"}],
             cart:[],
             pid:[],
-            product:[]
+            product:[],
+            serviceAll:[],
+            //服务的类型，用来对服务进行分组，这里暂时用假数据，
+            serviceType:[{type:1,multip:false},{type:2,multip:false},{type:3,multip:false},{type:4,multip:true}],
+            reserveType:[{type:4,multip:true},{type:1,multip:false},{type:2,multip:false},{type:3,multip:false}],
+            serviceSelected:[]
         }
     },
     components:{RecBrick},
+    methods: {
+        serviceSelect(service,pid,type){
+            
+            if(type.multip){
+                // type.multip为true，可以多选，直接push
+            this.serviceSelected.push(service)
+
+            }else{
+                //type.multip为false，不能多选，必须通过替换的方式添加（找到那个已经加进去的，替换掉他）
+                // ischange储存是否已经改了serviceSelected,
+                var ischange=false //初始状态还没动
+                for(let i=0;i<this.serviceSelected.length;i++){
+                    //遍历serviceSelected，
+                if(this.serviceSelected[i].pid==pid && this.serviceSelected[i].type==type.type){
+                    //如果找到i.pid==pid && i.type==type.type，说明已经存在一个这个类型的选项了
+                    //所以直接替换
+                    // console.log(true)
+                    this.$set(this.serviceSelected, i, service);
+                //   this.serviceSelected[i]=service
+                  //替换完成后ischange的状态为true，
+                  ischange=true
+                 }
+                }
+                // 如果前面的遍历出现一次遍历都没进行（可能serviceSelected是空的）,或者遍历完了都没找到i.pid==pid && i.type==type.type
+                // 说明serviceSelected里还没有这个选项。直接push。
+                if(!ischange){
+                    this.serviceSelected.push(service)
+                }
+
+            }
+
+            
+            
+        }
+    },
     mounted() {
-        // this.axios({
-        //          url: "/mi/v1/cart",
-        //          method: "get",
-        //          params: {}
-        //         }).then(res => {
-        //         // console.log(res.data)
-        //         this.cart=res.data
-        //         var pid=[];
-        //         for(let i of this.cart){
-        //             pid.push(i.pid)
-        //         }
-        //         })
 
         this.http.get("/mi/v1/cart").then((data)=>{
             this.cart=data;
-            
+            // console.log(this.cart)
+            for (let i of this.cart) {
+                i.img_src=require("../assets/images/product/product80/" + i.img_src);
+            }
             for(let i of this.cart){
                     this.pid.push(i.pid)
                 }
-                // console.log(pid)
-                // pid=qs.stringify(pid);
-                // console.log(pid)
-                // pid=[1]
-            return this.http.get("/mi/v1/cart_product/"+this.pid)
+
+            //请求购物车里商品的主要信息
+            var product=this.http.get("/mi/v1/cart_product/"+this.pid);
+            //请求购物车里所有商品的所有服务
+            var service=this.http.get("/mi/v1/service/"+this.pid);
+            //请求购物车里每个商品选中的服务
+            // var service_selected=this.http.get("/mi/v1/service_selected/"+this.pid);
+            //并发查询上列接口
+            return Promise.all([product,service]) 
         }).then((data)=>{
+            // 储存所有的服务数据条
+            this.serviceAll=data[1];
+            // 处理商品的数据条
             // 因为服务器查询的商品数据的顺序是按照数据库里商品的id排列的。我们需要按照购物车的pid的顺序进行排列，以便在v-for插入dom时的顺序是按照加入购物车的顺序插入的。
-            for(let i of this.pid){
-                var pid=i;
-                for(let j of data){
+            for(let i=0;i<this.pid.length;i++){
+                var pid=this.pid[i];
+                for(let j of data[0]){
                     if(j.id==pid){
+                        //修改图片，因为product表里的图片是200px的大图，这里替换成购物车的80px小图，其实应该把图片都全部保存到独立的表里，只不过需要增加一次查询。
+                        j.img_src=this.cart[i].img_src;
+                        // 增加商品的在购物车里的数量
+                        this.$set(j, "num", this.cart[i].num);
                         this.product.push(j)
                     }
                 }
             }
-            console.log(this.product)
+            this.product.reverse();
+            // console.log(this.product)
         })
-
-        
-
-
-
-
-
         this.img[0].src=require("../assets/images/product/product80/"+this.img[0].src)
         this.img[1].src=require("../assets/images/product/product80/"+this.img[1].src)
         this.img[2].src=require("../assets/images/product/product180/"+this.img[2].src)
         this.img[3].src=require("../assets/images/product/product180/"+this.img[3].src)
     },
+    computed: {
+        servicefilter(){
+          return  (pid,type)=>{
+              var newValue=[];
+                for(let i of this.serviceAll){
+                if(i.pid==pid && i.type==type){
+                newValue.push(i)
+                 }
+                }
+            //  console.log(pid,type)
+            return newValue
+             }
+        },
+        selectFilter(){
+            return  (pid,type)=>{
+              var newValue=[];
+                for(let i of this.serviceSelected){
+                if(i.pid==pid && i.type==type){
+                newValue.push(i)
+                 }
+                }
+            //  console.log(pid,type)
+            return newValue
+             }
+        }
+    }
 
 }
 </script>
@@ -880,7 +944,7 @@ export default {
 }
 .cart-main .service-add-box{
     margin-left: 100px;
-    padding-top: 15px;
+    /* padding-top: 15px; */
 }
 .cart-main .service-add-box .add-item{
     height: 48px;
@@ -891,6 +955,9 @@ export default {
     color: #424242;
     transition: all .4s;
     cursor: pointer;
+}
+.cart-main .service-add-box .add-item:first-child{
+    margin-top: 15px;
 }
 .cart-main .service-add-box .add-item .add-btn{
     display: inline-block;

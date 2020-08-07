@@ -68,3 +68,48 @@ CREATE TABLE category_list(
   img_src VARCHAR(256),
   FOREIGN KEY(clid) REFERENCES category(cid)
 );
+
+
+/**用户信息**/
+CREATE TABLE user(
+  id INT PRIMARY KEY AUTO_INCREMENT,
+  uid INT,
+  name varchar(8),
+  pwd varchar(8),
+  email varchar(20),
+  phone varchar(20),
+   verifycode int(4) DEFAULT 1314
+);
+
+/**购物车**/
+CREATE TABLE cart(
+  id INT PRIMARY KEY AUTO_INCREMENT,
+  uid INT,
+  pid INT,
+  num INT,
+  img_src VARCHAR(256),
+  FOREIGN KEY(pid) REFERENCES product(id),
+  FOREIGN KEY(uid) REFERENCES user(id)
+);
+
+/**所有服务**/
+/**type列中，1代表基础保修服务（意外，碎屏保修），2代表延迟保修服务，3代表云空间加价购，4代表其他商品加价购**/
+CREATE TABLE service(
+  id INT PRIMARY KEY AUTO_INCREMENT,
+  name VARCHAR(256),
+  tips VARCHAR(256),
+  pid INT,
+  type INT,
+  price INT,
+  FOREIGN KEY(pid) REFERENCES product(id)
+);
+/**购物车中某条商品选中的服务**/
+CREATE TABLE service_select(
+  id INT PRIMARY KEY AUTO_INCREMENT,
+  sid INT,
+  tid INT,
+  cid INT,
+  FOREIGN KEY(sid) REFERENCES service(id),
+  FOREIGN KEY(tid) REFERENCES service(type),
+  FOREIGN KEY(cid) REFERENCES cart(id)
+);
