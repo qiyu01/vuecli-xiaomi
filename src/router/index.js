@@ -27,6 +27,11 @@ Vue.use(VueRouter)
     path: '/cart',
     name: 'Cart',
     component: () => import('../views/Cart.vue')
+  },
+  {
+    path: '/search',
+    name: 'Search',
+    component: () => import('../views/search.vue')
   }
 ]
 
