@@ -1,7 +1,6 @@
 <template>
   <div class="product-wraper">
-    <!-- 是否显示导航栏的"全部商品分类" 该参数将作为props传给子组件，在子组件里面控制插槽slot是否显示 -->
-    <Header :navcategory="true"></Header>
+    <Header :navcategory="navcategory"></Header>
     <!-- <Category-list class="category-list"></Category-list> -->
 
     <div class="xm-product-box">
@@ -301,6 +300,7 @@ import NavbarFix from "@/components/Navbar-fix.vue";
 export default {
   data() {
     return {
+      navcategory: true,//是否显示导航栏的"全部商品分类" 该参数将作为props传给子组件，在子组件里面控制插槽slot是否显示
       // 所有版本参数，服务器返回
       version:[
         // {id:1,isselected:false,name:"8GB+128GB",price:3799,delprice:3999,gift:false},
@@ -505,7 +505,32 @@ export default {
 
 
 <style>
-
+/* category-list组件在product页面的样式微调 */
+.site-header .nav-category .home-hero-list-category {
+  display: none;
+}
+.site-header .nav-category:hover .home-hero-list-category {
+  display: block;
+}
+.site-header .nav-category .list-category {
+  background-color: #fff;
+  border: 1px solid #ff6700;
+  width: 232px;
+}
+.site-header .nav-category .list-category > li > a {
+  color: #424242;
+}
+.site-header .nav-category .list-category > li > a:hover {
+  color: #fff;
+}
+.site-header .nav-category .list-category > li > a > span {
+  opacity: 0.3;
+}
+.site-header .nav-category .list-category .children-list {
+  top: -1px;
+  left: 233px;
+  height: 457px;
+}
 
 /* 标题条 */
 

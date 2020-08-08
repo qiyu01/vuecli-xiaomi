@@ -493,7 +493,7 @@ export default {
   },
 }
 </script>
-<style scoped>
+<style>
 /* 防止样式穿透的方法scoped */
     .wraper {
         height: 100vh;

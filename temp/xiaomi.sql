@@ -110,6 +110,5 @@ CREATE TABLE service_select(
   tid INT,
   cid INT,
   FOREIGN KEY(sid) REFERENCES service(id),
-  FOREIGN KEY(tid) REFERENCES service(type),
   FOREIGN KEY(cid) REFERENCES cart(id)
 );

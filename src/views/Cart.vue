@@ -183,7 +183,7 @@
                                         </div> -->
                                         <div class="service-add-box" v-for="(type,j) of serviceType" :key="j">
                                             <!-- <span>{{item.id}}{{type.type}}</span> -->
-                                            <div class="add-item" v-for="(service,k) of servicefilter(item.id,type.type)" :key="k" @click="serviceSelect(service,item.id,type)">
+                                            <div class="add-item" v-for="(service,k) of servicefilter(item.id,type.type)" :key="k" @click="serviceSelect(service,type)">
                                                 <span class="add-btn">
                                                     <i class="iconfont	icon-iconfonticon02"></i>
                                                 </span>
@@ -419,43 +419,54 @@ export default {
             cart:[],
             pid:[],
             product:[],
+            // 可选服务
             serviceAll:[],
-            //服务的类型，用来对服务进行分组，这里暂时用假数据，
+            //服务的类型，用来对可选服务进行分组，这里暂时用假数据，
             serviceType:[{type:1,multip:false},{type:2,multip:false},{type:3,multip:false},{type:4,multip:true}],
+            //排序后的服务类型数据，因为可选服务里类型的排序  跟已选服务里的类型排序不一样。
             reserveType:[{type:4,multip:true},{type:1,multip:false},{type:2,multip:false},{type:3,multip:false}],
+            //已选服务，初始值全部是null，其实可以从服务器返回以前选中的服务，这里暂时不做。
             serviceSelected:[]
         }
     },
     components:{RecBrick},
     methods: {
-        serviceSelect(service,pid,type){
+        serviceSelect(service,type){
             
             if(type.multip){
-                // type.multip为true，可以多选，直接push
-            this.serviceSelected.push(service)
+                console.log(service)
+                // type.multip为true，可以多选，直接设置serviceAll里的对应项为null，设置serviceSelected的对应项为service
+                for(let i=0;i<this.serviceAll.length;i++){
+                    //注意每次都要检测null数据
+                    if(this.serviceAll[i]!=null && service.id==this.serviceAll[i].id){
+                        this.$set(this.serviceAll, i, null);
+                        this.$set(this.serviceSelected, i, service);
+                    }
+                }
+            
 
             }else{
-                //type.multip为false，不能多选，必须通过替换的方式添加（找到那个已经加进去的，替换掉他）
-                // ischange储存是否已经改了serviceSelected,
-                var ischange=false //初始状态还没动
+                //type.multip为false，不能多选，必须先去serviceSelected里面把已经选中的类型的先设置为null，再把对应的那项改为service。
                 for(let i=0;i<this.serviceSelected.length;i++){
-                    //遍历serviceSelected，
-                if(this.serviceSelected[i].pid==pid && this.serviceSelected[i].type==type.type){
-                    //如果找到i.pid==pid && i.type==type.type，说明已经存在一个这个类型的选项了
-                    //所以直接替换
-                    // console.log(true)
-                    this.$set(this.serviceSelected, i, service);
-                //   this.serviceSelected[i]=service
-                  //替换完成后ischange的状态为true，
-                  ischange=true
-                 }
+                    if(this.serviceSelected[i]!=null){//注意每次都要检测null数据
+                        // serviceSelected里需要设置为null的项是pid和type都跟service相同，因为同一个商品（pid）同一类型（type）只能选中一个，先全部都把他们设置为null（其实每次只有一个），后面再改新的那项
+                        if(service.pid==this.serviceSelected[i].pid && service.type==this.serviceSelected[i].type){
+                            // 注意这里要先把那项先还回去可选服务serviceAll那里（可选服务那里就又出现这项可以选择了，不能完全删掉）
+                        this.$set(this.serviceAll, i, this.serviceSelected[i]);
+                        //然后设置对应的已选服务为null
+                        this.$set(this.serviceSelected, i, null);
+                        }
+                    }
+                    
                 }
-                // 如果前面的遍历出现一次遍历都没进行（可能serviceSelected是空的）,或者遍历完了都没找到i.pid==pid && i.type==type.type
-                // 说明serviceSelected里还没有这个选项。直接push。
-                if(!ischange){
-                    this.serviceSelected.push(service)
+                //这时候就可以跟前面那样，先直接设置serviceAll里的对应项为null，然后设置serviceSelected的对应项为service了
+                for(let i=0;i<this.serviceAll.length;i++){
+                    if(this.serviceAll[i]!=null && service.id==this.serviceAll[i].id){
+                        this.$set(this.serviceAll, i, null);
+                        this.$set(this.serviceSelected, i, service);
+                    }
                 }
-
+                
             }
 
             
@@ -485,6 +496,12 @@ export default {
         }).then((data)=>{
             // 储存所有的服务数据条
             this.serviceAll=data[1];
+            //对应的选中的数据，一开始是全部没选中的，其实应该从服务器返回以前选中的选项，由于需要增加逻辑运算，这里暂时不做。
+            for(let i=0;i<this.serviceAll.length;i++){
+                this.serviceSelected[i]=null;
+            }
+                // console.log(this.serviceSelected);
+
             // 处理商品的数据条
             // 因为服务器查询的商品数据的顺序是按照数据库里商品的id排列的。我们需要按照购物车的pid的顺序进行排列，以便在v-for插入dom时的顺序是按照加入购物车的顺序插入的。
             for(let i=0;i<this.pid.length;i++){
@@ -511,10 +528,13 @@ export default {
         servicefilter(){
           return  (pid,type)=>{
               var newValue=[];
+            //   console.log(this.serviceAll)
                 for(let i of this.serviceAll){
-                if(i.pid==pid && i.type==type){
-                newValue.push(i)
-                 }
+                    if(i!=null){
+                    if(i.pid==pid && i.type==type){
+                    newValue.push(i)
+                    }
+                    }
                 }
             //  console.log(pid,type)
             return newValue
@@ -522,11 +542,15 @@ export default {
         },
         selectFilter(){
             return  (pid,type)=>{
+
               var newValue=[];
                 for(let i of this.serviceSelected){
-                if(i.pid==pid && i.type==type){
-                newValue.push(i)
-                 }
+                    if(i!=null){
+                        if(i.pid==pid && i.type==type){
+                         newValue.push(i)
+                        }
+                    }
+                    
                 }
             //  console.log(pid,type)
             return newValue

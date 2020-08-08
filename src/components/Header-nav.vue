@@ -13,7 +13,7 @@
                 <div class="header-nav">
                     <ul class="nav-list clearfix">
                         
-                        <li :class="[navcategory? 'hidden' : '', 'nav-category']" >
+                        <li class="nav-category">
                             
                                 <a href="" >
                                     <span v-if="navcategory">全部商品分类</span>
@@ -287,36 +287,6 @@ export default {
 }
 </script>
 <style>
-
-/* category-list组件在product页面的样式微调 */
-.site-header .hidden .home-hero-list-category {
-  display: none;
-}
-.site-header .hidden:hover .home-hero-list-category {
-  display: block;
-}
-.site-header .hidden .list-category {
-  background-color: #fff;
-  border: 1px solid #ff6700;
-  width: 232px;
-}
-.site-header .hidden .list-category > li > a {
-  color: #424242;
-}
-.site-header .hidden .list-category > li > a:hover {
-  color: #fff;
-}
-.site-header .hidden .list-category > li > a > span {
-  opacity: 0.3;
-}
-.site-header .hidden .list-category .children-list {
-  top: -1px;
-  left: 233px;
-  height: 457px;
-}
-
-
-
 /* 二级导航栏 */
 .header{
     /* z-index 必须添加position才能生效    */
