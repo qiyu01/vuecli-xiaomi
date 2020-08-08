@@ -55,9 +55,10 @@
                     <div class="loading"></div>
                     <div class="cart-main">
                         <div class="cart-goods-list">
-                            <div class="list-head clearfix">
+                            
+                            <div :class="[allSelected ? 'active' : '', 'list-head clearfix']">
                                 <div class="cart-col col-check">
-                                    <div>
+                                    <div @click="selectAll()">
                                         <i class="iconfont	icon-gou"></i>
                                     </div>
                                     全选
@@ -71,9 +72,9 @@
 
                             </div>
                             <div class="list-body">
-                                <div class="list-item" v-for="(item,i) of product" :key="i">
+                                <div v-for="(item,i) of product" :key="i" :class="[item.isselected ? 'active' : '', 'list-item']">
                                     <div class="item-main clearfix">
-                                        <div class="cart-col col-check">
+                                        <div class="cart-col col-check" @click="selectProduct(item)">
                                             <div>
                                              <i class="iconfont	icon-gou"></i>
                                             </div>
@@ -96,14 +97,14 @@
                                         </div>
                                         <div class="cart-col col-num">
                                             <div class="change-goods-num clearfix">
-                                                <a href="javascript:void(0)">-</a>
+                                                <a href="javascript:void(0)" @click="reducenum(item)">-</a>
                                                 <input type="text" class="goods-num" v-model="item.num">
-                                                <a href="javascript:void(0)">+</a>
+                                                <a href="javascript:void(0)" @click="addnum(item)">+</a>
                                             </div>
                                         </div>
-                                        <div class="cart-col col-total">3999元</div>
+                                        <div class="cart-col col-total">{{item.price*item.num}}元</div>
                                         <div class="cart-col col-action">
-                                                <div>
+                                                <div @click="deleteProduct(item)">
                                                     <i class="iconfont	icon-cha"></i>
                                                 </div>
 
@@ -137,8 +138,8 @@
                                                     {{item.num}}
                                                     </div>
                                                 </div>
-                                                <div class="item service-total">349元</div>
-                                                <div class="item service-action">
+                                                <div class="item service-total">{{select.price*item.num}}元</div>
+                                                <div class="item service-action" @click="removeSelect(select)">
                                                     <div>
                                                     <i class="iconfont	icon-cha"></i>
                                                     </div>
@@ -197,157 +198,7 @@
                                     
                                 </div>
 
-                                <div class="list-item">
-                                    <div class="item-main clearfix">
-                                        <div class="cart-col col-check">
-                                            <div>
-                                             <i class="iconfont	icon-gou"></i>
-                                            </div>
-                                            
-                                         </div>
-                                        <div class="cart-col col-img">
-                                            <router-link to="/">
-                                                <img :src="img[1].src" alt="">
-                                            </router-link></div>
-                                        <div class="cart-col col-name">
-                                            <div class="tags"></div>
-                                            <h3 class="name">
-                                                <router-link to="/">
-                                                    小米10 Pro 全网通版 8GB+256GB 钛银黑
-                                                </router-link>
-                                            </h3>
-                                        </div>
-                                        <div class="cart-col col-price">3999元
-                                            <p class="pre-info"></p>
-                                        </div>
-                                        <div class="cart-col col-num">
-                                            <div class="change-goods-num clearfix">
-                                                <a href="javascript:void(0)">-</a>
-                                                <input type="text" class="goods-num" value="1">
-                                                <a href="javascript:void(0)">+</a>
-                                            </div>
-                                        </div>
-                                        <div class="cart-col col-total">3999元</div>
-                                        <div class="cart-col col-action">
-                                                <div>
-                                                    <i class="iconfont	icon-cha"></i>
-                                                </div>
-
-                                        </div>
-
-                                    </div>
-                                    <div class="service-info-content">
-                                        <div class="service-info">
-                                            <div class="item-box clearfix">
-                                                <div class="item service-img">
-                                                    <router-link to="/">
-                                                    <img src="../static/images/bao.jpg" alt="">
-                                                    </router-link>
-                                                </div>
-                                                <div class="item service-name">
-                                                    
-                                                    <h3 class="name">
-                                                        <router-link to="/">
-                                                        意外保障服务
-                                                        </router-link>
-                                                    </h3>
-                                                    <p class="desc">手机意外碎屏/进水/碾压等损坏</p>
-                                                </div>
-                                                <div class="item service-price">349元
-                                                <p class="pre-info"></p>
-                                                </div>
-                                                <div class="item service-num">
-                                                    <div class="change-goods-num clearfix">
-                                                    1
-                                                    </div>
-                                                </div>
-                                                <div class="item service-total">349元</div>
-                                                <div class="item service-action">
-                                                    <div>
-                                                    <i class="iconfont	icon-cha"></i>
-                                                    </div>
-                                                </div>
-                                                
-                                              
-                                            </div>
-                                        </div>
-                                        <div class="service-info">
-                                            <div class="item-box clearfix">
-                                                <div class="item service-img">
-                                                    <router-link to="/">
-                                                    <img src="../static/images/bao.jpg" alt="">
-                                                    </router-link>
-                                                </div>
-                                                <div class="item service-name">
-                                                    
-                                                    <h3 class="name">
-                                                        <router-link to="/">
-                                                        延长保修服务
-                                                        </router-link>
-                                                    </h3>
-                                                    <p class="desc">厂保延一年，性能故障免费维修</p>
-                                                </div>
-                                                <div class="item service-price">159元
-                                                <p class="pre-info"></p>
-                                                </div>
-                                                <div class="item service-num">
-                                                    <div class="change-goods-num clearfix">
-                                                    1
-                                                    </div>
-                                                </div>
-                                                <div class="item service-total">159元</div>
-                                                <div class="item service-action">
-                                                    <div>
-                                                    <i class="iconfont	icon-cha"></i>
-                                                    </div>
-                                                </div>
-                                                
-                                              
-                                            </div>
-                                        </div>
-                                        <div class="service-add-box">
-                                            <div class="add-item">
-                                                <span class="add-btn">
-                                                    <i class="iconfont	icon-iconfonticon02"></i>
-                                                </span>
-                                                一年碎屏保
-                                                <span>249元</span>
-                                                <router-link to="/" class="more">了解意外保护 > </router-link>
-                                            </div>
-                                            <div class="add-item">
-                                                <span class="add-btn">
-                                                    <i class="iconfont	icon-iconfonticon02"></i>
-                                                </span>
-                                                一年碎屏保
-                                                <span>249元</span>
-                                                <router-link to="/" class="more">了解意外保护 > </router-link>
-                                            </div>
-                                        </div>
-                                        <div class="service-add-box">
-                                        
-                                            <div class="add-item">
-                                                <span class="add-btn">
-                                                    <i class="iconfont	icon-iconfonticon02"></i>
-                                                </span>
-                                                一年碎屏保
-                                                <span>249元</span>
-                                                <router-link to="/" class="more">了解意外保护 > </router-link>
-                                            </div>
-                                        </div>
-                                        <div class="service-add-box">
-                                        
-                                            <div class="add-item" v-for="i of 3" :key="i">
-                                                <span class="add-btn">
-                                                    <i class="iconfont	icon-iconfonticon02"></i>
-                                                </span>
-                                                一年碎屏保
-                                                <span>249元</span>
-                                                <router-link to="/" class="more">了解意外保护 > </router-link>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    
-                                </div>
+                                
                             </div>
                         </div>
 
@@ -356,14 +207,14 @@
                                 <router-link to="/">继续购物</router-link>
                                 <span class="cart-total">
                                     共
-                                    <i>5</i> 
+                                    <i>{{totalProduct}}</i> 
                                     件商品，已选择
-                                    <i>5</i>
+                                    <i>{{hasSelectedNum}}</i>
                                      件
                                 </span>
                             </div>
                             <div class="total-price">
-                                合计：<em>10105</em>
+                                合计：<em>{{totalPrice}}</em>
                                 元
                                 <router-link to="/">
                                 去结算
@@ -419,6 +270,8 @@ export default {
             cart:[],
             pid:[],
             product:[],
+            selctedProduct:[],
+            unlinkedProduct:[],
             // 可选服务
             serviceAll:[],
             //服务的类型，用来对可选服务进行分组，这里暂时用假数据，
@@ -426,15 +279,105 @@ export default {
             //排序后的服务类型数据，因为可选服务里类型的排序  跟已选服务里的类型排序不一样。
             reserveType:[{type:4,multip:true},{type:1,multip:false},{type:2,multip:false},{type:3,multip:false}],
             //已选服务，初始值全部是null，其实可以从服务器返回以前选中的服务，这里暂时不做。
-            serviceSelected:[]
+            serviceSelected:[],
+            recommend:[]
         }
     },
     components:{RecBrick},
     methods: {
+        selectAll(){
+
+            var bool=false;
+            for(let i of this.product){
+                if(!i.isselected){
+                    //如果找到最少一个商品是没选中的（!i.isselected），那这次点击就是全部选中，后面把全部product的isselected设置为bool=true
+                    //如果没有找到一个商品是没选中的，就是全部选中，这里不执行，那bool就还是前面的false，后面把全部product的isselected设置为bool=false，也就是全部不选中
+                    bool=true;
+                    break;
+                }
+            }
+            // 执行全选中还是全不选中
+            for(let i=0;i<this.product.length;i++){
+                this.$set(this.product[i], "isselected", bool);
+            }
+            //如果执行的是全不选中，还需要把所有选中的服务移走。
+            if(!bool){
+                for(let i=0;i<this.serviceSelected.length;i++){
+                    //注意每次都要检测null数据
+                    //设置serviceSelected里的对应项为null，设置serviceAll为this.serviceSelected[i]（还回去）
+                    if(this.serviceSelected[i]!=null){
+                        this.$set(this.serviceAll, i, this.serviceSelected[i]);
+                        this.$set(this.serviceSelected, i, null);
+                    }
+                }
+            }
+        },
+        selectProduct(item){
+            var bool=false
+            for(let i=0;i<this.product.length;i++){
+                if(this.product[i].id==item.id){
+                        var bool=!item.isselected;
+                        this.$set(this.product[i], "isselected", bool);
+                    
+                }
+            }
+            //如果执行的是不选中，还需要把所有选中的服务移走。
+            if(!bool){
+                for(let i=0;i<this.serviceSelected.length;i++){
+                    //注意每次都要检测null数据
+                    //设置serviceSelected里的对应项为null，设置serviceAll为this.serviceSelected[i]（还回去）
+                    if(this.serviceSelected[i]!=null){
+                        this.$set(this.serviceAll, i, this.serviceSelected[i]);
+                        this.$set(this.serviceSelected, i, null);
+                    }
+                }
+            }
+        },   
+        deleteProduct(item){
+            for(let i=0;i<this.product.length;i++){
+                if(this.product[i].id==item.id){
+                    // 删除product数组里的对应项
+                    this.product.splice(i,1)
+                }
+                
+            }
+            // 去cart里找到对应商品的购物车id，然后删除
+            for(let i=0;i<this.cart.length;i++){
+                if(this.cart[i].pid==item.id){
+                    var cid=this.cart[i].id;
+                    this.cart.splice(i,1)
+                    this.http.get("/mi/v1/cart_delete",{cid:cid}).then((data)=>{
+                        console.log(data)
+                    })
+                }
+            }
+        },
+        addnum(item){
+            for(let i of this.product){
+                if(i.id==item.id){
+                    i.num++
+                    if(i.num>20){
+                        alert("土豪，您有兴趣收购我们公司吗？")
+                        i.num=20
+                    }
+                }
+            }
+            
+        },
+        reducenum(item){
+            for(let i of this.product){
+                if(i.id==item.id){
+                    i.num--
+                    if(i.num<1){
+                        alert("已经不能再少啦")
+                        i.num=1
+                    }
+                }
+            }
+        },
         serviceSelect(service,type){
             
             if(type.multip){
-                console.log(service)
                 // type.multip为true，可以多选，直接设置serviceAll里的对应项为null，设置serviceSelected的对应项为service
                 for(let i=0;i<this.serviceAll.length;i++){
                     //注意每次都要检测null数据
@@ -471,9 +414,20 @@ export default {
 
             
             
+        },
+        removeSelect(select){
+                for(let i=0;i<this.serviceSelected.length;i++){
+                    //注意每次都要检测null数据
+                    //设置serviceSelected里的对应项为null，设置serviceAll为select（还回去）
+                    if(this.serviceSelected[i]!=null && select.id==this.serviceSelected[i].id){
+                        this.$set(this.serviceAll, i, select);
+                        this.$set(this.serviceSelected, i, null);
+                    }
+                }
         }
     },
     mounted() {
+
 
         this.http.get("/mi/v1/cart").then((data)=>{
             this.cart=data;
@@ -512,6 +466,8 @@ export default {
                         j.img_src=this.cart[i].img_src;
                         // 增加商品的在购物车里的数量
                         this.$set(j, "num", this.cart[i].num);
+                        // 增加是否选中状态
+                        this.$set(j, "isselected", this.cart[i].isselected);
                         this.product.push(j)
                     }
                 }
@@ -519,12 +475,24 @@ export default {
             this.product.reverse();
             // console.log(this.product)
         })
-        this.img[0].src=require("../assets/images/product/product80/"+this.img[0].src)
-        this.img[1].src=require("../assets/images/product/product80/"+this.img[1].src)
-        this.img[2].src=require("../assets/images/product/product180/"+this.img[2].src)
-        this.img[3].src=require("../assets/images/product/product180/"+this.img[3].src)
+        this.img[3].src=require("../assets/images/product/product180/"+this.img[3].src)       
+        this.http.get("/mi/v1/recommend").then((data)=>{
+            for(let i of data){
+                i.img=require("../assets/images/product/product180/"+i.img)
+            }
+            this.recommend=data;
+        })
+
     },
     computed: {
+        allSelected(){
+            for(let i=0;i<this.product.length;i++){
+                if(!this.product[i].isselected){
+                    return false                  
+                }
+            }
+            return true
+        },
         servicefilter(){
           return  (pid,type)=>{
               var newValue=[];
@@ -555,6 +523,46 @@ export default {
             //  console.log(pid,type)
             return newValue
              }
+        },
+        totalPrice(){
+            var totalPrice=0;
+            // 先加商品本身的价格
+            for(let i of this.product){
+                if(i.isselected){
+                    totalPrice+=(i.price*i.num)
+                }
+            }
+            // 再加商品服务的价格
+            for(let i of this.serviceSelected){
+                if(i!=null){
+                    var num
+                    for(let j of this.product){
+                         if(i.pid==j.id){
+                            //  找到这个服务对应的product的数量
+                            num=j.num
+                        }
+                     }
+                    //  数量*价格
+                    totalPrice+=(i.price*num)
+                }
+            }
+            return totalPrice
+        },
+        totalProduct(){
+            var i=0
+            for(let j of this.product){
+                i++
+            }
+            return i
+        },
+        hasSelectedNum(){
+            var i=0
+            for(let j of this.product){
+                if(j.isselected){
+                    i++
+                }
+            }
+            return i
         }
     }
 
@@ -736,6 +744,16 @@ export default {
 .cart-main .col-check div:hover i{
     color: #757575;
 }
+/* 选中或者全选的时候checkbox的父元素会添加.active */
+.cart-main .active .col-check div{
+    border-color:#ff6700 ;
+    background-color: #ff6700;
+    color: #fff;
+}
+.cart-main .active .col-check div i{
+    color: #fff;
+}
+
 .cart-main .col-img{
     width: 120px;
     color: #fff;
@@ -771,6 +789,11 @@ export default {
     line-height: 86px;
     overflow: hidden;
 }
+
+
+
+
+
 .cart-main  .item-main .col-name h3{
     /* line-height: 1; */
     /* margin-top: 8px; */
@@ -866,6 +889,12 @@ export default {
 }
 .cart-main  .item-main .col-action div:hover i{
     color: #fff;
+}
+.cart-main .list-item.active .service-info-content{
+    display: block;
+}
+.cart-main .list-item .service-info-content{
+    display: none;
 }
 .cart-main .service-info-content .service-info{
    margin-top: 2px;

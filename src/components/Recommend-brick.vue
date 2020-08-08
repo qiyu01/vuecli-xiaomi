@@ -7,9 +7,9 @@
       <div class="recommend-tips">461人好评</div>
     </router-link>
     <div class="recommend-action">
-      <a href="javascript:void(0)">加入购物车</a>
+      <a href="javascript:void(0)" @click="addCart">加入购物车</a>
     </div>
-    <div class="recommend-notice">
+    <div :class="[addSuccess ? 'active' : '', 'recommend-notice']">
       <a href="javascript:void(0)" class="btn">成功加入购物车</a>
     </div>
   </li>
@@ -18,14 +18,30 @@
 export default {
     data(){
         return{
-            img:[{id:1,src:"product2.jpg"},{id:2,src:"product1.jpg"},{id:3,src:"product1.jpg"},{id:4,src:"recommend-ad1.jpg"}]
+            img:[{id:1,src:"product2.jpg"},{id:2,src:"product1.jpg"},{id:3,src:"product1.jpg"},{id:4,src:"recommend-ad1.jpg"}],
+            addSuccess:false
         }
     },
     mounted() {
         this.img[0].src=require("../assets/images/product/product80/"+this.img[0].src)
         this.img[1].src=require("../assets/images/product/product80/"+this.img[1].src)
         this.img[2].src=require("../assets/images/product/product180/"+this.img[2].src)
-        this.img[3].src=require("../assets/images/product/product180/"+this.img[3].src)
+        this.img[3].src=require("../assets/images/product/product180/"+this.img[3].src)       
+    },
+    methods: {
+        addCart(){
+            this.http.get("/mi/v1/addcart",{pid:9,uid:1}).then((data)=>{
+                console.log(data)
+                if(data==1){
+                    this.addSuccess=true
+                    setTimeout(()=>{
+                        this.addSuccess=false
+                        location.reload();
+                        
+                    },300)
+                }
+        })
+        }
     },
 }
 </script>
@@ -104,7 +120,7 @@ export default {
     transform: translate3d(0,-10px,0);
     transition: all .2s linear;
 }
-.recommend-brick:hover .recommend-notice{
+.recommend-brick .recommend-notice.active{
     opacity: 1;
     transform: translateZ(0);
 }

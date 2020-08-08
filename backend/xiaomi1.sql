@@ -43,6 +43,7 @@ insert into product values
 (null,'小米电视4A 50英寸','../assets/images/product/product17.webp','骁龙865处理器，120Hz刷新率','3999','新颜色“国风雅灰”火爆热卖中','骁龙865处理器 / 1亿像素8K电影相机 / 双模5G / 新一代LPDDR5内存 / 对称式立体声 / 90Hz刷新率+180Hz采样率 / UFS 3.0高速存储 / 全面适配Wi-Fi 6 / 超强VC液冷散热 / 30W极速闪充+30W无线闪充+10W无线反充 / 4780mAh大电量 / 多功能NFC',3);
 
 
+
 insert into product_spec values 
 (null,'8GB+128GB','3799','3999',false,1),
 (null,'8GB+256GB','3999','4299',true,1),
@@ -64,26 +65,26 @@ insert into product_color values
 
 
 insert into product_img values 
-(null,'../assets/images/product-color/product1.webp',1),
-(null,'../assets/images/product-color/product2.webp',1),
-(null,'../assets/images/product-color/product3.webp',1),
-(null,'../assets/images/product-color/product4.webp',1),
-(null,'../assets/images/product-color/product5.webp',1),
-(null,'../assets/images/product-color/product11.webp',2),
-(null,'../assets/images/product-color/product12.webp',2),
-(null,'../assets/images/product-color/product13.webp',2),
-(null,'../assets/images/product-color/product14.webp',2),
-(null,'../assets/images/product-color/product15.webp',2),
-(null,'../assets/images/product-color/product21.webp',3),
-(null,'../assets/images/product-color/product22.webp',3),
-(null,'../assets/images/product-color/product23.webp',3),
-(null,'../assets/images/product-color/product24.webp',3),
-(null,'../assets/images/product-color/product25.webp',3),
-(null,'../assets/images/product-color/product31.webp',4),
-(null,'../assets/images/product-color/product32.webp',4),
-(null,'../assets/images/product-color/product33.webp',4),
-(null,'../assets/images/product-color/product34.webp',4),
-(null,'../assets/images/product-color/product35.webp',4);
+(null,'product1.jpg',1,1),
+(null,'product2.jpg',1,1),
+(null,'product3.jpg',1,1),
+(null,'product4.jpg',1,1),
+(null,'product5.jpg',1,1),
+(null,'product11.jpg',2,1),
+(null,'product12.jpg',2,1),
+(null,'product13.jpg',2,1),
+(null,'product14.jpg',2,1),
+(null,'product15.jpg',2,1),
+(null,'product21.jpg',3,1),
+(null,'product22.jpg',3,1),
+(null,'product23.jpg',3,1),
+(null,'product24.jpg',3,1),
+(null,'product25.jpg',3,1),
+(null,'product31.jpg',4,1),
+(null,'product32.jpg',4,1),
+(null,'product33.jpg',4,1),
+(null,'product34.jpg',4,1),
+(null,'product35.jpg',4,1);
 
 
 
@@ -125,3 +126,95 @@ insert into category_list values
 (null,'云服务空间月卡','1000','images/category/category-list22.jpg'),
 (null,'中国电信','1000','images/category/category-list23.webp')
 ;
+
+insert into category_list values 
+(null,'小米电视 大师 65英寸OLED','1001','images/category/category-list24.webp'),
+(null,'Redmi 智能电视 X65','1001','images/category/category-list25.webp'),
+(null,'Redmi 智能电视 X55','1001','images/category/category-list26.webp'),
+(null,'Redmi 智能电视 MAX 98"','1001','images/category/category-list27.webp'),
+(null,'小米电视5 55英寸','1001','images/category/category-list28.webp'),
+(null,'小米电视5 65英寸','1001','images/category/category-list29.webp'),
+(null,'小米电视5 75英寸','1001','images/category/category-list30.webp'),
+(null,'小米电视5 Pro 55英寸','1001','images/category/category-list31.webp'),
+(null,'小米电视5 Pro 65英寸','1001','images/category/category-list32.webp'),
+(null,'小米电视5 Pro 75英寸','1001','images/category/category-list33.webp'),
+(null,'Redmi 红米电视 70英寸','1001','images/category/category-list34.webp'),
+(null,'全面屏电视Pro 65英寸','1001','images/category/category-list35.webp'),
+(null,'全面屏电视Pro 55英寸','1001','images/category/category-list36.webp'),
+(null,'小米壁画电视 65英寸','1001','images/category/category-list37.jpg'),
+(null,'小米全面屏电视','1001','images/category/category-list38.jpg'),
+(null,'小米电视4A 32英寸','1001','images/category/category-list39.png'),
+(null,'小米电视4A 50英寸','1001','images/category/category-list40.png'),
+(null,'小米电视4A 55英寸','1001','images/category/category-list41.png'),
+(null,'小米电视4A 58英寸','1001','images/category/category-list42.png'),
+(null,'小米电视4A 65英寸','1001','images/category/category-list43.png'),
+(null,'小米电视4C 32英寸','1001','images/category/category-list44.png'),
+(null,'小米电视4C 40英寸','1001','images/category/category-list45.jpg'),
+(null,'小米电视4C 43英寸','1001','images/category/category-list46.png'),
+(null,'小米电视4C 50英寸','1001','images/category/category-list47.png')
+;
+
+insert into category_list values 
+(null,'RedmiBook 13','1002','images/category/category-list48.webp'),
+(null,'小米笔记本 15.6"','1002','images/category/category-list49.webp'),
+(null,'小米笔记本 13.3"','1002','images/category/category-list50.png'),
+(null,'小米笔记本 12.5"','1002','images/category/category-list51.jpg'),
+(null,'RedmiBook 14','1002','images/category/category-list52.png'),
+(null,'小米游戏本','1002','images/category/category-list53.jpg'),
+(null,'显示器','1002','images/category/category-list54.webp'),
+(null,'键鼠套装','1002','images/category/category-list55.webp'),
+(null,'鼠标','1002','images/category/category-list56.png'),
+(null,'转接器','1002','images/category/category-list57.webp'),
+(null,'平板配件','1002','images/category/category-list58.jpg')
+;
+
+
+insert into user values 
+(null,'166981872','123456','123456','123456@qq.com','18028859061',"1314"),
+(null,'166981812','123457','123457','123456@qq.com','18028859061',"1314");
+
+insert into cart values
+(null,'1','1','1','product2.jpg',true),
+(null,'1','3','1','product3.jpg',true),
+(null,'1','4','1','product4.jpg',true),
+(null,'1','2','2','product1.jpg',true),
+(null,'2','1','1','product2.jpg',true),
+(null,'2','3','1','product3.jpg',true),
+(null,'2','4','1','product4.jpg',true),
+(null,'2','2','2','product1.jpg',true);
+
+insert into service values
+(null,'意外保障服务','手机意外碎屏/进水/碾压等损坏','1','1','349'),
+(null,'一年碎屏保','手机意外碎屏','1','1','249'),
+(null,'延长保修服务','厂保延一年，性能故障免费维修','1','2','159'),
+(null,'云空间年卡500G','主商品签收后，自动激活至下单帐号','1','3','59'),
+(null,'云空间年卡50G','主商品签收后，自动激活至下单帐号','1','3','19'),
+(null,'小米10青春版 几何空间保护壳（黑色）',null,'1','4','39'),
+(null,'小米10青春版 炫彩透明保护壳（蓝色）',null,'1','4','59'),
+(null,'小米10青春版 炫彩透明保护壳（蓝色）',null,'1','4','19'),
+(null,'意外保障服务','手机意外碎屏/进水/碾压等损坏','3','1','349'),
+(null,'一年碎屏保','手机意外碎屏','3','1','249'),
+(null,'延长保修服务','厂保延一年，性能故障免费维修','3','2','159'),
+(null,'意外保障服务','手机意外碎屏/进水/碾压等损坏','4','1','349'),
+(null,'一年碎屏保','手机意外碎屏','4','1','249'),
+(null,'延长保修服务','厂保延一年，性能故障免费维修','4','2','159'),
+(null,'意外保障服务','手机意外碎屏/进水/碾压等损坏','2','1','349'),
+(null,'一年碎屏保','手机意外碎屏','2','1','249'),
+(null,'小米10青春版 几何空间保护壳（黑色）',null,'2','4','39'),
+(null,'小米10青春版 炫彩透明保护壳（蓝色）',null,'2','4','59'),
+(null,'小米10青春版 炫彩透明保护壳（蓝色）',null,'2','4','19'),
+(null,'延长保修服务','厂保延一年，性能故障免费维修','2','2','159');
+
+
+insert into recommend values 
+(null,'小米蓝牙耳机AirDots青春版','256','5','199','product1.jpg'),
+(null,'小米巨能写中性笔','7056','6','299','product2.jpg'),
+(null,'彩虹5号电池（10粒装）','126','7','169','product3.jpg'),
+(null,'米家迷你保温杯','322','8','999','product4.jpg'),
+(null,'米家迷你保温杯2','299','9','199','product5.jpg'),
+(null,'小米USB充电器快充版（18W）','70','10','368','product7.jpg'),
+(null,'多彩指尖积木','998','11','129','product6.jpg'),
+(null,'Redmi充电宝 20000mAh','123','12','899','product8.jpg'),
+(null,'彩虹7号电池（10粒装）','456','13','699','product9.jpg');
+
+

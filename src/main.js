@@ -26,11 +26,11 @@ Vue.prototype.http = http;
 Vue.config.productionTip = false
 
 Vue.use(ElementUI);
-Vue.component("Header",Header);
-Vue.component("Footer",Footer);
-axios.defaults.baseURL="http://127.0.0.1:8080"
-Vue.prototype.axios=axios
-Vue.prototype.$=$
+Vue.component("Header", Header);
+Vue.component("Footer", Footer);
+axios.defaults.baseURL = "http://127.0.0.1:8080"
+Vue.prototype.axios = axios
+Vue.prototype.$ = $
 
 
 new Vue({
