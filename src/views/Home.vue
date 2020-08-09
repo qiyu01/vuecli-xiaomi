@@ -1,7 +1,7 @@
 <template>
-<div class="wraper">
+<div class="wraper home">
     
-  <Header>
+  <Header :navcategory="true">
       
   </Header>
   <div class="home-hero container">
@@ -647,7 +647,7 @@ export default {
 }
 
 /* page-main */
-.page-main{
+.home .page-main{
     padding-top: 4px;
     padding-bottom: 12px;
     background: #f5f5f5;

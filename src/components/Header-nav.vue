@@ -13,10 +13,10 @@
                 <div class="header-nav">
                     <ul class="nav-list clearfix">
                         
-                        <li class="nav-category">
+                        <li :class="[navcategory ? 'active' : 'hidden', 'nav-category']">
                             
                                 <a href="" >
-                                    <span v-if="navcategory">全部商品分类</span>
+                                    <span v-if="!navcategory">全部商品分类</span>
                                 </a>
                             
                                 <Category-list></Category-list>
@@ -227,6 +227,7 @@
 import CategoryList from './Category-list.vue'
 export default {
   name: 'Headernav',
+  //navcategory控制是否给nav-category加hidden或者active属性，hidden属性会隐藏子组件category-list
   props: ["navcategory"],
   components: {CategoryList},
   mounted() {
@@ -352,6 +353,48 @@ export default {
     width: 127px;
     padding-right: 15px;
 }
+
+
+/* 
+.site-header .nav-category.active .home-hero-list-category {
+  display: block;
+} */
+
+/* category-list组件在product页面的样式微调 */
+.site-header .nav-category.hidden .home-hero-list-category {
+  display: none;
+}
+.site-header .nav-category:hover .home-hero-list-category {
+  display: block;
+}
+.site-header .nav-category .home-hero-list-category:hover {
+  display: block;
+}
+.site-header .nav-category{
+    height: 88px;
+}
+.site-header .nav-category.hidden .list-category {
+  background-color: #fff;
+  border: 1px solid #ff6700;
+  width: 232px;
+}
+.site-header .nav-category.hidden .list-category > li > a {
+  color: #424242;
+}
+.site-header .nav-category.hidden .list-category > li > a:hover {
+  color: #fff;
+}
+.site-header .nav-category.hidden .list-category > li > a > span {
+  opacity: 0.3;
+}
+.site-header .nav-category.hidden .list-category .children-list {
+  top: -1px;
+  left: 233px;
+  height: 457px;
+}
+
+
+
 
 .site-header .nav-item{
     position: relative;

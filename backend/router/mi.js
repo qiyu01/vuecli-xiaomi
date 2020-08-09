@@ -146,12 +146,12 @@ router.get("/v1/addcart", (req, res) => {
     // console.log(_pid)
     // console.log(_uname + "~~~~~" + _upwd);
     var num = 1;
-
+    console.log("_pid");
     var sql = "select * from cart where pid=? and uid=?";
     pool.query(sql, [_pid,_uid], (err, result) => {
         if (err) throw err;
         if (result.length > 0) {
-            console.log(result[0])
+            
             num += result[0].num;
             var cid = result[0].id;
             var sql = `update cart set num=${num} where id=${cid}`;
@@ -169,7 +169,7 @@ router.get("/v1/addcart", (req, res) => {
                 uid: _uid,
                 pid: _pid,
                 num: num,
-                img_src: "product1.jpg",
+                img_src: "product"+_pid+".jpg",
                 isselected: true
             };
             var sql = "insert into cart set ?";

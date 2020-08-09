@@ -1,6 +1,6 @@
 <template>
   <div class="product-wraper">
-    <Header :navcategory="navcategory"></Header>
+    <Header :navcategory="false"></Header>
     <!-- <Category-list class="category-list"></Category-list> -->
 
     <div class="xm-product-box">
@@ -505,32 +505,7 @@ export default {
 
 
 <style>
-/* category-list组件在product页面的样式微调 */
-.site-header .nav-category .home-hero-list-category {
-  display: none;
-}
-.site-header .nav-category:hover .home-hero-list-category {
-  display: block;
-}
-.site-header .nav-category .list-category {
-  background-color: #fff;
-  border: 1px solid #ff6700;
-  width: 232px;
-}
-.site-header .nav-category .list-category > li > a {
-  color: #424242;
-}
-.site-header .nav-category .list-category > li > a:hover {
-  color: #fff;
-}
-.site-header .nav-category .list-category > li > a > span {
-  opacity: 0.3;
-}
-.site-header .nav-category .list-category .children-list {
-  top: -1px;
-  left: 233px;
-  height: 457px;
-}
+
 
 /* 标题条 */
 

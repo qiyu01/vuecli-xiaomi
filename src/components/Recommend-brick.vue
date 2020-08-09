@@ -1,10 +1,10 @@
 <template>
   <li class="recommend-brick">
     <router-link to="/">
-      <img :src="img[2].src" alt />
-      <div class="recommend-name">米家多功能电煮壶</div>
-      <div class="recommend-price">399元</div>
-      <div class="recommend-tips">461人好评</div>
+      <img :src="brick.img" alt />
+      <div class="recommend-name">{{brick.name}}</div>
+      <div class="recommend-price">{{brick.price}}元</div>
+      <div class="recommend-tips">{{brick.good}}人好评</div>
     </router-link>
     <div class="recommend-action">
       <a href="javascript:void(0)" @click="addCart">加入购物车</a>
@@ -22,6 +22,7 @@ export default {
             addSuccess:false
         }
     },
+    props:["brick"],
     mounted() {
         this.img[0].src=require("../assets/images/product/product80/"+this.img[0].src)
         this.img[1].src=require("../assets/images/product/product80/"+this.img[1].src)
@@ -30,7 +31,7 @@ export default {
     },
     methods: {
         addCart(){
-            this.http.get("/mi/v1/addcart",{pid:9,uid:1}).then((data)=>{
+            this.http.get("/mi/v1/addcart",{pid:this.brick.pid,uid:1}).then((data)=>{
                 console.log(data)
                 if(data==1){
                     this.addSuccess=true
@@ -58,7 +59,7 @@ export default {
     background-color: #fff;
     text-align: center;
 }
-.recommend-brick .recommend-item a img{
+.recommend-brick  a img{
     display: block;
     margin: 40px auto 20px;
     width: 140px;

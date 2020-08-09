@@ -234,7 +234,7 @@
                                         <img :src="img[3].src" alt="">
                                     </a>
                                 </li>
-                                <Rec-brick v-for="i of 9" :key="i"></Rec-brick>
+                                <Rec-brick v-for="(item,i) of recommend" :key="i" :brick="item"></Rec-brick>
                                 <!-- <li class="recommend-item" v-for="i of 9" :key="i">
                                     <router-link to="/">
                                         <img :src="img[2].src" alt="">
@@ -481,6 +481,7 @@ export default {
                 i.img=require("../assets/images/product/product180/"+i.img)
             }
             this.recommend=data;
+            console.log(this.recommend)
         })
 
     },

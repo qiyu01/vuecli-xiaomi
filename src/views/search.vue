@@ -1,6 +1,6 @@
 <template>
     <div class="search">
-        <Header :navcategory="true"></Header>
+        <Header :navcategory="false"></Header>
         <div class="page-main">
                 <div class="loading"></div>
                 <div class="breadcrumbs">
@@ -88,6 +88,7 @@
                             </ul>
                         </div>
                         <div class="goods-list-box"></div>
+                        <div class="related-category"></div>
                     </div>
                 </div>
         </div>
@@ -162,5 +163,56 @@ export default {
     
     color: #b0b0b0;
     width: 124px;
+}
+
+.search-result{
+    padding: 20px 0 100px;
+}
+
+.search-result .order-list-box{
+        position: relative;
+    height: 30px;
+    margin: 20px 0;
+}
+.search-result .address-box{
+    display: none;
+    position: absolute;
+    padding: 42px 20px 0 20px;
+    top: 28px;
+    right: 0;
+    background: #fff;
+    z-index: 99;
+    width: 582px;
+    border: 1px solid #e3e3e3;
+    -webkit-box-shadow: 0 6px 12px 0 rgba(0,0,0,.15);
+    box-shadow: 0 6px 12px 0 rgba(0,0,0,.15);
+    margin: 0;
+}
+.search-result  .order-list{
+        float: left;
+    height: 30px;
+    line-height: 30px;
+}
+.search-result  .type-list{
+        float: right;
+    height: 30px;
+    line-height: 30px;
+}
+.search-result  .order-list .order-item{
+    float: left;
+    padding: 0 30px;
+    border-left: 1px solid #e0e0e0;
+    line-height: 20px;
+}
+.search-result  .order-list .order-item:first-child{
+    border-left: none;
+}
+.search-result  .order-item a{
+    color: #424242;
+    transition: color .2s;
+}
+.search-result  .order-item a:hover{
+    color: #ff6700;
+    transition: color .2s;
 }
 </style>
