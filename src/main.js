@@ -19,7 +19,7 @@ import 'element-ui/lib/theme-chalk/index.css';
 // import '../src/assets/iconfont/iconfont.css'
 import '../public/css/base.css'
 
-import http from './util/request.js'
+import http from './util/myhttp.js'
 //将方法挂载到Vue原型上
 Vue.prototype.http = http;
 

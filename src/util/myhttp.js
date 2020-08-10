@@ -1,6 +1,5 @@
 import axios from 'axios';
 import qs from 'qs'
-axios.defaults.baseURL="http://127.0.0.1:8080";
 // post请求
 function get(url, data = {}, method = 'get') {
     return new Promise((resolve, reject) => {

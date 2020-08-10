@@ -17,27 +17,41 @@
                         <div class="filter-list">
                             <ul class="item">
                                 <li><span>分类：</span></li>
-                                <li v-for="i in 7" :key="i"><router-link to="/">手机</router-link></li>
+                                <li><a href="javascript:void(0)">手机</a></li>
+                                <li><a href="javascript:void(0)">电视</a></li>
+                                <li><a href="javascript:void(0)">笔记本</a></li>
                             </ul>
                             <ul class="item">
                                 <li><span>拍照像素：</span></li>
-                                <li v-for="i in 4" :key="i"><router-link to="/">四摄像头</router-link></li>
+                                <li><a href="javascript:void(0)">四摄像头</a></li>
+                                <li><a href="javascript:void(0)">三摄像头</a></li>
+                                <li><a href="javascript:void(0)">双摄像头</a></li>
+                                <li><a href="javascript:void(0)">高清拍摄</a></li>
                             </ul>
                             <ul class="item">
                                 <li><span>屏幕大小：</span></li>
-                                <li v-for="i in 2" :key="i"><router-link to="/">超大屏</router-link></li>
+                                <li><a href="javascript:void(0)">超大屏</a></li>
+                                <li><a href="javascript:void(0)">中小屏</a></li>
                             </ul>
                             <ul class="item">
                                 <li><span>运行内存：</span></li>
-                                <li v-for="i in 3" :key="i"><router-link to="/">极速畅玩</router-link></li>
+                                <li><a href="javascript:void(0)">极速畅玩</a></li>
+                                <li><a href="javascript:void(0)">高速</a></li>
+                                <li><a href="javascript:void(0)">流畅</a></li>
                             </ul>
                             <ul class="item">
                                 <li><span>电池续航：</span></li>
-                                <li v-for="i in 1" :key="i"><router-link to="/">超长待机</router-link></li>
+                                <li><a href="javascript:void(0)">超长待机</a></li>
                             </ul>
                             <ul class="item">
                                 <li><span>高级选项：</span></li>
-                                <li v-for="i in 8" :key="i"><router-link to="/"> CPU型号</router-link></li>
+                                <li><a href="javascript:void(0)">CPU型号</a></li>
+                                <li><a href="javascript:void(0)">CPU主频</a></li>
+                                <li><a href="javascript:void(0)">前置摄像头</a></li>
+                                <li><a href="javascript:void(0)">屏幕分辨率</a></li>
+                                <li><a href="javascript:void(0)">储存容量</a></li>
+                                <li><a href="javascript:void(0)">机身厚度</a></li>
+                                <li><a href="javascript:void(0)">网络类型</a></li>
                             </ul>
                         </div>
                     </div>
@@ -50,44 +64,39 @@
                                 <li class="order-item"><a href="">综合</a></li>
                                 <li class="order-item"><a href="">新品</a></li>
                                 <li class="order-item"><a href="">销量</a></li>
-                                <li class="order-item"><a href="">价格</a></li>
+                                <li class="order-item"><a href="">价格 <i class="iconfont	icon-xiangshangjiantoucuxiao"></i></a></li>
                             </ul>
                             <ul class="type-list">
                                 <li>
-                                    <dir class="address-chosse">
-                                        <span>收货地</span>
+                                    <div class="address-choose">
+                                        <span class="label">收货地</span>
                                         <a href="" class="address-info">
                                             北京 北京市
                                         </a>
-                                    </dir>
+                                    </div>
                                 </li>
-                                <li>
+                                <li class="active">
                                     <a href="">
-                                        <span>
-                                            <i></i>
-                                        </span>
-                                        促销
+                                        <Check-box></Check-box><span class="label">促销</span>
                                     </a>
                                 </li>
                                 <li>
                                     <a href="">
-                                        <span>
-                                            <i></i>
-                                        </span>
-                                        分期
+                                        <Check-box></Check-box><span class="label">分期</span>
                                     </a>
                                 </li>
                                 <li>
                                     <a href="">
-                                        <span>
-                                            <i></i>
-                                        </span>
-                                        仅看有货
+                                        <Check-box></Check-box><span class="label">仅看有货</span>
                                     </a>
                                 </li>
                             </ul>
                         </div>
-                        <div class="goods-list-box"></div>
+                        <div class="goods-list-box">
+                            <div class="goods-list clearfix">
+                                <Goods-item v-for="(item,i) of product" :key="i" :item="item" :goodsImg="goodsImgColor(item)"></Goods-item>
+                            </div>
+                        </div>
                         <div class="related-category"></div>
                     </div>
                 </div>
@@ -97,14 +106,52 @@
 </template>
 <script>
 import RecBrick from '@/components/Recommend-brick.vue'
+import CheckBox from '@/components/Checkbox.vue'
+import GoodsItem from '@/components/Goods-item.vue'
+import {searchProduct,getImgBg} from '../util/api/getProduct'
 
 export default {
     data() {
         return {
-            
+            product:[],
+            goodsImg:[]
         }
     },
-    components:{RecBrick},
+    components:{RecBrick,CheckBox,GoodsItem},
+    mounted() {
+        searchProduct("小米",null).then(res=>{
+            var pid=[];
+            this.product=res
+
+            for(let i of this.product){
+                pid.push(i.id)
+            }
+            var pidAll=pid.join();
+           return getImgBg(pidAll)
+        }).then(res=>{
+            for(let i=0;i<res.length;i++){
+            res[i].src=require("../assets/images/product/product800/"+res[i].src)
+            res[i].active=false
+            }
+            this.goodsImg=res
+            console.log(this.goodsImg)
+            
+        })
+        
+    },
+    computed: {
+        goodsImgColor(){
+            return  (item)=>{
+              var newValue=[];
+                for(let i of this.goodsImg){
+                    if(item.id==i.pid){
+                    newValue.push(i)
+                    }
+                }
+            return newValue
+             }
+        }
+    },
 }
 </script>
 <style scoped>
@@ -158,6 +205,9 @@ export default {
     white-space: nowrap;
     text-overflow: ellipsis;
     color: #424242;
+}
+.search-filter .item li a:hover{
+    color: #ff6700;
 }
 .search-filter .item li:first-child{
     
@@ -214,5 +264,77 @@ export default {
 .search-result  .order-item a:hover{
     color: #ff6700;
     transition: color .2s;
+}
+.search-result .type-list li{
+    float: left;
+    margin-left: 30px;
+
+}
+.search-result .type-list .address-choose{
+    color: #424242;
+}
+.search-result .address-choose .label{
+    display: inline-block;
+    margin-right: 8px;
+    height: 30px;
+}
+.search-result .address-choose a{
+    color: #424242;
+    transition: color .2s;
+}
+
+.search-result .address-choose a{
+    color: #424242;
+    transition: color .2s;
+    position: relative;
+    display: inline-block;
+    background: #fff;
+    border: 1px solid #e3e3e3;
+    height: 14px;
+    line-height: 14px;
+    padding: 7px 14px;
+    cursor: pointer;
+}
+.search-result .address-choose a:hover{
+    color: #ff6700;
+}
+.search-result .address-choose a::after{
+    width: 0;
+    height: 0;
+    overflow: hidden;
+    font-size: 0;
+    line-height: 0;
+    border-width: 6px;
+    border-style: dashed dashed dashed solid;
+    border-color: rgba(0,0,0,0) rgba(0,0,0,0) rgba(0,0,0,0) #a9a9a9;
+    position: absolute;
+    -webkit-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    transform: rotate(45deg);
+    right: -4px;
+    bottom: -4px;
+    content: " ";
+}
+.search-result .type-list span.label:hover{
+    color: #ff6700;
+}
+/* 重写checkbox组件的样式 */
+.search-result .type-list li .my-checkbox{
+    background-color: #fff;
+    border-color:#e0e0e0 ;
+    margin-right: 8px;
+}
+
+.search-result .type-list li.active .my-checkbox{
+    border-color:#ff6700 ;
+    background-color: #ff6700;
+    color: #fff;
+}
+.search-result .type-list li.active .my-checkbox i{
+    color: #fff;
+}
+.search-result .goods-list{
+    width: 1240px;
+    min-height: 200px;
 }
 </style>

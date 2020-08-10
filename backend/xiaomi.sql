@@ -21,6 +21,7 @@ CREATE TABLE product(
   cid INT,
   FOREIGN KEY(cid) REFERENCES product_category(id)
 );
+
 /**商品规格(内存多少G)**/
 CREATE TABLE product_spec(
   id INT PRIMARY KEY AUTO_INCREMENT,
@@ -112,6 +113,16 @@ CREATE TABLE recommend(
   pid INT,
   price INT,
   img VARCHAR(256),
+  FOREIGN KEY(pid) REFERENCES product(id)
+);
+
+
+/**搜索页商品颜色数据和800px大图**/
+CREATE TABLE goods_item_color(
+  id INT PRIMARY KEY AUTO_INCREMENT,
+  colorname VARCHAR(256),
+  src VARCHAR(256),
+  pid INT,
   FOREIGN KEY(pid) REFERENCES product(id)
 );
 

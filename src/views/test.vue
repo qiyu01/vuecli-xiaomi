@@ -1,6 +1,6 @@
 <template>
     <div class="wraper">
-         
+            <Check-box></Check-box>
             <el-backtop target=".wraper">
                 <div
                     style="{
@@ -17,75 +17,18 @@
                 </div>
             </el-backtop>
           
-          <div>返回顶部</div>
-          <div>返回顶部</div>
-          <div>返回顶部</div>
-          <div>返回顶部</div>
-          <div>返回顶部</div>
-          <div>返回顶部</div>
-          <div>返回顶部</div>
-          <div>返回顶部</div>
-          <div>返回顶部</div>
-          <div>返回顶部</div>
-          <div>返回顶部</div>
-          <div>返回顶部</div>
-          <div>返回顶部</div>
-          <div>返回顶部</div>
-          <div>返回顶部</div>
-          <div>返回顶部</div>
-          <div>返回顶部</div>
-          <div>返回顶部</div>
-          <div>返回顶部</div>
-          <div>返回顶部</div>
-          <div>返回顶部</div>
-          <div>返回顶部</div>
-          <div>返回顶部</div>
-          <div>返回顶部</div>
-          <div>返回顶部</div>
-          <div>返回顶部</div>
-          <div>返回顶部</div>
-          <div>返回顶部</div>
-          <div>返回顶部</div>
-          <div>返回顶部</div>
-          <div>返回顶部</div>
-          <div>返回顶部</div>
-          <div>返回顶部</div>
-          <div>返回顶部</div>
-          <div>返回顶部</div>
-          <div>返回顶部</div>
-          <div>返回顶部</div>
-          <div>返回顶部</div>
-          <div>返回顶部</div>
-          <div>返回顶部</div>
-          <div>返回顶部</div>
-          <div>返回顶部</div>
-          <div>返回顶部</div>
-          <div>返回顶部</div>
-          <div>返回顶部</div>
-          <div>返回顶部</div>
-          <div>返回顶部</div>
-          <div>返回顶部</div>
-          <div>返回顶部</div>
-          <div>返回顶部</div>
-          <div>返回顶部</div>
-          <div>返回顶部</div>
-          <div>返回顶部</div>
-          <div>返回顶部</div>
-          <div>返回顶部</div>
-          <div>返回顶部</div>
-          <div>返回顶部</div>
-          <div>返回顶部</div>
-          <div>返回顶部</div>
-          <div>返回顶部</div>
+         
     </div>
 </template>
 <script>
+import CheckBox from "@/components/Checkbox.vue"
 export default {
     data(){
         return{
  
         }
     },
+    components:{CheckBox},
     mounted(){
         console.log(this.$store.state.products)
     }

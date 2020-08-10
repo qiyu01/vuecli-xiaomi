@@ -233,4 +233,23 @@ insert into recommend values
 (null,'Redmi充电宝 20000mAh','123','12','899','product8.jpg'),
 (null,'彩虹7号电池（10粒装）','456','13','699','product9.jpg');
 
+insert into goods_item_color values 
+(null,'国风雅灰','producta1.jpg',1),
+(null,'钛银黑','producta2.jpg',1),
+(null,'蜜桃金','producta3.jpg',1),
+(null,'晴空蓝','product1.jpg',2),
+(null,'云天黑','product2.jpg',3),
+(null,'砂石黑','product3.jpg',4),
+(null,'晴空蓝','product4.jpg',5),
+(null,'云天黑','product5.jpg',6),
+(null,'砂石黑','product6.jpg',7),
+(null,'砂石黑','product7.jpg',8),
+(null,'晴空蓝','product1.jpg',9),
+(null,'云天黑','product2.jpg',10),
+(null,'砂石黑','product3.jpg',11),
+(null,'砂石黑','product4.jpg',12),
+(null,'砂石黑','product5.jpg',13),
+(null,'晴空蓝','product6.jpg',14),
+(null,'云天黑','product7.jpg',15),
+(null,'砂石黑','product1.jpg',16);
 

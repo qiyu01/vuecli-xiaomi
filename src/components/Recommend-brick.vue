@@ -32,7 +32,7 @@ export default {
     methods: {
         addCart(){
             this.http.get("/mi/v1/addcart",{pid:this.brick.pid,uid:1}).then((data)=>{
-                console.log(data)
+               
                 if(data==1){
                     this.addSuccess=true
                     setTimeout(()=>{

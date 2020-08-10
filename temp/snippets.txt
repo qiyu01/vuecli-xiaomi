@@ -1,0 +1,18 @@
+{
+	"console.log": {
+		"prefix": ["co"],
+		"body": ["console.log($0)"],
+		"description": "console"
+	  },
+	  "javascript-void":{
+		"prefix": "aj",
+		"body": ["<a href=\"javascript:void(0)\">$0</a>"],
+		"description": "javascript"
+	  },
+	  "iconfont": {
+		"prefix": ["ic"],
+		"body": ["<i class=\"iconfont\t$0\"></i>"],
+		"description": "iconfont"
+	  }
+
+}
