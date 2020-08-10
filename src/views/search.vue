@@ -96,8 +96,21 @@
                             <div class="goods-list clearfix">
                                 <Goods-item v-for="(item,i) of product" :key="i" :item="item" :goodsImg="goodsImgColor(item)"></Goods-item>
                             </div>
+                            <div class="pagenav">
+                                <el-pagination
+    layout="prev, pager, next"
+    :total="1000">
+  </el-pagination>
+                            </div>
                         </div>
-                        <div class="related-category"></div>
+                        <div class="related-category">
+                            <p class="title">手机的相关商品分类</p>
+                            <span class="keyword"><a href="javascript:void(0)">手机保护壳</a></span>
+                            <span class="keyword"><a href="javascript:void(0)">手机配件</a></span>
+                            <span class="keyword"><a href="javascript:void(0)">手表</a></span>
+                            <span class="keyword"><a href="javascript:void(0)">服务</a></span>
+                            <span class="keyword"><a href="javascript:void(0)">数据线</a></span>
+                        </div>
                     </div>
                 </div>
         </div>
@@ -109,6 +122,7 @@ import RecBrick from '@/components/Recommend-brick.vue'
 import CheckBox from '@/components/Checkbox.vue'
 import GoodsItem from '@/components/Goods-item.vue'
 import {searchProduct,getImgBg} from '../util/api/getProduct'
+import {Pagination} from 'element-ui';
 
 export default {
     data() {
@@ -117,7 +131,7 @@ export default {
             goodsImg:[]
         }
     },
-    components:{RecBrick,CheckBox,GoodsItem},
+    components:{RecBrick,CheckBox,GoodsItem,Pagination,ElPagination: Pagination},
     mounted() {
         searchProduct("小米",null).then(res=>{
             var pid=[];
@@ -337,4 +351,104 @@ export default {
     width: 1240px;
     min-height: 200px;
 }
+.search-result .related-category{
+        -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    width: 1226px;
+    margin: 20px auto 0;
+    background: #fff;
+    padding: 20px 42px;
+}
+.search-result .related-category .title{
+    display: inline-block;
+    height: 42px;
+    line-height: 42px;
+    font-size: 14px;
+    color: #b0b0b0;
+    width: 210px;
+}
+.search-result .related-category .keyword{
+        display: inline-block;
+    height: 42px;
+    line-height: 42px;
+    font-size: 14px;
+    width: 108px;
+}
+.search-result .related-category .keyword a{
+        color: #424242;
+}
+.search-result .pagenav{
+        height: 30px;
+    padding: 15px 0;
+    text-align: center;
+}
+.search-result  /deep/ .el-pagination{
+    padding: 0;
+    background-color: transparent;
+    text-align: center;
+}
+.search-result /deep/ .el-pagination .btn-prev,
+.search-result /deep/ .el-pagination .btn-next{
+    display: inline-block;
+        box-sizing: content-box;
+
+    width: 48px!important;
+    height: 24px;
+    padding: 0!important;
+    margin: 0 5px;
+    font-size: 18px;
+    font-weight: 200;
+    line-height: 24px;
+    color: #b0b0b0;
+    background-color: transparent;
+}
+
+.search-result /deep/ .el-pagination .btn-prev .el-icon,
+.search-result /deep/ .el-pagination .btn-next .el-icon{
+        display: inline-block;
+        box-sizing: content-box;
+    width: 48px;
+    height: 24px;
+    padding: 3px 0;
+    margin: 0 5px;
+    font-size: 24px;
+    font-weight: 200;
+    line-height: 24px;
+    color: #b0b0b0;
+    vertical-align:-6px;
+}
+.search-result /deep/ .el-pagination .btn-prev .el-icon:hover,
+.search-result /deep/ .el-pagination .btn-next .el-icon:hover{
+    color: #fff;
+    background-color: #b0b0b0;
+}
+.search-result /deep/ .el-pagination .el-pager li{
+    display: inline-block;
+    box-sizing: content-box;
+    width: 48px;
+    height: 24px;
+    padding: 3px 0;
+    margin: 0 5px;
+    font-size: 18px;
+    font-weight: 200;
+    line-height: 24px;
+    color: #b0b0b0;
+    background-color: transparent;
+}
+.search-result /deep/ .el-pagination .el-pager li:hover{
+    background-color: #b0b0b0;
+    color:#fff;
+}
+.search-result /deep/ .el-pagination .el-pager .more:before {
+    line-height: 30px;
+    font-size: 10px;
+}
+.search-result /deep/ .el-pagination .el-pager .el-icon-d-arrow-left.el-icon-d-arrow-left:before,
+.search-result /deep/ .el-pagination .el-pager .el-icon-d-arrow-right:before {
+    line-height: 18px;
+    font-size: 18px;
+
+}
+
+
 </style>
