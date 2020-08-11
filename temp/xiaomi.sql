@@ -21,6 +21,7 @@ CREATE TABLE product(
   cid INT,
   FOREIGN KEY(cid) REFERENCES product_category(id)
 );
+
 /**商品规格(内存多少G)**/
 CREATE TABLE product_spec(
   id INT PRIMARY KEY AUTO_INCREMENT,
@@ -88,6 +89,7 @@ CREATE TABLE cart(
   pid INT,
   num INT,
   img_src VARCHAR(256),
+  isselected BOOL,
   FOREIGN KEY(pid) REFERENCES product(id),
   FOREIGN KEY(uid) REFERENCES user(id)
 );
@@ -103,12 +105,26 @@ CREATE TABLE service(
   price INT,
   FOREIGN KEY(pid) REFERENCES product(id)
 );
-/**购物车中某条商品选中的服务**/
-CREATE TABLE service_select(
+/**所有服务**/
+CREATE TABLE recommend(
   id INT PRIMARY KEY AUTO_INCREMENT,
-  sid INT,
-  tid INT,
-  cid INT,
-  FOREIGN KEY(sid) REFERENCES service(id),
-  FOREIGN KEY(cid) REFERENCES cart(id)
+  name VARCHAR(256),
+  good INT,
+  pid INT,
+  price INT,
+  img VARCHAR(256),
+  FOREIGN KEY(pid) REFERENCES product(id)
 );
+
+
+/**搜索页商品颜色数据和800px大图**/
+CREATE TABLE goods_item_color(
+  id INT PRIMARY KEY AUTO_INCREMENT,
+  colorname VARCHAR(256),
+  src VARCHAR(256),
+  pid INT,
+  FOREIGN KEY(pid) REFERENCES product(id)
+);
+
+
+

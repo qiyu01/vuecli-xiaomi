@@ -21,56 +21,14 @@
                             
                                 <Category-list></Category-list>
                         </li>
-                        <li class="nav-item">
-                            <a href="#">
-                            <span>小米手机</span>
-                            </a>
-                            
-                        </li>
-                        <li class="nav-item">
-                            <a href="#">
-                            <span>Redmi 红米</span>
+                        <li class="nav-item" v-for="(item,i) of navItem" :key="i" @mouseenter="dropDown" @mouseleave="dropUp">
+                            <a href="javascript:void(0)">
+                                <span>{{item.name}}</span>
                             </a>
                         </li>
-                        <li class="nav-item">
-                            <a href="#">
-                            <span>电视</span>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="#">
-                            <span>笔记本</span>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="#">
-                            <span>家电</span>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="#">
-                            <span>路由器</span>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="#">
-                            <span>智能硬件</span>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="#">
-                            <span>服务</span>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="#">
-                            <span>社区</span>
-                            </a>
-                        </li>
-                        
                     </ul>
                     
-                    <div class="item-children">
+                    <div :class="[navItemActive ? 'active' : '', 'item-children']" @mouseenter="dropDown" @mouseleave="dropUp">
                         <div class="container">
                             <!-- <div class="test">
                                 <a href="#">
@@ -197,93 +155,74 @@
                     </div>
                 </div>
                 <div class="header-search">
-                    <form action="#" class="search-form clearfix">
+                    <div class="search-form clearfix">
                         <label for="search" class="hide">站内搜索</label>
-                        <a href="#">
-                            <input type="search" class="search-text" id="search" name="keyword" autocomplete="off" placeholder="穿戴">
+                        <a href="javascript:void(0)">
+                            <input type="search" :class="[keylist ? 'border-info' : '', 'search-text']"   id="search" name="keyword" autocomplete="off" placeholder="穿戴" @focus="focus" v-model="keywords" @keyup.enter="search">
                         </a>
-                        <a href="#" class="search-btn iconfont icon-sousuo1">
-                            
-                        </a>
-                        <div class="keyword-list">
+                        <a href="javascript:void(0)" :class="[keylist ? 'border-info' : '', 'search-btn iconfont icon-sousuo1']" @click="search" ></a>
+
+                        <div :class="[keylist ? 'active' : '', 'keyword-list']">
                             <ul class="result-list">
-                                <li><a href="#">Redmi 9 五星高品质</a></li>
-                                <li><a href="#">小米手机</a></li>
-                                <li><a href="#">手环</a></li>
-                                <li><a href="#">小米10</a></li>
-                                <li><a href="#">全部商品</a></li>
-                                <li><a href="#">米家插线板 快充版 27W</a></li>
-                                <li><a href="#">Redmi 手环</a></li>
+                                <li><a href="javascript:void(0)">Redmi 9 五星高品质</a></li>
+                                <li><a href="javascript:void(0)">小米手机</a></li>
+                                <li><a href="javascript:void(0)">手环</a></li>
+                                <li><a href="javascript:void(0)">小米10</a></li>
+                                <li><a href="javascript:void(0)">全部商品</a></li>
+                                <li><a href="javascript:void(0)">米家插线板 快充版 27W</a></li>
+                                <li><a href="javascript:void(0)">Redmi 手环</a></li>
                             </ul>
                         </div>
 
 
-                    </form>
+                    </div>
                 </div>
             </div>
         </div>
 </template>
 <script>
 import CategoryList from './Category-list.vue'
+import {searchProduct,getImgBg} from '../util/api/getProduct'
+
 export default {
   name: 'Headernav',
+  data() {
+      return {
+                 
+          keywords:null,
+          keylist:false,
+          navItemActive:false,
+          navItem:[{name:"小米手机"},{name:"Redmi 红米"},{name:"电视"},{name:"笔记本"},{name:"家电"},{name:"路由器"},{name:"智能硬件"},{name:"服务"},{name:"社区"}],
+          navProduct:[{cid:1,name:"小米10 Pro",price:3999},{cid:1,name:"小米10",price:2999},{cid:1,name:"小米10 青春版",price:1999},{cid:1,name:"小米Mix alpha",price:4999},]
+      }
+  },
   //navcategory控制是否给nav-category加hidden或者active属性，hidden属性会隐藏子组件category-list
   props: ["navcategory"],
   components: {CategoryList},
   mounted() {
-      var that=this;
-       that.$(".header-nav .nav-item").hover(
-        function(){
-            
-            that.$(this).addClass("active").siblings().removeClass("active");
-            that.$(".header-nav .item-children").addClass("active");
-            // console.log($(this).index());
-            var index=that.$(this).index();
-            // $(".header-nav .children-list").eq()
-            // console.log($(".header-nav .children-list").eq(index));
-            that.$(".header-nav .children").eq(index-1).css({"z-index":1});
-            that.$(".header-nav .children").eq(index-1).siblings().css({"z-index":0});
-            that.$(".search-text").trigger("blur");
 
-        },
-        function(e){
-            // $(this).removeClass("active");
-            var index=that.$(this).index();
-            that.$(".header-nav .item-children").removeClass("active");
-            // $(".header-nav .children-list").index($(this).index()).css({"z-index":"1"});
-            // $(".header-nav .children-list").eq(index-1).css({"z-index":0});
-            }
-            )
-        that.$(".header-nav .item-children").hover(
-        function(){
-            var index=that.$(".header-nav .nav-item.active").index();
-            // console.log(eq)
-            that.$(".header-nav .item-children").addClass("active");
-            that.$(".header-nav .children").eq(index-1).css({"z-index":1});
-            that.$(".header-nav .children").eq(index-1).siblings().css({"z-index":0});
+  },
+  methods: {
+      dropDown(){
+          this.navItemActive=true
+          this.keylist=false
+      },
+      dropUp(){
+          this.navItemActive=false
 
-        },
-        function(){
-            var index=that.$(".header-nav .nav-item.active").index();
-            that.$(".header-nav .item-children").removeClass("active");
-            // $(".header-nav .children-list").eq(index-1).css({"z-index":0});
-            
-        }
-        )
-        that.$(".search-text").focus(
-        function(){
-            that.$(this).addClass("border-info");
-            that.$(".search-btn").addClass("border-info");
-            that.$(".keyword-list").addClass("active");
-        }
-        )
-         that.$(".search-text").blur(
-        function(){
-            that.$(this).removeClass("border-info");
-            that.$(".search-btn").removeClass("border-info");
-            that.$(".keyword-list").removeClass("active");
-        }
-    )
+      },
+      focus(){
+          this.keylist=true
+
+      },
+      search(){
+          this.keylist=false
+          this.$emit('search',this.keywords)
+          this.keywords="";
+          return false
+          
+          
+      }
   },
 }
 </script>
@@ -517,7 +456,7 @@ export default {
     width: 296px;
     margin-top: 25px;
 }
-.site-header .header-search form{
+.site-header .header-search .search-form{
     position: relative;
     width: 296px;
     height: 50px;

@@ -14,7 +14,7 @@
         </p>
         <div class="thumbs">
             <ul class="thumbs-list">
-                <li v-for="(color,i) of goodsImg" :key="i" :class="{ active: color.active}" @click="switchcolor(i)">
+                <li v-for="(color,i) of goodsImg" :key="i" :class="{ active: color.active}" @mouseenter="switchcolor(i)">
                     <a href="javascript:void(0)">
                     <img :src="color.src" alt="">
                     </a>

@@ -57,7 +57,7 @@
 
         </div>
         
-        <Header-nav :navcategory="navcategory">
+        <Header-nav :navcategory="navcategory" @search="search">
             
         </Header-nav>
     </div>
@@ -69,7 +69,12 @@ export default {
   props: ["navcategory"],//是否显示“全部商品分类”
   components: {
     HeaderNav
-  }
+  },
+  methods: {
+      search(val){
+          this.$emit('search',val)
+      }
+  },
 }
 </script>
 

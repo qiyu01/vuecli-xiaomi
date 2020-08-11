@@ -146,12 +146,12 @@ router.get("/v1/addcart", (req, res) => {
     // console.log(_pid)
     // console.log(_uname + "~~~~~" + _upwd);
     var num = 1;
-    
+
     var sql = "select * from cart where pid=? and uid=?";
-    pool.query(sql, [_pid,_uid], (err, result) => {
+    pool.query(sql, [_pid, _uid], (err, result) => {
         if (err) throw err;
         if (result.length > 0) {
-            
+
             num += result[0].num;
             var cid = result[0].id;
             var sql = `update cart set num=${num} where id=${cid}`;
@@ -169,7 +169,7 @@ router.get("/v1/addcart", (req, res) => {
                 uid: _uid,
                 pid: _pid,
                 num: num,
-                img_src: "product"+_pid+".jpg",
+                img_src: "product" + _pid + ".jpg",
                 isselected: true
             };
             var sql = "insert into cart set ?";
@@ -226,43 +226,77 @@ router.get("/v1/searchProduct", (req, res) => {
     res.header("Access-Control-Allow-Origin", "http://127.0.0.1:8081");
     var _kw = req.query.keywords;
     var _cid = req.query.category_id;
-    // console.log(_kw);
-    // console.log(_cid)
-    if(_kw && _cid){
+    var _pageSize = req.query.pageSize;
+    var start = (_pageSize - 1) * 20;
+    var total = {};
+    total.currentPage = _pageSize;
+    if (_kw && _cid) {
         var sql = `select * from product where cid=${_cid} and (name like '%${_kw}%')`;
-         pool.query(sql, [], (err, result) => {
-        if (err) throw err;
-        if (result.length > 0) {
-            res.send(result);
-        } else {
-            res.send("0");
-        }
+        pool.query(sql, [], (err, result) => {
+            if (err) throw err;
+            if (result.length > 0) {
+                total.num = result.length;
+                var sql = `select * from product where cid=${_cid} and (name like '%${_kw}%') LIMIT ${start},20`;
+                pool.query(sql, [], (err, result) => {
+                    if (err) throw err;
+                    if (result.length > 0) {
+                        result.push(total);
+                        res.send(result);
+                    } else {
+                        res.send("0");
+                    }
+                });
+            } else {
+                res.send("0");
+            }
         });
-    }else if(_kw && !_cid){
+
+
+    } else if (_kw && !_cid) {
         var sql = `select * from product where name like '%${_kw}%'`;
-         pool.query(sql, [], (err, result) => {
-        if (err) throw err;
-        if (result.length > 0) {
-            res.send(result);
-        } else {
-            res.send("0");
-        }
+        pool.query(sql, [], (err, result) => {
+            if (err) throw err;
+            if (result.length > 0) {
+                total.num = result.length;
+                var sql = `select * from product where name like '%${_kw}%' LIMIT ${start},20`;
+                pool.query(sql, [], (err, result) => {
+                    if (err) throw err;
+                    if (result.length > 0) {
+                        result.push(total);
+                        res.send(result);
+                    } else {
+                        res.send("0");
+                    }
+                });
+            } else {
+                res.send("0");
+            }
         });
-    }else if(!_kw && _cid){
+    } else if (!_kw && _cid) {
         var sql = `select * from product where cid=${_cid}`;
-         pool.query(sql, [], (err, result) => {
-        if (err) throw err;
-        if (result.length > 0) {
-            res.send(result);
-        } else {
-            res.send("0");
-        }
+        pool.query(sql, [], (err, result) => {
+            if (err) throw err;
+            if (result.length > 0) {
+                total.num = result.length;
+                var sql = `select * from product where cid=${_cid} LIMIT ${start},20`;
+                pool.query(sql, [], (err, result) => {
+                    if (err) throw err;
+                    if (result.length > 0) {
+                        result.push(total);
+                        res.send(result);
+                    } else {
+                        res.send("0");
+                    }
+                });
+            } else {
+                res.send("0");
+            }
         });
-    }else{
+    } else {
         res.send("0");
     }
     // console.log(_uname + "~~~~~" + _upwd);
-    
+
 });
 
 // 根据商品id返回800px大图
@@ -270,8 +304,8 @@ router.get("/v1/goods_img_bg", (req, res) => {
     // console.log(_uname + "~~~~~" + _upwd);
     res.header("Access-Control-Allow-Origin", "http://127.0.0.1:8081");
     var _pid = req.query.pidAll;
-    console.log(_pid)
-    var sql = "select * from goods_item_color where pid in ("+_pid+")";
+
+    var sql = "select * from goods_item_color where pid in (" + _pid + ")";
     pool.query(sql, [], (err, result) => {
         if (err) throw err;
         if (result.length > 0) {

@@ -2,9 +2,9 @@ import http from '../myhttp.js'
 import {URL} from "../serviceAPI.js"
 
 // keywords 关键词     category_id 分类  不想选的参数请传null
-function searchProduct(keywords,category_id){
+function searchProduct(keywords,category_id,pageSize){
     return new Promise((resolve,reject)=>{
-            http.get(URL.searchProduct,{keywords,category_id}).then(data=>{
+            http.get(URL.searchProduct,{keywords,category_id,pageSize}).then(data=>{
                 resolve(data)
             })
         }

@@ -1,6 +1,6 @@
 <template>
     <div class="search">
-        <Header :navcategory="false"></Header>
+        <Header :navcategory="false" @search="search"></Header>
         <div class="page-main">
                 <div class="loading"></div>
                 <div class="breadcrumbs">
@@ -12,7 +12,14 @@
                         <span>手机</span>
                     </div>
                 </div>
-                <div class="search-filter">
+                <div class="no-result" v-if="!noresult">
+                    <div class="container">
+                        <img :src="noresultSrc" alt="">
+                        <p class="empty">抱歉，没有找到商品“啊啊啊啊啊啊”，换个词搜搜吧</p>
+                        <div class="btn">查看全部商品</div>
+                    </div>
+                </div>
+                <div class="search-filter" v-if="noresult">
                     <div class="container">
                         <div class="filter-list">
                             <ul class="item">
@@ -56,7 +63,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="search-result">
+                <div class="search-result" v-if="noresult">
                     <div class="container">
                         <div class="order-list-box">
                             <div class="address-box"></div>
@@ -96,12 +103,7 @@
                             <div class="goods-list clearfix">
                                 <Goods-item v-for="(item,i) of product" :key="i" :item="item" :goodsImg="goodsImgColor(item)"></Goods-item>
                             </div>
-                            <div class="pagenav">
-                                <el-pagination
-    layout="prev, pager, next"
-    :total="1000">
-  </el-pagination>
-                            </div>
+                            <Page-nav :total="total" @pagechange="pageChange" id="pagenav"></Page-nav>
                         </div>
                         <div class="related-category">
                             <p class="title">手机的相关商品分类</p>
@@ -121,37 +123,77 @@
 import RecBrick from '@/components/Recommend-brick.vue'
 import CheckBox from '@/components/Checkbox.vue'
 import GoodsItem from '@/components/Goods-item.vue'
+import PageNav from '@/components/Pagenav.vue'
 import {searchProduct,getImgBg} from '../util/api/getProduct'
-import {Pagination} from 'element-ui';
+import Scroll from '../util/scroll'
 
 export default {
     data() {
         return {
+            keyword:null,
             product:[],
-            goodsImg:[]
+            goodsImg:[],
+            total:{},
+            noresult:true,
+            noresultSrc:require("../assets/images/icon-search-empty.png")
         }
     },
-    components:{RecBrick,CheckBox,GoodsItem,Pagination,ElPagination: Pagination},
+    components:{RecBrick,CheckBox,GoodsItem,PageNav},
     mounted() {
-        searchProduct("小米",null).then(res=>{
-            var pid=[];
-            this.product=res
+        this.getProduct("小米",null,1);
+        
+    },
+    methods: {
+        search(val){
+            this.keyword=val;
+        this.getProduct(val,null,1);
 
-            for(let i of this.product){
+        },
+        pageChange(val){
+        this.getProduct(this.keyword,null,val);
+        var scroll=new Scroll();
+        var top=scroll.getElementToPageTop(document.getElementById("pagenav"));
+        scroll.ScrollTop(0,300);
+        },
+        getProduct(keyword,cid,pageSize){
+            searchProduct(keyword,cid,pageSize).then(res=>{
+            
+            if(res){
+                var pid=[];
+            // 先从返回数据中拿到最后一个数组元素（后端约定好把total相关的参数（当前页码currentPage和总商品数量num）push到数组最后跟商品数据一起返回）
+            this.total=res[res.length-1];
+            //拿完后记得删掉最后一个元素，
+            res.splice(res.length-1,1)
+            //再赋值给this.product.就是当前页的商品。
+            this.product=res
+                this.noresult=true
+                for(let i of this.product){
+                // 拿到当前页的商品的id
                 pid.push(i.id)
+                }
+            // 把当前页商品的id数组变成字符串，传给后台查询回对应的图片和颜色
+                var pidAll=pid.join();
+            //记得再return一个promise以便then继续调用
+                return getImgBg(pidAll)
+            }else{
+                this.total.num=0;
+                this.total.currentPage=0
+                this.noresult=false
             }
-            var pidAll=pid.join();
-           return getImgBg(pidAll)
+            
         }).then(res=>{
-            for(let i=0;i<res.length;i++){
+            if(res){
+                for(let i=0;i<res.length;i++){
             res[i].src=require("../assets/images/product/product800/"+res[i].src)
+            // 增加active属性以便后面确定每个商品的颜色选定(goodsImg参数将会传给子组件gooditem)，这个active属性的使用会在gooditem里
             res[i].active=false
             }
             this.goodsImg=res
-            console.log(this.goodsImg)
+            }
+            
             
         })
-        
+        }
     },
     computed: {
         goodsImgColor(){
@@ -377,78 +419,15 @@ export default {
 .search-result .related-category .keyword a{
         color: #424242;
 }
-.search-result .pagenav{
-        height: 30px;
-    padding: 15px 0;
+
+.no-result{
+    padding: 60px 0 100px;
     text-align: center;
 }
-.search-result  /deep/ .el-pagination{
-    padding: 0;
-    background-color: transparent;
-    text-align: center;
+.no-result img{
+    width: 200px;
 }
-.search-result /deep/ .el-pagination .btn-prev,
-.search-result /deep/ .el-pagination .btn-next{
-    display: inline-block;
-        box-sizing: content-box;
-
-    width: 48px!important;
-    height: 24px;
-    padding: 0!important;
-    margin: 0 5px;
-    font-size: 18px;
-    font-weight: 200;
-    line-height: 24px;
-    color: #b0b0b0;
-    background-color: transparent;
+.no-result p{
+    margin: 14px 0;
 }
-
-.search-result /deep/ .el-pagination .btn-prev .el-icon,
-.search-result /deep/ .el-pagination .btn-next .el-icon{
-        display: inline-block;
-        box-sizing: content-box;
-    width: 48px;
-    height: 24px;
-    padding: 3px 0;
-    margin: 0 5px;
-    font-size: 24px;
-    font-weight: 200;
-    line-height: 24px;
-    color: #b0b0b0;
-    vertical-align:-6px;
-}
-.search-result /deep/ .el-pagination .btn-prev .el-icon:hover,
-.search-result /deep/ .el-pagination .btn-next .el-icon:hover{
-    color: #fff;
-    background-color: #b0b0b0;
-}
-.search-result /deep/ .el-pagination .el-pager li{
-    display: inline-block;
-    box-sizing: content-box;
-    width: 48px;
-    height: 24px;
-    padding: 3px 0;
-    margin: 0 5px;
-    font-size: 18px;
-    font-weight: 200;
-    line-height: 24px;
-    color: #b0b0b0;
-    background-color: transparent;
-}
-.search-result /deep/ .el-pagination .el-pager li:hover{
-    background-color: #b0b0b0;
-    color:#fff;
-}
-.search-result /deep/ .el-pagination .el-pager .more:before {
-    line-height: 30px;
-    font-size: 10px;
-}
-.search-result /deep/ .el-pagination .el-pager .el-icon-d-arrow-left.el-icon-d-arrow-left:before,
-.search-result /deep/ .el-pagination .el-pager .el-icon-d-arrow-right:before {
-    line-height: 18px;
-    font-size: 18px;
-
-}
-
-
 </style>

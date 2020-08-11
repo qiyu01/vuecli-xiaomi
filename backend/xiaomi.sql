@@ -16,6 +16,7 @@ CREATE TABLE product(
   title VARCHAR(256),
   /**商品最低价格，作为商品list里显示**/
   price  INT,
+  delprice INT,
   shotdesc VARCHAR(256),
   longdesc TINYTEXT,
   cid INT,
