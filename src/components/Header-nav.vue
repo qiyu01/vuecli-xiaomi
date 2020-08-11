@@ -21,14 +21,14 @@
                             
                                 <Category-list></Category-list>
                         </li>
-                        <li class="nav-item" v-for="(item,i) of navItem" :key="i" @mouseenter="dropDown" @mouseleave="dropUp">
+                        <li class="nav-item" v-for="(item,i) of navItem" :key="i" @mouseenter="dropDown(item)" @mouseleave="dropUp">
                             <a href="javascript:void(0)">
                                 <span>{{item.name}}</span>
                             </a>
                         </li>
                     </ul>
                     
-                    <div :class="[navItemActive ? 'active' : '', 'item-children']" @mouseenter="dropDown" @mouseleave="dropUp">
+                    <div :class="[navItemActive ? 'active' : '', 'item-children']" @mouseenter="mouseoverChild" @mouseleave="dropUp">
                         <div class="container">
                             <!-- <div class="test">
                                 <a href="#">
@@ -41,116 +41,16 @@
                             </div>
                             <ol class="test2">我你们啊</ol> -->
                             <ul class="children">
-                                <li><a href="#">
+                                <li v-for="(item,i) of activeNav" :key="i"><a href="#">
                                     <div class="figure">
-                                        <img src="images/mi10-qingchun.webp" alt="" width="160" height="110">
+                                        <img :src="item.src" alt="" width="160" height="110">
                                     </div>
-                                    <div class="title">小米10 青春版 5G</div>
-                                    <p class="price">1899元起</p>
+                                    <div class="title">{{item.name}}</div>
+                                    <p class="price">{{item.price}}元起</p>
                                 </a></li>
-                                <li><a href="#">
-                                    <div class="figure">
-                                        <img src="images/mi10-qingchun.webp" alt="" width="160" height="110">
-                                    </div>
-                                    <div class="title">小米10 青春版 5G</div>
-                                    <p class="price">1899元起</p>
-                                </a></li>
-                                <li><a href="#">
-                                    <div class="figure">
-                                        <img src="images/mi10-qingchun.webp" alt="" width="160" height="110">
-                                    </div>
-                                    <div class="title">小米10 青春版 5G</div>
-                                    <p class="price">1899元起</p>
-                                </a></li>
-                                <li><a href="#">
-                                    <div class="figure">
-                                        <img src="images/mi10-qingchun.webp" alt="" width="160" height="110">
-                                    </div>
-                                    <div class="title">小米10 青春版 5G</div>
-                                    <p class="price">1899元起</p>
-                                </a></li>
-                                <li><a href="#">
-                                    <div class="figure">
-                                        <img src="images/mi10-qingchun.webp" alt="" width="160" height="110">
-                                    </div>
-                                    <div class="title">小米10 青春版 5G</div>
-                                    <p class="price">1899元起</p>
-                                </a></li>
+                               
                             </ul>
-                            <ul class="children">
-                                <li><a href="#">
-                                    <div class="figure">
-                                        <img src="../../public/images/children-list1.webp" alt="" width="160" height="110">
-                                    </div>
-                                    <div class="title">小米10 青春版 5G</div>
-                                    <p class="price">1899元起</p>
-                                </a></li>
-                                <li><a href="#">
-                                    <div class="figure">
-                                        <img src="/images/children-list1.webp" alt="" width="160" height="110">
-                                    </div>
-                                    <div class="title">小米10 青春版 5G</div>
-                                    <p class="price">1899元起</p>
-                                </a></li>
-                                <li><a href="#">
-                                    <div class="figure">
-                                        <img src="images/children-list1.webp" alt="" width="160" height="110">
-                                    </div>
-                                    <div class="title">小米10 青春版 5G</div>
-                                    <p class="price">1899元起</p>
-                                </a></li>
-                                <li><a href="#">
-                                    <div class="figure">
-                                        <img src="images/children-list1.webp" alt="" width="160" height="110">
-                                    </div>
-                                    <div class="title">小米10 青春版 5G</div>
-                                    <p class="price">1899元起</p>
-                                </a></li>
-                                <li><a href="#">
-                                    <div class="figure">
-                                        <img src="images/children-list1.webp" alt="" width="160" height="110">
-                                    </div>
-                                    <div class="title">小米10 青春版 5G</div>
-                                    <p class="price">1899元起</p>
-                                </a></li>
-                            </ul>
-                            <ul class="children">
-                                <li><a href="#">
-                                    <div class="figure">
-                                        <img src="images/children-list3.webp" alt="" width="160" height="110">
-                                    </div>
-                                    <div class="title">小米10 青春版 5G</div>
-                                    <p class="price">1299元起</p>
-                                </a></li>
-                                <li><a href="#">
-                                    <div class="figure">
-                                        <img src="images/children-list3.webp" alt="" width="160" height="110">
-                                    </div>
-                                    <div class="title">小米10 青春版 5G</div>
-                                    <p class="price">1299元起</p>
-                                </a></li>
-                                <li><a href="#">
-                                    <div class="figure">
-                                        <img src="images/children-list3.webp" alt="" width="160" height="110">
-                                    </div>
-                                    <div class="title">小米10 青春版 5G</div>
-                                    <p class="price">1299元起</p>
-                                </a></li>
-                                <li><a href="#">
-                                    <div class="figure">
-                                        <img src="images/children-list3.webp" alt="" width="160" height="110">
-                                    </div>
-                                    <div class="title">小米10 青春版 5G</div>
-                                    <p class="price">1299元起</p>
-                                </a></li>
-                                <li><a href="#">
-                                    <div class="figure">
-                                        <img src="images/children-list3.webp" alt="" width="160" height="110">
-                                    </div>
-                                    <div class="title">小米10 青春版 5G</div>
-                                    <p class="price">1299元起</p>
-                                </a></li>
-                            </ul>
+                            
                         </div>
                     </div>
                 </div>
@@ -192,24 +92,42 @@ export default {
           keywords:null,
           keylist:false,
           navItemActive:false,
-          navItem:[{name:"小米手机"},{name:"Redmi 红米"},{name:"电视"},{name:"笔记本"},{name:"家电"},{name:"路由器"},{name:"智能硬件"},{name:"服务"},{name:"社区"}],
-          navProduct:[{cid:1,name:"小米10 Pro",price:3999},{cid:1,name:"小米10",price:2999},{cid:1,name:"小米10 青春版",price:1999},{cid:1,name:"小米Mix alpha",price:4999},]
+          navItem:[{id:1,name:"小米手机"},{id:2,name:"Redmi 红米"},{id:3,name:"电视"},{id:4,name:"笔记本"},{id:2,name:"家电"},{id:6,name:"路由器"},{id:7,name:"智能硬件"},{id:8,name:"服务"},{id:9,name:"社区"}],
+          navProduct:[{cid:1,name:"小米10 Pro",price:3999,src:"product1.webp"},{cid:1,name:"小米10",price:2999,src:"product2.webp"},{cid:1,name:"小米10 青春版",price:1999,src:"product3.webp"},{cid:1,name:"小米Mix alpha",price:4999,src:"product4.webp"},{cid:2,name:"Redmi K30 至尊纪念版",price:1999,src:"product5.webp"},{cid:2,name:"Redmi K30 Pro 系列",price:2699,src:"product6.webp"},{cid:2,name:"Redmi K30 系列",price:1399,src:"product7.webp"},{cid:2,name:"Redmi 10X 5G",price:1599,src:"product8.webp"},{cid:2,name:"Redmi Note 8",price:899,src:"product9.webp"},{cid:2,name:"Redmi 9",price:799,src:"product10.webp"},{cid:3,name:"小米电视 大师 65英寸OLED",price:12999,src:"product11.webp"},{cid:3,name:"Redmi 智能电视 MAX 98''",price:19999,src:"product12.webp"},{cid:3,name:"小米电视4A 60英寸",price:1899,src:"product13.webp"},{cid:3,name:"Redmi 智能电视 X55",price:2899,src:"product14.webp"},{cid:3,name:"Redmi 红米电视 70英寸 R70A",price:2888,src:"product15.webp"},{cid:3,name:"小米壁画电视 65英寸",price:6899,src:"product16.jpg"},{cid:4,name:"RedmiBook 16",price:4899,src:"product16.webp"},{cid:4,name:"RedmiBook 14 Ⅱ",price:4499,src:"product17.png"},{cid:5,name:"米家互联网空调C1（一级能效）",price:1899,src:"product18.png"},{cid:6,name:"Redmi路由器 AX6",price:399,src:"product19.webp"},{cid:7,name:"小米米家智能摄像机云台版",price:179,src:"product20.jpg"},{cid:7,name:"小米小爱老师",price:399,src:"product21.jpg"}],
+          activeNav:[]
       }
   },
   //navcategory控制是否给nav-category加hidden或者active属性，hidden属性会隐藏子组件category-list
   props: ["navcategory"],
   components: {CategoryList},
   mounted() {
-
+        for(let i of this.navProduct){
+            i.src=require("../assets/images/product/productNav/"+i.src)
+        }
+        
   },
   methods: {
-      dropDown(){
+      navswitch(cid){
+          this.activeNav=[]
+          for(let i of this.navProduct){
+              if(i.cid==cid){
+             this.activeNav.push(i);
+
+              }
+          }
+      },
+      dropDown(item){
+          this.navswitch(item.id);
           this.navItemActive=true
           this.keylist=false
       },
       dropUp(){
           this.navItemActive=false
 
+      },
+      mouseoverChild(){
+          this.navItemActive=true
+          this.keylist=false
       },
       focus(){
           this.keylist=true
