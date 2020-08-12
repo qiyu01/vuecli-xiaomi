@@ -316,7 +316,24 @@ router.get("/v1/searchProduct", (req, res) => {
 
 });
 
-// 根据商品id返回800px大图
+// 搜索商品根据商品id返回800px大图
+router.get("/v1/goods_img_bg", (req, res) => {
+    // console.log(_uname + "~~~~~" + _upwd);
+    res.header("Access-Control-Allow-Origin", "http://127.0.0.1:8081");
+    var _pid = req.query.pidAll;
+
+    var sql = "select * from goods_item_color where pid in (" + _pid + ")";
+    pool.query(sql, [], (err, result) => {
+        if (err) throw err;
+        if (result.length > 0) {
+            res.send(result);
+        } else {
+            res.send("0");
+        }
+    });
+});
+
+// 首页brick里的商品展示，手机类返回8条数据，电脑类返回两个7条数据，智能返回三个7条数据
 router.get("/v1/goods_img_bg", (req, res) => {
     // console.log(_uname + "~~~~~" + _upwd);
     res.header("Access-Control-Allow-Origin", "http://127.0.0.1:8081");

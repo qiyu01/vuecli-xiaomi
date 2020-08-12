@@ -15,8 +15,8 @@
       <div class="no-result" v-if="!noresult">
         <div class="container">
           <img :src="noresultSrc" alt />
-          <p class="empty">抱歉，没有找到商品“啊啊啊啊啊啊”，换个词搜搜吧</p>
-          <div class="btn">查看全部商品</div>
+          <p class="empty">抱歉，没有找到商品“{{keyword}}”，搜索"全部商品,小米,手机,电视,redmi"等关键字试试吧</p>
+          <div class="btn" @click="searchAll">查看全部商品</div>
         </div>
       </div>
       <div class="search-filter" v-if="noresult">
@@ -115,16 +115,16 @@
             <div class="address-box"></div>
             <ul class="order-list">
               <li class="order-item">
-                <a href>综合</a>
+                <a href="javascript:void(0)">综合</a>
               </li>
               <li class="order-item">
-                <a href>新品</a>
+                <a href="javascript:void(0)">新品</a>
               </li>
               <li class="order-item">
-                <a href>销量</a>
+                <a href="javascript:void(0)">销量</a>
               </li>
               <li class="order-item">
-                <a href>
+                <a href="javascript:void(0)">
                   价格
                   <i class="iconfont icon-xiangshangjiantoucuxiao"></i>
                 </a>
@@ -134,24 +134,24 @@
               <li>
                 <div class="address-choose">
                   <span class="label">收货地</span>
-                  <a href class="address-info">北京 北京市</a>
+                  <a href="javascript:void(0)" class="address-info">北京 北京市</a>
                 </div>
               </li>
               <li>
-                <a href>
-                  <Check-box></Check-box>
+                <a href="javascript:void(0)">
+                  <Check-box :active="false"></Check-box>
                   <span class="label">促销</span>
                 </a>
               </li>
-              <li class="active">
-                <a href>
-                  <Check-box></Check-box>
-                  <span class="label">分期</span>
+              <li>
+                <a href="javascript:void(0)">
+                  <Check-box :active="true"></Check-box>
+                <span class="label">分期</span>
                 </a>
               </li>
               <li>
-                <a href>
-                  <Check-box></Check-box>
+                <a href="javascript:void(0)">
+                  <Check-box :active="false"></Check-box>
                   <span class="label">仅看有货</span>
                 </a>
               </li>
@@ -238,6 +238,14 @@ export default {
     },
   },
   methods: {
+    //搜索全部商品
+    searchAll(){
+          
+          this.$router.push({name:'Search',query:{keyword:"全部商品"}});
+          this.reload()
+          
+          
+      },
     //   分类筛选
     searchFilter(keyword,item, pageSize) {
       this.currentCategory = item.cid;

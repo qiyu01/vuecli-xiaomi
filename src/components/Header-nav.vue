@@ -3,12 +3,12 @@
         <div class="site-header">
             <div class="container">
                 <div class="header-logo">
-                    <a href="#" class="logo">
+                    <router-link class="logo" to="/">
                         <span>
-                            <img src="images/mi-home.png" alt="">
-                            <img src="images/mi-logo.png" alt="">
+                            <img :src="logoImg[0].src" alt="">
+                            <img :src="logoImg[1].src" alt="">
                         </span>
-                    </a>
+                    </router-link>
                 </div>
                 <div class="header-nav">
                     <ul class="nav-list clearfix">
@@ -94,7 +94,7 @@ export default {
   name: 'Headernav',
   data() {
       return {
-                 
+          logoImg:[{id:1,src:"mi-home.png"},{id:2,src:"mi-logo.png"}],  
           keyword:null,
           keylist:false,
           navItemActive:false,
@@ -112,6 +112,9 @@ export default {
   mounted() {
         for(let i of this.navProduct){
             i.src=require("../assets/images/product/productNav/"+i.src)
+        }
+        for(let i of this.logoImg){
+            i.src=require("../assets/images/"+i.src)
         }
             this.keyword=this.$route.query.keyword
 

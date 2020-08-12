@@ -1,10 +1,28 @@
 <template>
     
-    <span class="my-checkbox">
+    <span :class="[active?'active':'','my-checkbox']" @click="check">
             <i class="iconfont	icon-gou"></i>
     </span>                                          
     
 </template>
+<script>
+export default {
+    data() {
+        return {
+            
+        }
+    },
+    mounted(){
+        
+    },
+    props:["active"],
+    methods: {
+        check(){
+            this.active=!this.active
+        }
+    },
+}
+</script>
 <style>
 
 .my-checkbox{
@@ -23,13 +41,21 @@
 }
 
 /* 选中或者全选的时候checkbox的父元素会添加.active */
-.active .my-checkbox{
+/* .active .my-checkbox{
     border-color:#ff6700 ;
     background-color: #ff6700;
     color: #fff;
 }
 .active .my-checkbox i{
     color: #fff;
+} */
+.my-checkbox.active{
+    border-color:#ff6700!important;
+    background-color: #ff6700!important;
+    color: #fff!important;
+}
+.my-checkbox.active i{
+    color: #fff!important;
 }
 
     

@@ -3,7 +3,7 @@
         <div class="site-topbar">
             <div class="container">
                 <div class="topbar-nav">
-                    <a href="javascriot:void(0);">小米商城</a>
+                    <router-link :to="{name:'Home'}">小米商城</router-link>
                     <span class="sep">|</span>
                     <a href="javascriot:void(0);">MIUI</a>
                     <span class="sep">|</span>
