@@ -57,7 +57,7 @@
 
         </div>
         
-        <Header-nav :navcategory="navcategory" @search="search">
+        <Header-nav :navcategory="navcategory">
             
         </Header-nav>
     </div>
@@ -71,9 +71,7 @@ export default {
     HeaderNav
   },
   methods: {
-      search(val){
-          this.$emit('search',val)
-      }
+      
   },
 }
 </script>

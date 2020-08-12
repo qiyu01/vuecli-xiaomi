@@ -10,10 +10,10 @@ const router = express.Router();
 //获取category列表
 router.get("/v1/category_restful", (req, res) => {
     // console.log(_uname + "~~~~~" + _upwd);
-    res.header("Access-Control-Allow-Origin","http://127.0.0.1:8081");
+    res.header("Access-Control-Allow-Origin", "http://127.0.0.1:8081");
     var sql = "select * from category";
     pool.query(sql, [], (err, result) => {
-        
+
         if (err) throw err;
         if (result.length > 0) {
 
@@ -25,7 +25,7 @@ router.get("/v1/category_restful", (req, res) => {
 });
 router.get("/v1/category_list", (req, res) => {
     // console.log(_uname + "~~~~~" + _upwd);
-    res.header("Access-Control-Allow-Origin","http://127.0.0.1:8081");
+    res.header("Access-Control-Allow-Origin", "http://127.0.0.1:8081");
     var sql = "select * from category_list";
     pool.query(sql, [], (err, result) => {
         if (err) throw err;
@@ -39,7 +39,7 @@ router.get("/v1/category_list", (req, res) => {
 // 根据id返回版本
 router.get("/v1/product_version", (req, res) => {
     // console.log(_uname + "~~~~~" + _upwd);
-    res.header("Access-Control-Allow-Origin","http://127.0.0.1:8081");
+    res.header("Access-Control-Allow-Origin", "http://127.0.0.1:8081");
     var sql = "select * from product_spec where pid=1";
     pool.query(sql, [], (err, result) => {
         if (err) throw err;
@@ -53,8 +53,320 @@ router.get("/v1/product_version", (req, res) => {
 // 根据id返回所有版本的颜色
 router.get("/v1/product_color", (req, res) => {
     // console.log(_uname + "~~~~~" + _upwd);
-    res.header("Access-Control-Allow-Origin","http://127.0.0.1:8081");
+    res.header("Access-Control-Allow-Origin", "http://127.0.0.1:8081");
     var sql = "select * from product_color where pid=1";
+    pool.query(sql, [], (err, result) => {
+        if (err) throw err;
+        if (result.length > 0) {
+            res.send(result);
+        } else {
+            res.send("0");
+        }
+    });
+});
+// 根id返回所颜色的图片
+router.get("/v1/product_img", (req, res) => {
+    // console.log(_uname + "~~~~~" + _upwd);
+    res.header("Access-Control-Allow-Origin", "http://127.0.0.1:8081");
+    var sql = "select * from product_img where pid=1";
+    pool.query(sql, [], (err, result) => {
+        if (err) throw err;
+        if (result.length > 0) {
+            res.send(result);
+        } else {
+            res.send("0");
+        }
+    });
+});
+// 根用户id返回购物车所有商品
+router.get("/v1/cart", (req, res) => {
+    // console.log(_uname + "~~~~~" + _upwd);
+    res.header("Access-Control-Allow-Origin", "http://127.0.0.1:8081");
+    var sql = "select * from cart where uid=1";
+    pool.query(sql, [], (err, result) => {
+        if (err) throw err;
+        if (result.length > 0) {
+            res.send(result);
+        } else {
+            res.send("0");
+        }
+    });
+});
+// 根用购物车里的商品id返回商品信息
+router.get("/v1/cart_product/:pid", (req, res) => {
+    res.header("Access-Control-Allow-Origin", "http://127.0.0.1:8081");
+    var _pid = req.params.pid;
+    var pid = _pid.split(",");
+    var value = [];
+    for (let i of pid) {
+        value.push("id=" + i)
+    }
+    value = value.join(" or ")
+    // console.log(_uname + "~~~~~" + _upwd);
+    var sql = "select * from product where " + value;
+    pool.query(sql, [], (err, result) => {
+        if (err) throw err;
+        if (result.length > 0) {
+            res.send(result);
+        } else {
+            res.send("0");
+        }
+    });
+});
+
+// 根据购物车里的商品id返回这些商品所有的服务
+router.get("/v1/service/:pid", (req, res) => {
+    res.header("Access-Control-Allow-Origin", "http://127.0.0.1:8081");
+    var _pid = req.params.pid;
+    var pid = _pid.split(",");
+    var value = [];
+    for (let i of pid) {
+        value.push("pid=" + i)
+    }
+    value = value.join(" or ")
+    // console.log(value)
+    // console.log(_uname + "~~~~~" + _upwd);
+    var sql = "select * from service where " + value;
+    pool.query(sql, [], (err, result) => {
+        if (err) throw err;
+
+        if (result.length > 0) {
+            res.send(result);
+        } else {
+            res.send("0");
+        }
+    });
+});
+
+// 根用商品id加入购物车
+router.get("/v1/addcart", (req, res) => {
+    res.header("Access-Control-Allow-Origin", "http://127.0.0.1:8081");
+    var _pid = req.query.pid;
+    var _uid = req.query.uid;
+    // console.log(_pid)
+    // console.log(_uname + "~~~~~" + _upwd);
+    var num = 1;
+
+    var sql = "select * from cart where pid=? and uid=?";
+    pool.query(sql, [_pid, _uid], (err, result) => {
+        if (err) throw err;
+        if (result.length > 0) {
+
+            num += result[0].num;
+            var cid = result[0].id;
+            var sql = `update cart set num=${num} where id=${cid}`;
+            pool.query(sql, [], (err, result) => {
+                if (err) throw err;
+                if (result.affectedRows > 0) {
+                    res.send("1");
+                } else {
+                    res.send("0");
+                }
+            });
+        } else {
+            var post = {
+                id: "null",
+                uid: _uid,
+                pid: _pid,
+                num: num,
+                img_src: "product" + _pid + ".jpg",
+                isselected: true
+            };
+            var sql = "insert into cart set ?";
+            pool.query(sql, post, (err, result) => {
+                if (err) throw err;
+                if (result.affectedRows > 0) {
+                    res.send("1");
+                } else {
+                    res.send("0");
+                }
+            });
+        }
+    });
+
+
+
+
+});
+
+// 根据购物车id删除对应的数据
+router.get("/v1/cart_delete", (req, res) => {
+    res.header("Access-Control-Allow-Origin", "http://127.0.0.1:8081");
+    var _cid = req.query.cid;
+    // console.log(value)
+    // console.log(_uname + "~~~~~" + _upwd);
+    var sql = "delete from cart where id=?";
+    pool.query(sql, [_cid], (err, result) => {
+        if (err) throw err;
+
+        if (result.length > 0) {
+            res.send(result);
+        } else {
+            res.send("0");
+        }
+    });
+});
+
+// 返回推荐商品
+router.get("/v1/recommend", (req, res) => {
+    // console.log(_uname + "~~~~~" + _upwd);
+    res.header("Access-Control-Allow-Origin", "http://127.0.0.1:8081");
+    var sql = "select * from recommend";
+    pool.query(sql, [], (err, result) => {
+        if (err) throw err;
+        if (result.length > 0) {
+            res.send(result);
+        } else {
+            res.send("0");
+        }
+    });
+});
+// 搜索商品根据keywords和category_id,pageSize为需要返回的页码
+router.get("/v1/searchProduct", (req, res) => {
+    res.header("Access-Control-Allow-Origin", "http://127.0.0.1:8081");
+    var _kw = req.query.keywords;
+    var _cid = req.query.category_id;
+    var _pageSize = req.query.pageSize;
+    var start = (_pageSize - 1) * 20;
+    // total对象会push到每次返回的数据里面返回给客户端，作为分页相关数据(有多少页，现在处于第几页)
+    var total = {};
+    total.currentPage = _pageSize;
+    
+    function isCategory(){
+            // 判断_kw的关键字是不是本身就属于分类（比如"手机"，"电视"）这种关键字，
+    var isCategory=false
+    var match=[];
+    var sql = `select * from product_category`;
+                pool.query(sql, [], (err, result) => {
+                    if (err) throw err;
+                    if (result.length > 0) {
+                        for(let i of result){
+                           if(i.name.search(_kw)!=-1){
+                            isCategory=true
+                            match.push(i.id)
+                           }
+                           
+                        }
+                    }
+                });
+    }
+
+
+    function quereAll(sql_1,sql_2){
+        pool.query(sql_1, [], (err, result) => {
+            if (err) throw err;
+            if (result.length > 0) {
+                total.num = result.length;
+                pool.query(sql_2, [], (err, result) => {
+                    if (err) throw err;
+                    if (result.length > 0) {
+                        result.push(total);
+                        res.send(result);
+                    } else {
+                        res.send("0");
+                    }
+                });
+            } else {
+                res.send("0");
+            }
+        });
+    }
+
+    if (_kw && _cid) {
+        var sql = `select * from product where cid=${_cid} and (name like '%${_kw}%')`;
+        pool.query(sql, [], (err, result) => {
+            if (err) throw err;
+            if (result.length > 0) {
+                total.num = result.length;
+                var sql = `select * from product where cid=${_cid} and (name like '%${_kw}%') LIMIT ${start},20`;
+                pool.query(sql, [], (err, result) => {
+                    if (err) throw err;
+                    if (result.length > 0) {
+                        result.push(total);
+                        res.send(result);
+                    } else {
+                        res.send("0");
+                    }
+                });
+            } else {
+                res.send("0");
+            }
+        });
+
+
+    } else if (_kw && !_cid) {
+        var sql = `select * from product where name like '%${_kw}%'`;
+        pool.query(sql, [], (err, result) => {
+            if (err) throw err;
+            if (result.length > 0) {
+                total.num = result.length;
+                var sql = `select * from product where name like '%${_kw}%' LIMIT ${start},20`;
+                pool.query(sql, [], (err, result) => {
+                    if (err) throw err;
+                    if (result.length > 0) {
+                        result.push(total);
+                        res.send(result);
+                    } else {
+                        res.send("0");
+                    }
+                });
+            } else {
+                res.send("0");
+            }
+        });
+    } else if (!_kw && _cid) {
+        var sql = `select * from product where cid=${_cid}`;
+        pool.query(sql, [], (err, result) => {
+            if (err) throw err;
+            if (result.length > 0) {
+                total.num = result.length;
+                var sql = `select * from product where cid=${_cid} LIMIT ${start},20`;
+                pool.query(sql, [], (err, result) => {
+                    if (err) throw err;
+                    if (result.length > 0) {
+                        result.push(total);
+                        res.send(result);
+                    } else {
+                        res.send("0");
+                    }
+                });
+            } else {
+                res.send("0");
+            }
+        });
+    } else {
+        var sql = `select * from product`;
+        pool.query(sql, [], (err, result) => {
+            if (err) throw err;
+            if (result.length > 0) {
+                total.num = result.length;
+                var sql = `select * from product LIMIT ${start},20`;
+                pool.query(sql, [], (err, result) => {
+                    if (err) throw err;
+                    if (result.length > 0) {
+                        result.push(total);
+                        res.send(result);
+                    } else {
+                        res.send("0");
+                    }
+                });
+            } else {
+                res.send("0");
+            }
+        });
+       
+    }
+    // console.log(_uname + "~~~~~" + _upwd);
+
+});
+
+// 根据商品id返回800px大图
+router.get("/v1/goods_img_bg", (req, res) => {
+    // console.log(_uname + "~~~~~" + _upwd);
+    res.header("Access-Control-Allow-Origin", "http://127.0.0.1:8081");
+    var _pid = req.query.pidAll;
+
+    var sql = "select * from goods_item_color where pid in (" + _pid + ")";
     pool.query(sql, [], (err, result) => {
         if (err) throw err;
         if (result.length > 0) {
@@ -612,7 +924,7 @@ router.put('/v1/upd', (req, res) => {
                     //// console.log(99);
                     if (result.changedRows > 0) {
                         res.send('1')
-                            //// console.log(88);
+                        //// console.log(88);
                     } else {
                         res.send('0')
                     }

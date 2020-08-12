@@ -26,6 +26,16 @@
                                 <span>{{item.name}}</span>
                             </a>
                         </li>
+                        <li class="nav-item">
+                            <a href="javascript:void(0)">
+                                <span>服务</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="javascript:void(0)">
+                                <span>社区</span>
+                            </a>
+                        </li>
                     </ul>
                     
                     <div :class="[navItemActive ? 'active' : '', 'item-children']" @mouseenter="mouseoverChild" @mouseleave="dropUp">
@@ -57,20 +67,16 @@
                 <div class="header-search">
                     <div class="search-form clearfix">
                         <label for="search" class="hide">站内搜索</label>
-                        <a href="javascript:void(0)">
-                            <input type="search" :class="[keylist ? 'border-info' : '', 'search-text']"   id="search" name="keyword" autocomplete="off" placeholder="穿戴" @focus="focus" v-model="keywords" @keyup.enter="search">
-                        </a>
-                        <a href="javascript:void(0)" :class="[keylist ? 'border-info' : '', 'search-btn iconfont icon-sousuo1']" @click="search" ></a>
+                        <span>
+                            <input type="search" :class="[keylist ? 'border-info' : '', 'search-text']"   id="search" name="keyword" autocomplete="off" :placeholder="keyPlaceholder.name" @focus="focus" @blur="blur" v-model="keyword" @keyup.enter="search">
+                        </span>
+                        <router-link :class="[keylist ? 'border-info' : '', 'search-btn iconfont icon-sousuo1']"  :to="{name:'Search', query: {keyword:content}}" @click.native="search"></router-link>
+                        
 
                         <div :class="[keylist ? 'active' : '', 'keyword-list']">
                             <ul class="result-list">
-                                <li><a href="javascript:void(0)">Redmi 9 五星高品质</a></li>
-                                <li><a href="javascript:void(0)">小米手机</a></li>
-                                <li><a href="javascript:void(0)">手环</a></li>
-                                <li><a href="javascript:void(0)">小米10</a></li>
-                                <li><a href="javascript:void(0)">全部商品</a></li>
-                                <li><a href="javascript:void(0)">米家插线板 快充版 27W</a></li>
-                                <li><a href="javascript:void(0)">Redmi 手环</a></li>
+                                <router-link :to="{name:'Search', query: {keyword:item.name}}" tag="li" v-for="(item,i) of keyRecommend" :key="i"><span>{{item.name}}</span></router-link>
+                                
                             </ul>
                         </div>
 
@@ -89,14 +95,17 @@ export default {
   data() {
       return {
                  
-          keywords:null,
+          keyword:null,
           keylist:false,
           navItemActive:false,
-          navItem:[{id:1,name:"小米手机"},{id:2,name:"Redmi 红米"},{id:3,name:"电视"},{id:4,name:"笔记本"},{id:2,name:"家电"},{id:6,name:"路由器"},{id:7,name:"智能硬件"},{id:8,name:"服务"},{id:9,name:"社区"}],
+          navItem:[{id:1,name:"小米手机"},{id:2,name:"Redmi 红米"},{id:3,name:"电视"},{id:4,name:"笔记本"},{id:2,name:"家电"},{id:6,name:"路由器"},{id:7,name:"智能硬件"}],
           navProduct:[{cid:1,name:"小米10 Pro",price:3999,src:"product1.webp"},{cid:1,name:"小米10",price:2999,src:"product2.webp"},{cid:1,name:"小米10 青春版",price:1999,src:"product3.webp"},{cid:1,name:"小米Mix alpha",price:4999,src:"product4.webp"},{cid:2,name:"Redmi K30 至尊纪念版",price:1999,src:"product5.webp"},{cid:2,name:"Redmi K30 Pro 系列",price:2699,src:"product6.webp"},{cid:2,name:"Redmi K30 系列",price:1399,src:"product7.webp"},{cid:2,name:"Redmi 10X 5G",price:1599,src:"product8.webp"},{cid:2,name:"Redmi Note 8",price:899,src:"product9.webp"},{cid:2,name:"Redmi 9",price:799,src:"product10.webp"},{cid:3,name:"小米电视 大师 65英寸OLED",price:12999,src:"product11.webp"},{cid:3,name:"Redmi 智能电视 MAX 98''",price:19999,src:"product12.webp"},{cid:3,name:"小米电视4A 60英寸",price:1899,src:"product13.webp"},{cid:3,name:"Redmi 智能电视 X55",price:2899,src:"product14.webp"},{cid:3,name:"Redmi 红米电视 70英寸 R70A",price:2888,src:"product15.webp"},{cid:3,name:"小米壁画电视 65英寸",price:6899,src:"product16.jpg"},{cid:4,name:"RedmiBook 16",price:4899,src:"product16.webp"},{cid:4,name:"RedmiBook 14 Ⅱ",price:4499,src:"product17.png"},{cid:5,name:"米家互联网空调C1（一级能效）",price:1899,src:"product18.png"},{cid:6,name:"Redmi路由器 AX6",price:399,src:"product19.webp"},{cid:7,name:"小米米家智能摄像机云台版",price:179,src:"product20.jpg"},{cid:7,name:"小米小爱老师",price:399,src:"product21.jpg"}],
-          activeNav:[]
+          activeNav:[],
+          keyRecommend:[{id:1,name:"Redmi 9"},{id:2,name:"小米手机"},{id:3,name:"小米10 Pro"},{id:4,name:"小米10"},{id:5,name:"全部商品"},{id:6,name:"小米电视"},{id:7,name:"智能"},],
+          keyPlaceholder:{id:1,name:"Redmi 9"}
       }
   },
+  inject: ['reload'],
   //navcategory控制是否给nav-category加hidden或者active属性，hidden属性会隐藏子组件category-list
   props: ["navcategory"],
   components: {CategoryList},
@@ -104,9 +113,50 @@ export default {
         for(let i of this.navProduct){
             i.src=require("../assets/images/product/productNav/"+i.src)
         }
+            this.keyword=this.$route.query.keyword
+
+        this.placeholderChange();
         
   },
+  watch: {
+      '$route'(to,from){
+            this.keyword=this.$route.query.keyword
+
+      }
+  },
+  computed: {
+      content(){
+          var newValue;
+          if(this.keyword){
+              newValue=this.keyword
+          }else{
+              newValue=this.keyPlaceholder.name
+          }
+          return newValue
+      }
+  },
   methods: {
+      search(){
+          var newValue;
+          if(this.keyword){
+              newValue=this.keyword
+          }else{
+              newValue=this.keyPlaceholder.name
+          }
+          this.$router.push({name:'Search',query:{keyword:newValue}});
+          this.reload()
+          
+          
+      },
+      placeholderChange(){
+          this.keyPlaceholder=this.keyRecommend[0]
+          var i=0
+          setInterval(()=>{
+              i++
+              if(i>6){i=0}
+              this.keyPlaceholder=this.keyRecommend[i]
+        },5000)
+      },
       navswitch(cid){
           this.activeNav=[]
           for(let i of this.navProduct){
@@ -133,14 +183,14 @@ export default {
           this.keylist=true
 
       },
-      search(){
+      blur(){
+          setTimeout(()=>{
           this.keylist=false
-          this.$emit('search',this.keywords)
-          this.keywords="";
-          return false
-          
-          
-      }
+
+          },150)
+
+      },
+      
   },
 }
 </script>
@@ -301,29 +351,7 @@ export default {
     /* border: 1px solid red; */
 }
 
-/* .test{
-    display: block;
-    position: absolute;
-    top: 0;left: 0;
-    background-color: #fff;
-    z-index: 100;
-    border: 1px solid red;
-    width: 0;height: 200px;
-}
-.test a{
-    display: inline-block;
-    padding: 35px 0 28px 0;
-    text-align: center;
-    cursor: auto;
-}
-.test a .figure{
-    border-right:1px solid #e0e0e0 ;
-    width: 200px;height: 100px;
-}
-.test3{
-    width: 50px;height: 50px;
-    background-color: brown;
-} */
+
 .site-header .header-nav .children{
     position: absolute;
     top: 0px;left: 0;
@@ -426,7 +454,10 @@ export default {
 .site-header .header-search div.keyword-list.active{
     display: block;
 }
-.site-header .header-search .keyword-list li a{
+.site-header .header-search .keyword-list li:hover{
+    cursor: pointer;
+}
+.site-header .header-search .keyword-list li span{
     position: relative;
     display: block;
     padding: 6px 15px;

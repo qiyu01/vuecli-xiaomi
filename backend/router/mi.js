@@ -221,47 +221,87 @@ router.get("/v1/recommend", (req, res) => {
         }
     });
 });
-// 搜索商品根据keywords和category_id
+// 搜索商品根据keywords和category_id,pageSize为需要返回的页码
 router.get("/v1/searchProduct", (req, res) => {
     res.header("Access-Control-Allow-Origin", "http://127.0.0.1:8081");
     var _kw = req.query.keywords;
     var _cid = req.query.category_id;
     var _pageSize = req.query.pageSize;
-    var start = (_pageSize - 1) * 20;
+    var pageCount=20  //每页多少条数据
+    var start = (_pageSize - 1) * pageCount;
+    // total对象会push到每次返回的数据里面返回给客户端，作为分页相关数据(有多少页，现在处于第几页)
     var total = {};
     total.currentPage = _pageSize;
-    if (_kw && _cid) {
-        var sql = `select * from product where cid=${_cid} and (name like '%${_kw}%')`;
-        pool.query(sql, [], (err, result) => {
-            if (err) throw err;
-            if (result.length > 0) {
-                total.num = result.length;
-                var sql = `select * from product where cid=${_cid} and (name like '%${_kw}%') LIMIT ${start},20`;
-                pool.query(sql, [], (err, result) => {
-                    if (err) throw err;
-                    if (result.length > 0) {
-                        result.push(total);
-                        res.send(result);
-                    } else {
-                        res.send("0");
-                    }
-                });
-            } else {
-                res.send("0");
-            }
-        });
 
 
-    } else if (_kw && !_cid) {
-        var sql = `select * from product where name like '%${_kw}%'`;
-        pool.query(sql, [], (err, result) => {
+    // 判断_kw的关键字是不是本身就属于分类（比如"手机"，"电视"）这种关键字，
+    var isCategory = false;
+    var match = [];
+    var sql = `select * from product_category`;
+    pool.query(sql, [], (err, result) => {
+        if (err) throw err;
+        if (result.length > 0) {
+            for (let i of result) {
+                if (i.name.search(_kw) != -1) {
+                    isCategory = true
+                    match.push(i.id)
+                }
+            }
+            if (isCategory && _kw!="小米") {
+                // 如果_kw是分类的关键字,直接拿找到符合的分类进行查询
+                var value=match.join();
+                if(_cid){
+                    var sql1 = `select * from product where cid=${_cid}`;
+                var sql2 = `select * from product where cid=${_cid} LIMIT ${start},${pageCount}`;
+                queryAll(sql1, sql2)
+                }else{
+                    var sql1 = `select * from product where cid in (${value})`;
+                var sql2 = `select * from product where cid in (${value}) LIMIT ${start},${pageCount}`;
+                queryAll(sql1, sql2)
+                }
+                
+
+            } else {
+                // 如果_kw不是分类的关键字,就判断前端设置的参数状态，
+                if (_kw && _cid) {
+                    //前端设置了keword和分类的id，那意味着需要查询对应的分类里商品名称包含关键字的数据
+                    var sql1 = `select * from product where cid=${_cid} and (name like '%${_kw}%')`;
+                    var sql2 = `select * from product where cid=${_cid} and (name like '%${_kw}%') LIMIT ${start},${pageCount}`;
+                    queryAll(sql1, sql2)
+                } else if (_kw && !_cid) {
+                    //前端设置了keword，分类的id=null，那意味着只需要查询所有的商品名称里包含关键字的数据
+                    var sql1 = `select * from product where name like '%${_kw}%'`;
+                    var sql2 = `select * from product where name like '%${_kw}%' LIMIT ${start},${pageCount}`;
+                    queryAll(sql1, sql2)
+                } else if (!_kw && _cid) {
+                    //前端设置的keword=null，分类的id不是null，那意味着只需要查询对应的分类所有的数据
+                    var sql1 = `select * from product where cid=${_cid}`;
+                    var sql2 = `select * from product where cid=${_cid} LIMIT ${start},${pageCount}`;
+                    queryAll(sql1, sql2)
+                } else {
+                    //前端设置的keword=null而且id=null，意味着查询的是全部商品
+                    var sql1 = `select * from product`;
+                    var sql2 = `select * from product LIMIT ${start},${pageCount}`;
+                    queryAll(sql1, sql2)
+                }
+
+            }
+        }
+    });
+
+
+
+    function queryAll(sql_1, sql_2) {
+        // 第一次query返回全部符合的数据条数，以便作为total参数附加的返回的数据里面的总页数num，如果没有符合的数据，直接send(0)
+        pool.query(sql_1, [], (err, result) => {
             if (err) throw err;
             if (result.length > 0) {
                 total.num = result.length;
-                var sql = `select * from product where name like '%${_kw}%' LIMIT ${start},20`;
-                pool.query(sql, [], (err, result) => {
+                // 在第一次query查到有数据后，开始按照要求返回对应的页数的数据
+                pool.query(sql_2, [], (err, result) => {
                     if (err) throw err;
                     if (result.length > 0) {
+                        // 在数据末尾加入total对象，储存总符合的数据有多少条和当前页码
                         result.push(total);
                         res.send(result);
                     } else {
@@ -272,30 +312,7 @@ router.get("/v1/searchProduct", (req, res) => {
                 res.send("0");
             }
         });
-    } else if (!_kw && _cid) {
-        var sql = `select * from product where cid=${_cid}`;
-        pool.query(sql, [], (err, result) => {
-            if (err) throw err;
-            if (result.length > 0) {
-                total.num = result.length;
-                var sql = `select * from product where cid=${_cid} LIMIT ${start},20`;
-                pool.query(sql, [], (err, result) => {
-                    if (err) throw err;
-                    if (result.length > 0) {
-                        result.push(total);
-                        res.send(result);
-                    } else {
-                        res.send("0");
-                    }
-                });
-            } else {
-                res.send("0");
-            }
-        });
-    } else {
-        res.send("0");
     }
-    // console.log(_uname + "~~~~~" + _upwd);
 
 });
 
