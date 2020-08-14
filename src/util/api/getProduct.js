@@ -18,6 +18,14 @@ function getImgBg(pidAll){
         }
     )
 }
+function brickProduct(){
+    return new Promise((resolve,reject)=>{
+            http.get(URL.getBrickProduct,{}).then(data=>{
+                resolve(data)
+            })
+        }
+    )
+}
 
 // 活动列表页
 function getActive(){
@@ -43,4 +51,4 @@ function getActiveDetail(tid){
         }
     )
 }
-export{searchProduct,getImgBg}
+export{searchProduct,getImgBg,brickProduct}

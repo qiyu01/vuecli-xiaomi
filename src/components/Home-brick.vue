@@ -1,185 +1,125 @@
 <template>
-  <div class="home-brick-box xm-plain-box">
+  <div class="home-brick-box">
     <div class="box-hd">
       <slot name="title">
         <h2 class="title">手机</h2>
       </slot>
       <div class="more">
-        <slot name="more"></slot>
+        <!-- cid等于1的时候也就是手机brick，显示查看全部 -->
+        <router-link to="search" v-if="cid==1">
+          查看全部
+          <i class="iconfont icon-jiantou1"></i>
+        </router-link>
+        <!-- cid不等于1的时候也就是除了手机birck，显示这个tab-list -->
+        <ul class="tab-list" v-if="cid==1?0:1">
+            <li v-for="(item, i) of gettabs(cid)" :key="i" :class="[item.isactive?'active':'']" @mouseenter="tabChange(item)">{{item.name}}</li>
+        </ul>
       </div>
     </div>
     <div class="box-bd clearfix">
       <div class="span4">
         <ul class="brick-promo-list">
-          <slot name="promo">
-            <li class="brick-item">
-              <a href>
-                <img src="images/promo1.webp" alt />
-              </a>
-            </li>
-          </slot>
+          <li :class="[cid==1?'':'brick-item-m','brick-item']">
+                <router-link to="product">
+                  <img :src="getpromoImg(cid,0)" alt="">
+                </router-link>
+          </li>
+          <li class="brick-item brick-item-m" v-if="cid==1?0:1">
+                <router-link to="product">
+                  <img :src="getpromoImg(cid,1)" alt="">
+                </router-link>
+          </li>
         </ul>
       </div>
       <div class="span16">
-        <slot name="bricklist1">
-          <ul class="brick-list clearfix">
-            <li v-for="i in 7" :key="i" class="brick-item">
-              <a href>
-                <div class="figure">
-                  <img src="images/brick-list1.webp" alt />
-                </div>
-                <h3 class="title">小米10 青春版 5G</h3>
-                <p class="desc">50倍潜望式变焦 / 轻薄5G手机</p>
-                <p class="price">
-                  <span class="num">1899</span>元
-                  <span>起</span>
-                  <del>
-                    <span class="num">2099</span>
-                    元
-                  </del>
-                </p>
-              </a>
-            </li>
-            <slot name="brickitem">
-              <li class="brick-item">
-                <a href>
-                  <div class="figure">
-                    <img src="images/brick-list1.webp" alt />
-                  </div>
-                  <h3 class="title">小米10 青春版 5G</h3>
-                  <p class="desc">50倍潜望式变焦 / 轻薄5G手机</p>
-                  <p class="price">
-                    <span class="num">1899</span>元
-                    <span>起</span>
-                    <del>
-                      <span class="num">2099</span>
-                      元
-                    </del>
-                  </p>
-                </a>
-              </li>
-            </slot>
+          <ul v-for="(tab,t) of gettabs(cid)" :key="t" :class="[tab.isactive?'active':'','brick-list clearfix']">
+            <Brick-item v-for="(item,i) of brickList(t)" :key="i" :product="item"></Brick-item>
+            <Brick-item-s :img="itemS[t]" v-if="cid==1?0:1"></Brick-item-s>
           </ul>
-        </slot>
-        <slot name="bricklist2">
-          <ul class="brick-list clearfix">
-            <li v-for="i in 7" :key="i" class="brick-item">
-              <a href>
-                <div class="figure">
-                  <img src="images/brick-list6.webp" alt />
-                </div>
-                <h3 class="title">小米10 青春版 5G</h3>
-                <p class="desc">50倍潜望式变焦 / 轻薄5G手机</p>
-                <p class="price">
-                  <span class="num">1899</span>元
-                  <span>起</span>
-                  <del>
-                    <span class="num">2099</span>
-                    元
-                  </del>
-                </p>
-              </a>
-            </li>
-            <li class="brick-item-s brick-item">
-              <a href>
-                <div class="figure">
-                  <img src="images/brick-item-s2.webp" alt />
-                </div>
-                <h3 class="title">Air 13.3" 2019款</h3>
-                <p class="price">
-                  <span class="num">5699</span>元
-                  <span>起</span>
-                </p>
-              </a>
-            </li>
-            <li class="brick-item-s brick-item">
-              <a href>
-                <div class="figure figure-more">
-                  <i class="iconfont icon-yuanquanjiantouyou
-                   "></i>
-                </div>
-                <div class="more">
-                  浏览更多
-                  <small>电视影音</small>
-                </div>
-              </a>
-            </li>
-          </ul>
-        </slot>
-        <slot name="bricklist3">
-          <ul class="brick-list clearfix">
-            <li v-for="i in 7" :key="i" class="brick-item">
-              <a href>
-                <div class="figure">
-                  <img src="images/brick-list3.webp" alt />
-                </div>
-                <h3 class="title">小米10 青春版 5G</h3>
-                <p class="desc">50倍潜望式变焦 / 轻薄5G手机</p>
-                <p class="price">
-                  <span class="num">1899</span>元
-                  <span>起</span>
-                  <del>
-                    <span class="num">2099</span>
-                    元
-                  </del>
-                </p>
-              </a>
-            </li>
-            <li class="brick-item-s brick-item">
-              <a href>
-                <div class="figure">
-                  <img src="images/brick-item-s2.webp" alt />
-                </div>
-                <h3 class="title">Air 13.3" 2019款</h3>
-                <p class="price">
-                  <span class="num">5699</span>元
-                  <span>起</span>
-                </p>
-              </a>
-            </li>
-            <li class="brick-item-s brick-item">
-              <a href>
-                <div class="figure figure-more">
-                  <i class="iconfont icon-yuanquanjiantouyou
-                   "></i>
-                </div>
-                <div class="more">
-                  浏览更多
-                  <small>电视影音</small>
-                </div>
-              </a>
-            </li>
-          </ul>
-        </slot>
-        
       </div>
     </div>
   </div>
 </template>
 <script>
+import BrickItem from "./Brick-item.vue";
+import BrickItemS from "./Brick-item-s.vue";
 export default {
   name: "Homebrick",
-  props: {
-    msg: String
+  data() {
+    return {
+      tabs:[{cid:1,name:null,isactive:true},{cid:3,name:"热门",isactive:true},{cid:3,name:"电视影音",isactive:false},{cid:11,name:"热门",isactive:true},{cid:11,name:"安防",isactive:false},{cid:11,name:"出行",isactive:false}],
+      itemS:[{src:"itemS1.webp"},{src:"itemS2.webp"},{src:"itemS3.webp"}],
+      promoImg:[{src:"promo1.webp"},{src:"promo2.webp"},{src:"promo3.webp"},{src:"promo4.webp"},{src:"promo5.webp"}]
+    }
+  },
+  props:["products","cid"],
+  components:{BrickItem,BrickItemS},
+  methods: {
+      tabChange(item){
+        for(let i of this.tabs){
+          if(i.cid==item.cid){
+            i.isactive=false
+          }
+        }
+        item.isactive=true
+      }
+  },
+  computed:{
+    //该属性负责返回每个birckList里显示的商品。
+    brickList(){
+      return  (t)=>{
+              var newValue=[];
+              var tabCount;
+              if(this.cid==1){
+                // 手机那个brick显示8个
+                tabCount=8
+              }else{
+                // 其他的brick显示7个
+                tabCount=7
+              }
+                for(let i=0;i<tabCount;i++){
+                  var item=this.products[t*tabCount+i]
+                  if(item!=null){
+                    newValue.push(item)
+                  }
+                    
+                }
+            return newValue
+             }
+    },
+    // 负责返回对应的分类brick前面的promo图
+    getpromoImg(){
+      return (cid,i)=>{
+          if(cid==1){
+            return this.promoImg[i].src
+          }else if(cid==3){
+            return this.promoImg[i+1].src
+          }else{
+            return this.promoImg[i+3].src
+          }
+      }
+    },
+    //负责返回对应tab的数量
+    gettabs(){
+      return (cid)=>{
+        var temp=[];
+          for (let i of this.tabs){
+          if(i.cid==cid){
+            temp.push(i)
+          }
+        }
+        return temp
+        
+      }
+    }
   },
   mounted() {
-    var _this = this;
-    _this.$(".home-brick-box .tab-list li").mouseenter(function() {
-      _this
-        .$(this)
-        .addClass("active")
-        .siblings()
-        .removeClass("active");
-      var target = _this.$(this).index();
-      _this
-        .$(this)
-        .parents(".xm-plain-box")
-        .find("ul.brick-list")
-        .eq(target)
-        .css("display", "block")
-        .siblings()
-        .css("display", "none");
-    });
+    for(let i of this.itemS){
+                  i.src=require("../assets/images/product/product200/"+i.src)
+              }
+    for(let i of this.promoImg){
+                  i.src=require("../assets/images/product/product200/"+i.src)
+              }
   }
 };
 </script>
@@ -187,34 +127,34 @@ export default {
 
 <style>
 /* page-main下各个模块的标题统一样式 */
-.xm-plain-box .box-hd {
+.home-brick-box .box-hd {
   position: relative;
   height: 58px;
   -webkit-font-smoothing: antialiased;
 }
-.xm-plain-box .box-hd .title {
+.home-brick-box .box-hd .title {
   margin: 0;
   font-size: 22px;
   font-weight: 200;
   line-height: 58px;
   color: #333;
 }
-.xm-plain-box .box-hd .more {
+.home-brick-box .box-hd .more {
   position: absolute;
   top: 0;
   right: 0;
 }
-.xm-plain-box .box-hd .more a {
+.home-brick-box .box-hd .more a {
   font-size: 16px;
   line-height: 58px;
   color: #424242;
   -webkit-transition: all 0.4s;
   transition: all 0.4s;
 }
-.xm-plain-box .box-hd .more a:hover {
+.home-brick-box .box-hd .more a:hover {
   color: #ff6700;
 }
-.xm-plain-box .box-hd .more a i {
+.home-brick-box .box-hd .more a i {
   width: 12px;
   height: 12px;
   padding: 4px;
@@ -229,7 +169,7 @@ export default {
   transition: all 0.4s;
   text-align: center;
 }
-.xm-plain-box .box-hd .more a:hover i {
+.home-brick-box .box-hd .more a:hover i {
   background-color: #ff6700;
 }
 
@@ -245,6 +185,11 @@ export default {
   margin-bottom: 14px;
   -webkit-transition: all 0.2s linear;
   transition: all 0.2s linear;
+}
+.home-brick-box .brick-item:hover {
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+  -webkit-transform: translate3d(0, -2px, 0);
+  transform: translate3d(0, -2px, 0);
 }
 .home-brick-box .span4 .brick-item img {
   width: 234px;
@@ -264,76 +209,24 @@ export default {
 .home-brick-box .brick-list {
   height: 614px;
 }
-.home-brick-box .brick-list + .brick-list {
+.home-brick-box .brick-list{
   display: none;
 }
-.home-brick-box .brick-list .brick-item {
-  height: 260px;
-  padding: 20px 0;
-  text-align: center;
-  position: relative;
-  z-index: 1;
-  float: left;
-  width: 234px;
-  margin-left: 14px;
-  margin-bottom: 14px;
-  background: #fff;
-  -webkit-transition: all 0.2s linear;
-  transition: all 0.2s linear;
+.home-brick-box .brick-list.active{
+  display: block;
 }
-.home-brick-box .brick-item:hover {
-  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
-  -webkit-transform: translate3d(0, -2px, 0);
-  transform: translate3d(0, -2px, 0);
-}
-.home-brick-box .brick-item .figure {
-  margin: 0 auto 18px;
-}
-.home-brick-box .brick-item .figure img {
-  width: 160px;
-  height: 160px;
-}
-.home-brick-box .brick-item .title {
-  margin: 0 10px 2px;
-  text-align: center;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  overflow: hidden;
 
-  font-size: 14px;
-  font-weight: 400;
-  color: #333;
-}
-.home-brick-box .brick-item .desc {
-  margin: 0 10px 10px;
-  height: 18px;
-  font-size: 12px;
-  color: #b0b0b0;
-
-  text-align: center;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  overflow: hidden;
-}
-.home-brick-box .brick-item .price {
-  margin: 0 10px 14px;
-  color: #ff6700;
-}
-.home-brick-box .brick-item .price del {
-  margin-left: 0.5em;
-  color: #b0b0b0;
-}
 
 /* 家电 */
 /* 家电模块大标题右侧tab，后面的模块的标题都是此样式 */
 
-.xm-plain-box .box-hd .more .tab-list {
+.home-brick-box .box-hd .more .tab-list {
   margin: 0;
   padding: 16px 0 0;
   list-style-type: none;
   font-size: 16px;
 }
-.xm-plain-box .box-hd .more .tab-list li {
+.home-brick-box .box-hd .more .tab-list li {
   display: inline-block;
   padding: 0;
   margin: 0 0 0 30px;
@@ -343,64 +236,11 @@ export default {
   transition: border 0.3s;
   cursor: pointer;
 }
-.xm-plain-box .box-hd .more .tab-list li.active,
-.xm-plain-box .box-hd .more .tab-list li:hover {
+.home-brick-box .box-hd .more .tab-list li.active,
+.home-brick-box .box-hd .more .tab-list li:hover {
   color: #ff6700;
   border-bottom: 2px solid #ff6700;
 }
 
-.home-brick-box .brick-item.brick-item-s {
-  height: 93px;
-  padding: 0;
-  padding-top: 50px;
-}
-.home-brick-box .brick-item.brick-item-s .figure {
-  position: absolute;
-  right: 20px;
-  top: 32px;
-  width: 80px;
-  height: 80px;
-}
-.home-brick-box .brick-item.brick-item-s .figure img {
-  width: 80px;
-  height: 80px;
-}
-.home-brick-box .brick-item.brick-item-s .title {
-  margin: -10px 110px 5px 30px;
-  font-size: 14px;
-  font-weight: 400;
-  text-overflow: ellipsis;
-  white-space: normal;
-  text-align: left;
-}
-.home-brick-box .brick-item.brick-item-s .price {
-  margin: 0 110px 0 30px;
-  text-align: left;
-}
-.home-brick-box .brick-item.brick-item-s .figure.figure-more {
-  position: absolute;
-  right: 35px;
-  top: 48px;
-  width: 48px;
-  height: 48px;
-  line-height: 48px;
-  color: #ff6700;
-  font-size: 45px;
-  /* font-weight: 100; */
-}
-.home-brick-box .brick-item.brick-item-s .figure-more i {
-  font-size: 48px;
-}
-.home-brick-box .brick-item.brick-item-s div.more {
-  display: block;
-  margin: 0 110px 0 30px;
-  font-size: 18px;
-  color: #333;
-  text-align: left;
-}
-.home-brick-box .brick-item.brick-item-s div.more small {
-  display: block;
-  font-size: 12px;
-  color: #757575;
-}
+
 </style>

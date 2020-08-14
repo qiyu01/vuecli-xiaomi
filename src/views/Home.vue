@@ -74,7 +74,7 @@
             <div class="home-banner-box">
                 <a href=""><img src="images/banner-box1.webp" alt=""></a>
             </div>
-            <Home-brick>
+            <Home-brick :products="productsPhone" :cid="1">
                 <template v-slot:more>
                     <a href="">
                             查看全部
@@ -87,272 +87,46 @@
             <div class="home-banner-box">
                 <a href=""><img src="images/banner-box2.webp" alt=""></a>
             </div>
-            <Home-brick>
+            <Home-brick :products="productsTV" :cid="3">
                 <template v-slot:title>
                     <h2 class="title">家电</h2>
-                </template>
-                <template v-slot:more>
-                    <ul class="tab-list">
-                            <li class="active">热门</li>
-                            <li>电视影音</li>
-                    </ul>
-                </template>
-                <template v-slot:promo>
-                    <li class="brick-item brick-item-m">
-                        <a href="">
-                                <img src="images/brick-item-m1.webp" alt="">
-                        </a>
-                    </li>
-                    <li class="brick-item brick-item-m">
-                        <a href="">
-                        <img src="images/brick-item-m2.webp" alt="">
-                        </a>
-                    </li>
-                </template>
-                <template v-slot:brickitem>
-                    <li class="brick-item-s brick-item">
-                                <a href="">
-                                    <div class="figure">
-                                        <img src="images/brick-item-s1.webp" alt="">
-                                    </div>
-                                    <h3 class="title">
-                                        Air 13.3" 2019款 
-                                    </h3>
-                                    <p class="price">
-                                        <span class="num">5699</span>元<span>起</span>
-                                    </p>
-                                </a>
-                            </li>
-                    <li class="brick-item-s brick-item">
-                                <a href="">
-                                    <div class="figure figure-more">
-                                        <i class="iconfont icon-yuanquanjiantouyou
-                                          "></i>
-                                    </div>
-                                    <div class="more">
-                                        浏览更多<small>热门</small>
-                                    </div>
-                                </a>
-                            </li>
-                </template>
-                
+                </template>            
             </Home-brick>
             <!--  -->
             <div class="home-banner-box">
                 <a href=""><img src="images/banner-box3.webp" alt=""></a>
             </div>
-            <Home-brick>
+            <Home-brick :products="productsAI" :cid="11">
                 <template v-slot:title>
                     <h2 class="title">智能</h2>
                 </template>
-                <template v-slot:more>
-                    <ul class="tab-list">
-                            <li class="active">热门</li>
-                            <li>安防</li>
-                            <li>出行</li>
-                    </ul>
-                </template>
-                <template v-slot:promo>
-                    <li class="brick-item brick-item-m">
-                        <a href="">
-                                <img src="images/brick-item-m1.webp" alt="">
-                        </a>
-                    </li>
-                    <li class="brick-item brick-item-m">
-                        <a href="">
-                        <img src="images/brick-item-m2.webp" alt="">
-                        </a>
-                    </li>
-                </template>
-                <template v-slot:brickitem>
-                    <li class="brick-item-s brick-item">
-                                <a href="">
-                                    <div class="figure">
-                                        <img src="images/brick-item-s1.webp" alt="">
-                                    </div>
-                                    <h3 class="title">
-                                        Air 13.3" 2019款 
-                                    </h3>
-                                    <p class="price">
-                                        <span class="num">5699</span>元<span>起</span>
-                                    </p>
-                                </a>
-                            </li>
-                    <li class="brick-item-s brick-item">
-                                <a href="">
-                                    <div class="figure figure-more">
-                                        <i class="iconfont icon-yuanquanjiantouyou
-                                          "></i>
-                                    </div>
-                                    <div class="more">
-                                        浏览更多<small>热门</small>
-                                    </div>
-                                </a>
-                            </li>
-                </template>
-                
             </Home-brick>
             <!--  -->
             <div class="home-banner-box">
                 <a href=""><img src="images/banner-box4.webp" alt=""></a>
             </div>
-            <Home-brick>
+            <Home-brick :products="productsAI" :cid="11">
                 <template v-slot:title>
                     <h2 class="title">搭配</h2>
-                </template>
-                <template v-slot:more>
-                    <ul class="tab-list">
-                            <li class="active">热门</li>
-                            <li>耳机音箱</li>
-                    </ul>
-                </template>
-                <template v-slot:promo>
-                    <li class="brick-item brick-item-m">
-                        <a href="">
-                                <img src="images/brick-item-m1.webp" alt="">
-                        </a>
-                    </li>
-                    <li class="brick-item brick-item-m">
-                        <a href="">
-                        <img src="images/brick-item-m2.webp" alt="">
-                        </a>
-                    </li>
-                </template>
-                <template v-slot:brickitem>
-                    <li class="brick-item-s brick-item">
-                                <a href="">
-                                    <div class="figure">
-                                        <img src="images/brick-item-s1.webp" alt="">
-                                    </div>
-                                    <h3 class="title">
-                                        Air 13.3" 2019款 
-                                    </h3>
-                                    <p class="price">
-                                        <span class="num">5699</span>元<span>起</span>
-                                    </p>
-                                </a>
-                            </li>
-                    <li class="brick-item-s brick-item">
-                                <a href="">
-                                    <div class="figure figure-more">
-                                        <i class="iconfont icon-yuanquanjiantouyou
-                                          "></i>
-                                    </div>
-                                    <div class="more">
-                                        浏览更多<small>热门</small>
-                                    </div>
-                                </a>
-                            </li>
-                </template>
-                
+                </template>         
             </Home-brick>
             <!--  -->
             <div class="home-banner-box">
                 <a href=""><img src="images/banner-box5.webp" alt=""></a>
             </div>
-            <Home-brick>
+            <Home-brick :products="productsAI" :cid="11">
                 <template v-slot:title>
                     <h2 class="title">配件</h2>
-                </template>
-                <template v-slot:more>
-                    <ul class="tab-list">
-                            <li class="active">热门</li>
-                            <li>充电器</li>
-                    </ul>
-                </template>
-                <template v-slot:promo>
-                    <li class="brick-item brick-item-m">
-                        <a href="">
-                                <img src="images/brick-item-m1.webp" alt="">
-                        </a>
-                    </li>
-                    <li class="brick-item brick-item-m">
-                        <a href="">
-                        <img src="images/brick-item-m2.webp" alt="">
-                        </a>
-                    </li>
-                </template>
-                <template v-slot:brickitem>
-                    <li class="brick-item-s brick-item">
-                                <a href="">
-                                    <div class="figure">
-                                        <img src="images/brick-item-s1.webp" alt="">
-                                    </div>
-                                    <h3 class="title">
-                                        Air 13.3" 2019款 
-                                    </h3>
-                                    <p class="price">
-                                        <span class="num">5699</span>元<span>起</span>
-                                    </p>
-                                </a>
-                            </li>
-                    <li class="brick-item-s brick-item">
-                                <a href="">
-                                    <div class="figure figure-more">
-                                        <i class="iconfont icon-yuanquanjiantouyou
-                                          "></i>
-                                    </div>
-                                    <div class="more">
-                                        浏览更多<small>热门</small>
-                                    </div>
-                                </a>
-                            </li>
-                </template>
-                
+                </template>            
             </Home-brick>
             <!--  -->
             <div class="home-banner-box">
                 <a href=""><img src="images/banner-box6.webp" alt=""></a>
             </div>
-            <Home-brick>
+            <Home-brick :products="productsAI" :cid="11">
                 <template v-slot:title>
                     <h2 class="title">周边</h2>
                 </template>
-                <template v-slot:more>
-                    <ul class="tab-list">
-                            <li class="active">热门</li>
-                            <li>出行</li>
-                    </ul>
-                </template>
-                <template v-slot:promo>
-                    <li class="brick-item brick-item-m">
-                        <a href="">
-                                <img src="images/brick-item-m1.webp" alt="">
-                        </a>
-                    </li>
-                    <li class="brick-item brick-item-m">
-                        <a href="">
-                        <img src="images/brick-item-m2.webp" alt="">
-                        </a>
-                    </li>
-                </template>
-                <template v-slot:brickitem>
-                    <li class="brick-item-s brick-item">
-                                <a href="">
-                                    <div class="figure">
-                                        <img src="images/brick-item-s1.webp" alt="">
-                                    </div>
-                                    <h3 class="title">
-                                        Air 13.3" 2019款 
-                                    </h3>
-                                    <p class="price">
-                                        <span class="num">5699</span>元<span>起</span>
-                                    </p>
-                                </a>
-                            </li>
-                    <li class="brick-item-s brick-item">
-                                <a href="">
-                                    <div class="figure figure-more">
-                                        <i class="iconfont icon-yuanquanjiantouyou
-                                          "></i>
-                                    </div>
-                                    <div class="more">
-                                        浏览更多<small>热门</small>
-                                    </div>
-                                </a>
-                            </li>
-                </template>
-                
             </Home-brick>
             <!--  -->
             <div class="home-banner-box">
@@ -449,14 +223,14 @@
                 
             </div>
         </div>
-
+    
 
 
     </div>
 
   <Footer></Footer>
   <Tool-bar></Tool-bar>
-    <el-backtop target=".wraper" class="el-backtop">
+    <el-backtop target="wraper" class="el-backtop">
         <a href="javascript:void(0);" class="item backtop">
 
         
@@ -476,25 +250,45 @@
 
 <script>
 // @ is an alias to /src
-import Swiper from 'swiper'
 import HomeBrick from '@/components/Home-brick.vue'
 import ToolBar from '@/components/Tool-bar.vue'
 import FlashCounter from '@/components/Flash-counter.vue'
 import SwiperFade from '@/components/Swiper-fade.vue'
 import SwiperSlide from '@/components/Swiper-slide.vue'
+import {brickProduct} from "../util/api/getProduct";
 
 export default {
   name: 'Home',
+  data() {
+      return {
+          productsPhone:[],
+          productsTV:[],
+          productsAI:[]
+      }
+  },
   components: {
     FlashCounter,SwiperFade,SwiperSlide,ToolBar,HomeBrick
   },
   mounted() {
-      
+      brickProduct().then((res)=>{
+          if(res.length>0){
+              for(let i=0;i<res.length;i++){
+              for(let j of res[i]){
+                  j.img_src=require("../assets/images/product/product200/"+j.img_src)
+              }
+            }
+          }
+          
+          this.productsPhone=res[0]
+          this.productsTV=res[1]
+          this.productsAI=res[2]
+      });
   },
 }
 </script>
 <style>
 /* 防止样式穿透的方法scoped */
+
     .wraper {
         height: 100vh;
         overflow-x: hidden;
@@ -556,7 +350,6 @@ export default {
 .el-backtop .item:hover .text{
     color: #ff6700;
 }
-
   
     
 

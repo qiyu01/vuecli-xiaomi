@@ -333,21 +333,38 @@ router.get("/v1/goods_img_bg", (req, res) => {
     });
 });
 
-// 首页brick里的商品展示，手机类返回8条数据，电脑类返回两个7条数据，智能返回三个7条数据
-router.get("/v1/goods_img_bg", (req, res) => {
+// 首页brick里的商品展示，手机类返回14条数据，电脑类返回两个7条数据，智能返回21条数据
+router.get("/v1/brick_product", (req, res) => {
     // console.log(_uname + "~~~~~" + _upwd);
     res.header("Access-Control-Allow-Origin", "http://127.0.0.1:8081");
-    var _pid = req.query.pidAll;
+    var sql1 = "select * from product where cid=1 LIMIT 0,8";
+    var sql2 = "select * from product where cid=3 LIMIT 0,14";
+    var sql3 = "select * from product where cid=11 LIMIT 0,21";
 
-    var sql = "select * from goods_item_color where pid in (" + _pid + ")";
-    pool.query(sql, [], (err, result) => {
-        if (err) throw err;
-        if (result.length > 0) {
-            res.send(result);
-        } else {
-            res.send("0");
-        }
-    });
+    var promise1=new Promise((resolve,reject)=>{
+        queryProduct(sql1,resolve)
+    })
+    var promise2=new Promise((resolve,reject)=>{
+        queryProduct(sql2,resolve)
+    })
+    var promise3=new Promise((resolve,reject)=>{
+        queryProduct(sql3,resolve)
+    })
+
+    Promise.all([promise1,promise2,promise3]).then((data)=>{
+        res.send(data)
+    })
+
+    function queryProduct(sql,resolve){
+        pool.query(sql, [], (err, result) => {
+            if (err) throw err;
+            if (result.length > 0) {
+                resolve(result)
+            } 
+        });
+    }
+
+    
 });
 
 

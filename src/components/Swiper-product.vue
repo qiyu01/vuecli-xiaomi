@@ -143,7 +143,7 @@ export default {
   },
 };
 </script>
-<style>
+<style scoped>
 @import "/css/swiper.min.css";
 /* swiper */
 /* 改变切换的动画曲线和延迟时间，如果不改，默认的动画延迟有点严重 */
