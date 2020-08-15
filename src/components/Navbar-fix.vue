@@ -3,7 +3,7 @@
     <div class="xm-product-box">
       <div class="nav-bar">
         <div class="container">
-          <h2>小米10</h2>
+          <h2>{{product.name}}</h2>
 
           <div class="left">
             <span class="separator">|</span>
@@ -32,6 +32,7 @@ export default {
       visiable: false,
     };
   },
+  props:['product'],
   mounted() {
     var _this = this;
     //防抖函数
@@ -61,16 +62,16 @@ export default {
     }
 
     function change() {
-      var scrollTop =
-        document.body.scrollTop || document.documentElement.scrollTop;
-      // console.log(scrollTop);
+      
+        // document.body.scrollTop || document.documentElement.scrollTop;
+        var scrollTop=document.getElementsByClassName("wraper")[0].scrollTop;
       if (scrollTop > 260) {
         _this.visiable = true;
       } else {
         _this.visiable = false;
       }
     }
-    window.onscroll = throttle(change, 100);
+    document.getElementsByClassName("wraper")[0].addEventListener('scroll',throttle(change, 100))
     
   },
 };

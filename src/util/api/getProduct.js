@@ -1,6 +1,43 @@
 import http from '../myhttp.js'
 import {URL} from "../serviceAPI.js"
+// producnt页面接口
+// 获取商品主要信息
+function getProductById(pid){
+    return new Promise((resolve,reject)=>{
+            http.get(URL.getProductById,{pid}).then(data=>{
+                resolve(data)
+            })
+        }
+    )
+}
+// 获取商品版本选项
+function getProduct_version(pid){
+    return new Promise((resolve,reject)=>{
+            http.get(URL.getProduct_version,{pid}).then(data=>{
+                resolve(data)
+            })
+        }
+    )
+}
+// 获取商品颜色选项
+function getProduct_color(pid){
+    return new Promise((resolve,reject)=>{
+            http.get(URL.getProduct_color,{pid}).then(data=>{
+                resolve(data)
+            })
+        }
+    )
+}
+function getProduct_banner(pid){
+    return new Promise((resolve,reject)=>{
+            http.get(URL.getProduct_banner,{pid}).then(data=>{
+                resolve(data)
+            })
+        }
+    )
+}
 
+// 搜索页面接口
 // keywords 关键词     category_id 分类  不想选的参数请传null
 function searchProduct(keywords,category_id,pageSize){
     return new Promise((resolve,reject)=>{
@@ -18,6 +55,7 @@ function getImgBg(pidAll){
         }
     )
 }
+// 主页接口
 function brickProduct(){
     return new Promise((resolve,reject)=>{
             http.get(URL.getBrickProduct,{}).then(data=>{
@@ -26,29 +64,24 @@ function brickProduct(){
         }
     )
 }
-
-// 活动列表页
-function getActive(){
-    return new Promise(
-        function (resolve,reject){
-            axios({
-                url:URL.getActive,
-                method:'get'
-            }).then(res=>{
-                resolve(res.data.result)
+// 加入购物车接口
+function addCart(pid,uid){
+    return new Promise((resolve,reject)=>{
+            http.get(URL.addCart,{pid:pid,uid:uid}).then(data=>{
+                resolve(data)
             })
         }
     )
 }
 
-//活动详情页
-function getActiveDetail(tid){
-    return new Promise(
-        function (resolve,reject){
-            axios.get(URL.getActiveDetail,{params:{tid}}).then(res=>{
-                resolve(res.data.result)
-            })
-        }
-    )
+
+export{
+    getProductById,
+    getProduct_version,
+    getProduct_color,
+    getProduct_banner,
+    searchProduct,
+    getImgBg,
+    brickProduct,
+    addCart
 }
-export{searchProduct,getImgBg,brickProduct}

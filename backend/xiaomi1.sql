@@ -176,9 +176,15 @@ insert into product values
 
 
 insert into product_spec values 
-(null,'8GB+128GB','3799','3999',false,1),
-(null,'8GB+256GB','3999','4299',true,1),
-(null,'12GB+256GB','4299','4699',true,1);
+(null,1,'8GB+128GB','3799','3999',false,1),
+(null,2,'8GB+256GB','3999','4299',true,1),
+(null,3,'12GB+256GB','4299','4699',true,1),
+(null,1,'8GB+128GB','4799','4999',true,2),
+(null,2,'8GB+256GB','4999','5299',true,2),
+(null,3,'12GB+256GB','5299','5699',true,2),
+(null,1,'32英寸','2999','3299',true,9),
+(null,2,'38英寸','3999','4299',true,9),
+(null,3,'42英寸','4199','4599',false,9);
 
 insert into product_color values 
 (null,'国风雅灰',1,1),
@@ -192,7 +198,16 @@ insert into product_color values
 (null,'国风雅灰',3,1),
 (null,'钛银黑',3,1),
 (null,'冰海蓝',3,1),
-(null,'蜜桃金',3,1);
+(null,'蜜桃金',3,1),
+(null,'星空蓝',1,2),
+(null,'珍珠白',1,2),
+(null,'星空蓝',2,2),
+(null,'珍珠白',2,2),
+(null,'星空蓝',3,2),
+(null,'珍珠白',3,2),
+(null,'灰色',1,9),
+(null,'灰色',2,9),
+(null,'灰色',3,9);
 
 
 insert into product_img values 
@@ -215,7 +230,22 @@ insert into product_img values
 (null,'product32.jpg',4,1),
 (null,'product33.jpg',4,1),
 (null,'product34.jpg',4,1),
-(null,'product35.jpg',4,1);
+(null,'product35.jpg',4,1),
+(null,'pro11.jpg',1,2),
+(null,'pro12.jpg',1,2),
+(null,'pro13.jpg',1,2),
+(null,'pro14.jpg',1,2),
+(null,'pro15.jpg',1,2),
+(null,'pro21.jpg',2,2),
+(null,'pro22.jpg',2,2),
+(null,'pro23.jpg',2,2),
+(null,'pro24.jpg',2,2),
+(null,'pro25.jpg',2,2),
+(null,'tv1.jpg',1,9),
+(null,'tv2.jpg',1,9),
+(null,'tv3.jpg',1,9),
+(null,'tv4.jpg',1,9),
+(null,'tv5.jpg',1,9);
 
 
 

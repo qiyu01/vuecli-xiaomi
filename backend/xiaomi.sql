@@ -18,7 +18,7 @@ CREATE TABLE product(
   price  INT,
   delprice INT,
   shotdesc VARCHAR(256),
-  longdesc TINYTEXT,
+  longdesc TEXT,
   cid INT,
   FOREIGN KEY(cid) REFERENCES product_category(id)
 );
@@ -26,6 +26,7 @@ CREATE TABLE product(
 /**商品规格(内存多少G)**/
 CREATE TABLE product_spec(
   id INT PRIMARY KEY AUTO_INCREMENT,
+  sid INT,
   name VARCHAR(32),
   price INT,
   delprice INT,
@@ -39,7 +40,6 @@ CREATE TABLE product_color(
   name VARCHAR(32),
   sid INT,
   pid INT,
-  FOREIGN KEY(sid) REFERENCES product_spec(id),
   FOREIGN KEY(pid) REFERENCES product(id)
 );
 

@@ -36,11 +36,27 @@ router.get("/v1/category_list", (req, res) => {
         }
     });
 });
+// 根据id返回商品主要信息
+router.get("/v1/getProductById", (req, res) => {
+    res.header("Access-Control-Allow-Origin", "http://127.0.0.1:8081");
+    var _pid = req.query.pid;
+    console.log(_pid)
+    var sql = `select * from product where id=${_pid}`;
+    pool.query(sql, [], (err, result) => {
+        if (err) throw err;
+        if (result.length > 0) {
+            res.send(result);
+        } else {
+            res.send("0");
+        }
+    });
+});
+
 // 根据id返回版本
 router.get("/v1/product_version", (req, res) => {
-    // console.log(_uname + "~~~~~" + _upwd);
     res.header("Access-Control-Allow-Origin", "http://127.0.0.1:8081");
-    var sql = "select * from product_spec where pid=1";
+    var _pid = req.query.pid;
+    var sql = `select * from product_spec where pid=${_pid}`;
     pool.query(sql, [], (err, result) => {
         if (err) throw err;
         if (result.length > 0) {
@@ -52,9 +68,9 @@ router.get("/v1/product_version", (req, res) => {
 });
 // 根据id返回所有版本的颜色
 router.get("/v1/product_color", (req, res) => {
-    // console.log(_uname + "~~~~~" + _upwd);
     res.header("Access-Control-Allow-Origin", "http://127.0.0.1:8081");
-    var sql = "select * from product_color where pid=1";
+    var _pid = req.query.pid;
+    var sql = `select * from product_color where pid=${_pid}`;
     pool.query(sql, [], (err, result) => {
         if (err) throw err;
         if (result.length > 0) {
@@ -65,10 +81,10 @@ router.get("/v1/product_color", (req, res) => {
     });
 });
 // 根id返回所颜色的图片
-router.get("/v1/product_img", (req, res) => {
-    // console.log(_uname + "~~~~~" + _upwd);
+router.get("/v1/product_banner", (req, res) => {
+    var _pid = req.query.pid;
     res.header("Access-Control-Allow-Origin", "http://127.0.0.1:8081");
-    var sql = "select * from product_img where pid=1";
+    var sql = `select * from product_img where pid=${_pid}`;
     pool.query(sql, [], (err, result) => {
         if (err) throw err;
         if (result.length > 0) {

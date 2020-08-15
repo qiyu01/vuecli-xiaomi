@@ -15,7 +15,7 @@
                         
                         <li :class="[navcategory ? 'active' : 'hidden', 'nav-category']">
                             
-                                <a href="" >
+                                <a href="javascript:void(0)" >
                                     <span v-if="!navcategory">全部商品分类</span>
                                 </a>
                             
@@ -40,25 +40,16 @@
                     
                     <div :class="[navItemActive ? 'active' : '', 'item-children']" @mouseenter="mouseoverChild" @mouseleave="dropUp">
                         <div class="container">
-                            <!-- <div class="test">
-                                <a href="#">
-                                    <div class="figure">
-                                        <img src="images/mi10-qingchun.webp" alt="" width="160" height="110">
-                                    </div>
-                                    <div class="title">小米10 青春版 5G</div>
-                                    <p class="price">1899元起</p>
-                                </a>
-                            </div>
-                            <ol class="test2">我你们啊</ol> -->
                             <ul class="children">
-                                <li v-for="(item,i) of activeNav" :key="i"><a href="#">
-                                    <div class="figure">
+                                <li v-for="(item,i) of activeNav" :key="i">
+                                    <router-link to="product">
+                                        <div class="figure">
                                         <img :src="item.src" alt="" width="160" height="110">
-                                    </div>
-                                    <div class="title">{{item.name}}</div>
-                                    <p class="price">{{item.price}}元起</p>
-                                </a></li>
-                               
+                                        </div>
+                                        <div class="title">{{item.name}}</div>
+                                        <p class="price">{{item.price}}元起</p>
+                                    </router-link>
+                                </li>
                             </ul>
                             
                         </div>

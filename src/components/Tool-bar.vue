@@ -1,6 +1,6 @@
 <template>
     <div class="home-tool-bar">
-        <a href="" class="item">
+        <a href="javascript:void(0)" class="item">
             <div class="icon">
                 <img src="images/tool-bar1.png" alt="">
                 <img src="images/tool-bar1y.png" alt="">
@@ -15,7 +15,7 @@
                 </span>
             </div>
         </a>
-        <a href="" class="item">
+        <a href="javascript:void(0)" class="item">
             <div class="icon">
                 <img src="images/tool-bar2.png" alt="">
                 <img src="images/tool-bar2y.png" alt="">
@@ -23,7 +23,7 @@
             <span class="text">个人中心</span>
             
         </a>
-        <a href="" class="item">
+        <a href="javascript:void(0)" class="item">
             <div class="icon">
                 <img src="images/tool-bar3.png" alt="">
                 <img src="images/tool-bar3y.png" alt="">
@@ -31,7 +31,7 @@
             <span class="text">售后服务</span>
             
         </a>
-        <a href="" class="item">
+        <a href="javascript:void(0)" class="item">
             <div class="icon">
                 <img src="images/tool-bar4.png" alt="">
                 <img src="images/tool-bar4y.png" alt="">
@@ -39,67 +39,76 @@
             <span class="text">人工客服</span>
             
         </a>
-        <a href="" class="item">
+        <router-link to="cart" class="item">
             <div class="icon">
                 <img src="images/tool-bar5.png" alt="">
                 <img src="images/tool-bar5y.png" alt="">
             </div>
             <span class="text">购物车</span>
-            
-        </a>
-        <el-backtop target="body" class="el-backtop">
-        <a href="javascript:void(0);" class="item backtop">
-
-        
+        </router-link>
+        <el-backtop target=".wraper" class="el-backtop">
+            <a href="javascript:void(0);" class="backtop">
             <div class="icon">
                 <img src="images/tool-bar6.png" alt="">
                 <img src="images/tool-bar6y.png" alt="">
             </div>
             <span class="text">回顶部</span>
-            
-        </a>
-
-    </el-backtop>
+            </a>
+        </el-backtop>
         
     </div>
 </template>
+<script>
+import {Backtop} from 'element-ui';
+
+export default {
+    components:{ElBacktop: Backtop},
+}
+</script>
 
 <style>
+
 /* 右侧导航条 */
+/* backtop */
+/* 注意在需要使用tool-bar里的backtop功能的view页面最外层div加入wraper
+类  这个组件不能加scoped，因为需要样式穿透 */
+.wraper {
+    /* 使用backtop必须设置的属性 */
+        height: 100vh;
+        overflow-x: hidden;
+}
 
 .el-backtop{
     position: fixed;
-    width: 82px!important;
+    width: 84px!important;
     height: 90px!important;
-    bottom: 78px!important;
-    right: 18px!important;
+    bottom: 71px!important;
+    right: 17px!important;
     z-index: 99!important;
 }
-.el-backtop .item{
+
+.el-backtop .backtop{
     position: relative;
     display: block;
     width: 82px;
     height: 90px;
-    margin-top: -1px;
     background-color: #fff;
     border: 1px solid #f5f5f5;
     text-align: center;
     cursor: default;
     font-size: 14px;
-}
-.el-backtop .backtop{
-    margin-top: 14px;
     border-top: 1px solid #f5f5f5;
     visibility: visible;
 }
-.el-backtop .item .icon{
+.el-backtop .backtop .icon{
     position: relative;
     width: 30px;
     height: 30px;
     margin: 0 auto 8px;
     padding-top: 18px;
+    overflow: hidden;
 }
-.el-backtop .item .icon img{
+.el-backtop .backtop .icon img{
     position: absolute;
     bottom: 0;
     left: 0;
@@ -108,43 +117,30 @@
     -webkit-transition: opacity .3s;
     transition: opacity .3s;
 }
-.el-backtop .item .icon img:last-child{
+.el-backtop .backtop .icon img:last-child{
     display: none;
 }
-.el-backtop .item:hover .icon img:last-child{
+.el-backtop .backtop:hover .icon img:last-child{
     display: inline-block;
 }
-.el-backtop .item .icon img:last-child
-.el-backtop .item .text{
+.el-backtop .backtop .icon img:last-child
+.el-backtop .backtop .text{
     color: #757575;
     -webkit-transition: color .3s;
     transition: color .3s;
 }
-.el-backtop .item:hover .text{
+.el-backtop .backtop:hover .text{
     color: #ff6700;
 }
 
-/* .el-backtop {
-    position: relative;
-    display: block;
-    width: 82px;
-    height: 90px;
-    margin-top: -1px;
-    background-color: #fff;
-    border: 1px solid #f5f5f5;
-    text-align: center;
-    cursor: default;
-}
 
-.el-backtop:hover {
-    background-color: blue
-} */
 
 .home-tool-bar{
     position: fixed;
     bottom: 176px;
     right: 17px;
     z-index: 999;
+    background: #fff;
     
 }
 .home-tool-bar .item{
@@ -160,11 +156,7 @@
     font-size: 14px;
     
 }
-.home-tool-bar .backtop{
-    margin-top: 14px;
-    border-top: 1px solid #f5f5f5;
-    visibility: visible;
-}
+
 .home-tool-bar .item .icon{
     position: relative;
     width: 30px;

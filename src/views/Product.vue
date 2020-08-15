@@ -1,54 +1,45 @@
 <template>
-  <div class="product-wraper">
+  <div class="product-wraper wraper">
     <Header :navcategory="false"></Header>
     <!-- <Category-list class="category-list"></Category-list> -->
 
     <div class="xm-product-box">
       <div class="nav-bar">
         <div class="container">
-          <h2>小米10</h2>
-
+          <h2>{{product.name}}</h2>
           <div class="left">
             <span class="separator">|</span>
-            <a href>小米10 Pro</a>
+            <a href="javascript:void(0)">小米10 Pro</a>
           </div>
           <div class="right">
-            <a href>概述</a>
+            <a href="javascript:void(0)">概述</a>
             <span class="separator">|</span>
-            <a href>参数</a>
+            <a href="javascript:void(0)">参数</a>
             <span class="separator">|</span>
-            <a href>F码通道</a>
+            <a href="javascript:void(0)">F码通道</a>
             <span class="separator">|</span>
-            <a href>咨询客服</a>
+            <a href="javascript:void(0)">咨询客服</a>
             <span class="separator">|</span>
-            <a href>用户评价</a>
+            <a href="javascript:void(0)">用户评价</a>
           </div>
         </div>
       </div>
     </div>
-    <Navbar-fix></Navbar-fix>
+    <Navbar-fix :product="product"></Navbar-fix>
     <div class="page">
       <div class="product-box container">
         <div class="img-left">
           <!-- {{swiperColor}} -->
           <!-- swiperColor是传给子组件swiper的次数，用来切换轮播图的颜色（更改图片） -->
-          <Swiper-product :swiperColor="swiperColor" ref="swiper"></Swiper-product>
+          <Swiper-product :swiperColor="swiperColor" :pid="product.id" ref="swiper"></Swiper-product>
         </div>
         <div class="product-con">
-          <h2>小米10</h2>
+          <h2>{{product.name}}</h2>
           <p class="sale-desc">
-            <span class="highlight">「小米10“国风雅灰”新颜色今日首销，256GB买赠冰封散热背夹，火爆热卖中」</span>
-            骁龙865处理器 / 1亿像素8K电影相机 / 双模5G / 新一代LPDDR5内存 / 对称式立体声 / 90Hz刷新率+180Hz采样率 / UFS 3.0高速存储 / 全面适配Wi-Fi 6 / 超强VC液冷散热 / 30W极速闪充+30W无线闪充+10W无线反充 / 4780mAh大电量 / 多功能NFC
+            <span class="highlight">「{{product.shotdesc}}」</span>
+            {{product.longdesc}}
           </p>
-          <p
-            title="企业名称：小米通讯技术有限公司
-                   企业执照注册号：91110108558521630L
-                   企业地址：北京市海淀区西二旗中路33号院6 号楼9层019号
-                   企业电话：400-100-5678
-                   营业期限：2010年08月25日 至 2040年08月24日
-                   经营范围：开发手机技术、计算机软件及信息技术；技术检测、技术咨询、技术服务、技术转让；计算机技术培训；系统集成；货物进出口、技术进出口、代理进出口；家用电器、通信设备、广播电视设备（不含卫星电视广播、                   地面接收装置）、机械设备、电子产品、文化用品的批发零售；维修仪器仪表；销售医疗器械I类、II、III类、针纺织品（含家纺家饰）、服装鞋帽、日用杂货、工艺品、文化用品、体育用品、照相器材、卫生用品（含个人护理                   用品）、钟表眼镜、箱包、家具（不从事实体店铺经营）、小饰品、日用品、乐器、自行车、智能卡；计算机、通讯设备、家用电器、电子产品、机械设备的技术开发、技术服务；销售金银饰品（不含金银质地纪念币）；家用空                   调的委托生产；委托生产翻译机；销售翻译机、五金交电（不含电动自行车）、厨房用品、陶瓷制品、玻璃制品、玩具、汽车零配件、食用农产品、花卉、苗木、宠物用品、建筑材料、装饰材料、化妆品、珠宝首饰、通讯设备、                   卫生间用品、农药；生产手机（仅限在海淀区永捷北路2号三层生产及外埠生产）；出版物批发；出版物零售；销售食品。（销售第三类医疗器械以及销售食品以及依法须经批准的项目，经相关部门批准后依批准的内容开展经营活                   动。）"
-            class="company-info"
-          >小米自营</p>
+          <p class="company-info">小米自营</p>
           <div class="price-info">
             <span>
               {{selectVersion.price}}元
@@ -105,7 +96,7 @@
             <div class="server-item-box" v-if="serviceOption">
               <div class="title">
                 选择小米提供的意外保护
-                <a href>了解意外保护 ></a>
+                <a href="Javascript:void(0);">了解意外保护 ></a>
               </div>
               <ul>
                 <li v-for="(item,i) in serviceOption" :key="i" :class="[item.selected ? 'active' : '', 'clearfix']" @click="serviceSelect(item)">
@@ -142,7 +133,7 @@
             <div class="server-item-box" v-if="repairOption[0]">
               <div class="title">
                 选择小米提供的延长保修
-                <a href>了解延长保护 ></a>
+                <a href="Javascript:void(0);">了解延长保护 ></a>
               </div>
               <ul>
                 <li v-for="(item,i) in repairOption" :key="i" :class="[item.selected ? 'active' : '', 'clearfix']" @click="repairSelect(item)">
@@ -181,7 +172,7 @@
           <div class="select-list">
             <ul>
               <li>
-                小米10 全网通版 8GB+256GB 国风雅灰
+                {{product.name}} 全网通版 {{selectVersion.name}} {{selectColor.name}}
                 <span>
                   {{selectVersion.price}}元
                   <del>{{selectVersion.delprice}}元</del>
@@ -199,10 +190,10 @@
           </div>
           <div class="btn-box">
             <div class="sale-btn">
-              <a href class="btn btn-primary">加入购物车</a>
+              <a href="Javascript:void(0);" class="btn btn-primary" @click="addProduct">加入购物车</a>
             </div>
             <div class="favorite-btn">
-              <a href class="btn-like btn-grey">
+              <a href="Javascript:void(0);" class="btn-like btn-grey">
                 <i class="iconfont icon-xin"></i>
 
                 喜欢
@@ -260,13 +251,13 @@
         <div class="detail-banner">
           <div class="container">
             <ul>
-              <li class="active"><a href="javascript:void(0)" @click="detailSwitch">商品概述</a></li>
-              <li><a href="javascript:void(0)" @click="detailSwitch">商品参数</a></li>
+              <li :class="detailActive[0].isactive?'active':''"><a href="javascript:void(0)" @click="detailSwitch(0)">商品概述</a></li>
+              <li :class="detailActive[1].isactive?'active':''"><a href="javascript:void(0)" @click="detailSwitch(1)">商品参数</a></li>
             </ul>
           </div>
         </div>
         <div class="detail-box">
-          <div class="detail-item">
+          <div class="detail-item" :class="detailActive[0].isactive?'active':''">
             <div class="section">
               <img src="images/product/imgbox1.jpg" alt="">
             </div>
@@ -274,7 +265,7 @@
                <img src="images/product/imgbox2.jpg" alt="">
             </div>
           </div>
-          <div class="detail-item">
+          <div class="detail-item" :class="detailActive[1].isactive?'active':''">
             <div class="section">
               <img src="images/product/imgbox3.jpg" alt="">
             </div>
@@ -290,6 +281,8 @@
     </div>
 
     <Footer></Footer>
+  <Tool-bar></Tool-bar>
+
   </div>
 </template>
 
@@ -297,16 +290,17 @@
 import CategoryList from "@/components/Category-list.vue";
 import SwiperProduct from "@/components/Swiper-product.vue";
 import NavbarFix from "@/components/Navbar-fix.vue";
+import ToolBar from '@/components/Tool-bar.vue';
+import {getProductById,getProduct_version,getProduct_color,addCart} from "../util/api/getProduct";
+
 export default {
   data() {
     return {
       navcategory: true,//是否显示导航栏的"全部商品分类" 该参数将作为props传给子组件，在子组件里面控制插槽slot是否显示
+      // 对应pid的商品信息
+      product:[],
       // 所有版本参数，服务器返回
-      version:[
-        // {id:1,isselected:false,name:"8GB+128GB",price:3799,delprice:3999,gift:false},
-        // {id:2,isselected:true,name:"8GB+256GB",price:3999,delprice:4299,gift:true},
-        // {id:3,isselected:false,name:"12GB+256GB",price:4299,delprice:4699,gift:false}
-      ],
+      version:[],
       // 当前选中的版本
       selectVersion:{},
       // 当前选中的版本对应的颜色
@@ -314,7 +308,8 @@ export default {
 
       // 该product所有的颜色（虽然目前是每种版本有4种相同的颜色，但也可能出现不同的版本拥有的颜色数不相同），服务器返回
       allColor:[],
-
+      //选中的颜色
+      selectColor:{},
       // 选择颜色后传入颜色对应的id，作为props属性传给子组件swiper，改变对应的颜色图片
       swiperColor:1,
       // 服务选择参数,暂时用假数据
@@ -328,19 +323,41 @@ export default {
         {id:1,selected:false,name:"延长保修服务",price:159,desc:"厂保延一年，性能故障免费维修",prov:"https://api.jr.mi.com/insurance/document/phone_accidentIns.html?insuranceSku=28006&couponFrom=rule",tips:"https://api.jr.mi.com/insurance/document/phone_accidentIns.html?insuranceSku=28006&couponFrom=question"}
       ],
       // 额外选择的服务（前面选择的service和repair），如果有，就在总金额上方列出这两条信息，没有就为空不显示
-      extra:[{},{}]
+      extra:[{},{}],
+      // 控制最下面商品大图prodcut-detail的tab切换
+      detailActive:[{id:1,isactive:true},{id:2,isactive:false}],
     };
   },
-  components: { CategoryList, SwiperProduct,NavbarFix},
+  components: { CategoryList, SwiperProduct,NavbarFix,ToolBar},
   mounted() {
-    this.axios({
-                 url: "http://127.0.0.1:8080/mi/v1/product_version",
-                 method: "get",
-                 params: {}
-                }).then(res => {
-                // console.log(res.data);
-                // console.log(this.version);
-                this.version=res.data;
+    this.getcontent(2)
+              
+  },
+  watch: {
+    $route(to, from) {
+      // this.keyword = this.$route.query.pid;
+      
+      // this.getcontent(1);
+    },
+  },
+  methods:{
+
+    getcontent(pid){
+        getProductById(pid).then((res)=>{
+          if(res.length>0){
+            console.log(res)
+            this.product=res[0]
+            // promiseall获取商品的版本选项和颜色选项
+            return Promise.all([getProduct_version(pid),getProduct_color(pid)])
+          }else{
+            this.$message({
+          message: '没有此商品',
+          type: 'error'
+          })
+          }
+        }).then((res)=>{
+          // 版本选项
+                this.version=res[0];
                 for(let v of this.version){
                   // 给version里面的全部对象添加新属性isselected，必须使用$set方法，vue才能监测到数据变化
                     this.$set(v, "isselected", false)
@@ -350,13 +367,8 @@ export default {
                 // selectVersion存储当前选中的版本（默认第二个）
                 this.selectVersion=this.version[1];
 
-                });
-       this.axios({
-                 url: "http://127.0.0.1:8080/mi/v1/product_color",
-                 method: "get",
-                 params: {}
-                }).then(res => {
-                this.allColor=res.data;
+            // 颜色选项
+            this.allColor=res[1];
                 //默认版本sid=2（前面version中第二个版本所对应的颜色）的颜色存入this.color作为第一次页面加载时显示的颜色选项
                 for(let c of this.allColor){
                 // 给allcolor里的全部对象添加isselected属性作为是否被选中的颜色。
@@ -367,12 +379,13 @@ export default {
                 }
                   // 默认选中第一个颜色
                 this.color[0].isselected=true;
+                this.selectColor=this.color[0];
                 // 默认选中颜色的图片，这个1是自定义的参数， 1代表第一个颜色，2代表第二个颜色...这个参数将作为props属性传给子组件swiper查询颜色对应的图片，数据库里对应的是product_img表里的cid。
                 this.swiperColor=1;
 
-                })         
-  },
-  methods: {
+        })
+    },
+
     // 选择版本
     versionSelect(item){
         for(let v of this.version){
@@ -382,25 +395,13 @@ export default {
         this.selectVersion=item;
         // 调用子组件swiper里的方法重置滚动位置。
         this.$refs.swiper.slideReset();
-
-        // 现清空color数组里的对象选项
-        // this.color=[];
-        // 去allcolor里找到对应版本所拥有的颜色添加进color里面
-        // for(let c of this.allColor){
-        //             if(c.sid==item.id){
-        //               this.color.push(c);                      
-        //             }
-        //         }
-          // 默认选中第一个颜色
-          // this.color[0].isselected=true;
-          // this.swiperColor=1;
-
     },
     colorSelect(item,i){
       for(let c of this.color){
           c.isselected=false;
         }
         item.isselected=true;
+        this.selectColor=item;
         // 这里用下标来获取swipercolor对应的cid，1代表第一个颜色，2代表第二个颜色...
         this.swiperColor=i+1;
     },
@@ -433,11 +434,23 @@ export default {
           }
         }
     },
+  //加入购物车
+    addProduct(){
+      addCart(1,1).then((data)=>{
+        if(data==1){
+          this.$message({
+          message: '添加购物车成功',
+          type: 'success'
+          });
+        }
+      })
+    },
     // 最下面的商品大图和参数的切换
-    detailSwitch(e){
-      this.$(e.target).parent().addClass("active").siblings().removeClass("active");
-      var eq=this.$(e.target).parent().index();
-      this.$(".product-detail .detail-item").eq(eq).css("display","block").siblings().css("display","none");
+    detailSwitch(i){
+      for(let a of this.detailActive){
+        a.isactive=false
+      }
+      this.detailActive[i].isactive=true
     }
   },
   computed: {
@@ -460,15 +473,7 @@ export default {
       }
         
     },
-    //根据选择的版本设置颜色
-    // color(){
-    //   for(let v of this.version){
-    //     if(v.isselected){
-    //         return v.color;
-    //       }
-    //     }
-    // },
-    // 总价
+    
     totalprice(){
       var totalprice=this.selectVersion.price;
       for(let s of this.serviceOption){
@@ -931,6 +936,12 @@ export default {
 }
 .product-detail .detail-banner li a:hover{
   color: #ff6700;
+}
+.product-detail .detail-box .detail-item{
+  display: none;
+}
+.product-detail .detail-box .detail-item.active{
+  display: block;
 }
 .product-detail .detail-box .section{
   position: relative;

@@ -15,7 +15,7 @@
       <div class="no-result" v-if="!noresult">
         <div class="container">
           <img :src="noresultSrc" alt />
-          <p class="empty">抱歉，没有找到商品“{{keyword}}”，搜索"全部商品,小米,手机,电视,redmi"等关键字试试吧</p>
+          <p class="empty">抱歉，没有找到商品“{{keyword}}”，搜索 <span style="color:#ff6700">"全部商品,小米,手机,电视,redmi"</span>等关键字试试吧</p>
           <div class="btn" @click="searchAll">查看全部商品</div>
         </div>
       </div>

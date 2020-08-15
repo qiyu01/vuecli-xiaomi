@@ -148,40 +148,7 @@
                                               
                                             </div>
                                         </div>
-                                        <!-- <div class="service-info">
-                                            <div class="item-box clearfix">
-                                                <div class="item service-img">
-                                                    <router-link to="/">
-                                                    <img src="../static/images/bao.jpg" alt="">
-                                                    </router-link>
-                                                </div>
-                                                <div class="item service-name">
-                                                    
-                                                    <h3 class="name">
-                                                        <router-link to="/">
-                                                        延长保修服务
-                                                        </router-link>
-                                                    </h3>
-                                                    <p class="desc">厂保延一年，性能故障免费维修</p>
-                                                </div>
-                                                <div class="item service-price">159元
-                                                <p class="pre-info"></p>
-                                                </div>
-                                                <div class="item service-num">
-                                                    <div class="change-goods-num clearfix">
-                                                    1
-                                                    </div>
-                                                </div>
-                                                <div class="item service-total">159元</div>
-                                                <div class="item service-action">
-                                                    <div>
-                                                    <i class="iconfont	icon-cha"></i>
-                                                    </div>
-                                                </div>
-                                                
-                                              
-                                            </div>
-                                        </div> -->
+                                        
                                         <div class="service-add-box" v-for="(type,j) of serviceType" :key="j">
                                             <!-- <span>{{item.id}}{{type.type}}</span> -->
                                             <div class="add-item" v-for="(service,k) of servicefilter(item.id,type.type)" :key="k" @click="serviceSelect(service,type)">

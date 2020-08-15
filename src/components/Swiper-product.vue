@@ -14,6 +14,7 @@
 </template>
 
 <script>
+import {getProduct_banner} from "../util/api/getProduct";
 import Swiper from "swiper";
 // import 'swiper/css/swiper.min.css';
 export default {
@@ -25,7 +26,7 @@ export default {
       colorImg: [],
     };
   },
-  props: ["swiperColor"],
+  props: ["swiperColor","pid"],
   methods: {
     // 重置滚动位置，在product父组件里面切换版本号的时候需要重置图片滚动位置到初始位置。
     slideReset(){
@@ -82,16 +83,13 @@ export default {
       deep: true,
       // immediate: true,
     },
-  },
-  mounted() {
-    this.axios({
-      url: "http://127.0.0.1:8080/mi/v1/product_img",
-      method: "get",
-      params: {},
-    }).then((res) => {
-      let data = res.data;
-      //循环动态加载图像
-      data.forEach((item) => {
+    pid:{
+      handler(){
+        if(!this.pid){return false}
+        getProduct_banner(this.pid).then((res)=>{
+        let data = res;
+        //循环动态加载图像
+       data.forEach((item) => {
         //因为有的文章没有图像，所以无需动态加载图像了
         //故进行判断操作
         if (item.img_src != null) {
@@ -112,7 +110,6 @@ export default {
       // http://www.idangero.us/swiper/
       // 这个是swiper的正宗官方api，一切以这个为准，百度那个https://www.swiper.com.cn/都是坑！！！
       // vue里面所有swiper的创建操作都必须放到$nextTick里面，以便swiper在vue的数据改变后异步更新的dom对象更新完毕再操作dom
-
       this.$nextTick(function () {
         this.swiper = new Swiper(".swiper-product", {
           direction: "horizontal", // 垂直切换选项
@@ -138,8 +135,13 @@ export default {
           },
           effect: "fade",
         });
-      });
-    });
+        });
+      // $nextTick   --end--
+      })
+    // axiao  --end--
+      },//handler --end--
+      immediate: true,
+    }
   },
 };
 </script>
