@@ -33,7 +33,7 @@
       </div>
       <div class="span16">
           <ul v-for="(tab,t) of gettabs(cid)" :key="t" :class="[tab.isactive?'active':'','brick-list clearfix']">
-            <Brick-item v-for="(item,i) of brickList(t)" :key="i" :product="item"></Brick-item>
+            <Brick-item v-for="(item,i) of brickList(t)" :key="i" :product="item" :cid="cid"></Brick-item>
             <Brick-item-s :img="itemS[t]" v-if="cid==1?0:1"></Brick-item-s>
           </ul>
       </div>

@@ -73,37 +73,50 @@
             </div>
           </div>
           <div class="buy-option">
-            <div class="buy-box-child">
+            <div class="buy-box-child" v-if="noVersion">
               <div class="title">选择版本</div>
               <ul class="clearfix">
-                <li v-for="(item,i) in version" :key="i" :class="[item.isselected ? 'active' : '', 'clearfix']" @click="versionSelect(item)">
+                <li
+                  v-for="(item,i) in version"
+                  :key="i"
+                  :class="[item.isselected ? 'active' : '', 'clearfix']"
+                  @click="versionSelect(item)"
+                >
                   <a href="javascript:void(0)">{{item.name}}</a>
                 </li>
-                
               </ul>
             </div>
             <div class="buy-box-child">
               <div class="title">选择颜色</div>
               <ul class="clearfix">
-                <li v-for="(item,i) in color" :key="i" :class="[item.isselected ? 'active' : '', 'clearfix']" 
-                @click="colorSelect(item,i)">
+                <li
+                  v-for="(item,i) in color"
+                  :key="i"
+                  :class="[item.isselected ? 'active' : '', 'clearfix']"
+                  @click="colorSelect(item,i)"
+                >
                   <a href="Javascript:void(0);">{{item.name}}</a>
                 </li>
               </ul>
             </div>
           </div>
-          <div class="service-box">
+          <div class="service-box" v-if="noOption">
             <div class="server-item-box" v-if="serviceOption">
               <div class="title">
                 选择小米提供的意外保护
                 <a href="Javascript:void(0);">了解意外保护 ></a>
               </div>
               <ul>
-                <li v-for="(item,i) in serviceOption" :key="i" :class="[item.selected ? 'active' : '', 'clearfix']" @click="serviceSelect(item)">
+                <li
+                  v-for="(item,i) in serviceOption"
+                  :key="i"
+                  :class="[item.selected ? 'active' : '', 'clearfix']"
+                  @click="serviceSelect(item)"
+                >
                   <div class="circle">
-                    <i class="iconfont	icon-gou"></i>
+                    <i class="iconfont icon-gou"></i>
                   </div>
-                  <img src="images/product/bao.jpg" alt="">
+                  <img src="images/product/bao.jpg" alt />
                   <div class="box">
                     <h3>
                       {{item.name}}
@@ -112,10 +125,8 @@
                     <div class="desc">{{item.desc}}</div>
                     <div class="agreement-box">
                       <div class="rectangle">
-                       <i class="iconfont	icon-gou"></i>
-                      </div>
-                      
-                      我已阅读
+                        <i class="iconfont icon-gou"></i>
+                      </div>我已阅读
                       <a :href="item.prov">
                         服务条款
                         <span>|</span>
@@ -125,9 +136,6 @@
                     <div class="price">{{item.price}}元</div>
                   </div>
                 </li>
-                
-                
-  
               </ul>
             </div>
             <div class="server-item-box" v-if="repairOption[0]">
@@ -136,11 +144,16 @@
                 <a href="Javascript:void(0);">了解延长保护 ></a>
               </div>
               <ul>
-                <li v-for="(item,i) in repairOption" :key="i" :class="[item.selected ? 'active' : '', 'clearfix']" @click="repairSelect(item)">
+                <li
+                  v-for="(item,i) in repairOption"
+                  :key="i"
+                  :class="[item.selected ? 'active' : '', 'clearfix']"
+                  @click="repairSelect(item)"
+                >
                   <div class="circle">
-                    <i class="iconfont	icon-gou"></i>
+                    <i class="iconfont icon-gou"></i>
                   </div>
-                  <img src="images/product/bao.jpg" alt="">
+                  <img src="images/product/bao.jpg" alt />
                   <div class="box">
                     <h3>
                       {{item.name}}
@@ -149,10 +162,8 @@
                     <div class="desc">{{item.desc}}</div>
                     <div class="agreement-box">
                       <div class="rectangle">
-                       <i class="iconfont	icon-gou"></i>
-                      </div>
-                      
-                      我已阅读
+                        <i class="iconfont icon-gou"></i>
+                      </div>我已阅读
                       <a :href="item.prov">
                         服务条款
                         <span>|</span>
@@ -162,12 +173,8 @@
                     <div class="price">{{item.price}}元</div>
                   </div>
                 </li>
-                
-                
-  
               </ul>
             </div>
-            
           </div>
           <div class="select-list">
             <ul>
@@ -179,12 +186,12 @@
                 </span>
               </li>
             </ul>
-            <ul><li v-for="(item,i) in extra" :key="i">
-                 {{item.name}}
-                <span>
-                  {{item.price}}
-                </span>
-              </li></ul>
+            <ul>
+              <li v-for="(item,i) in extra" :key="i">
+                {{item.name}}
+                <span>{{item.price}}</span>
+              </li>
+            </ul>
             <ul></ul>
             <div class="total-price">总计: {{totalprice}}元</div>
           </div>
@@ -195,7 +202,6 @@
             <div class="favorite-btn">
               <a href="Javascript:void(0);" class="btn-like btn-grey">
                 <i class="iconfont icon-xin"></i>
-
                 喜欢
               </a>
             </div>
@@ -251,29 +257,33 @@
         <div class="detail-banner">
           <div class="container">
             <ul>
-              <li :class="detailActive[0].isactive?'active':''"><a href="javascript:void(0)" @click="detailSwitch(0)">商品概述</a></li>
-              <li :class="detailActive[1].isactive?'active':''"><a href="javascript:void(0)" @click="detailSwitch(1)">商品参数</a></li>
+              <li :class="detailActive[0].isactive?'active':''">
+                <a href="javascript:void(0)" @click="detailSwitch(0)">商品概述</a>
+              </li>
+              <li :class="detailActive[1].isactive?'active':''">
+                <a href="javascript:void(0)" @click="detailSwitch(1)">商品参数</a>
+              </li>
             </ul>
           </div>
         </div>
         <div class="detail-box">
           <div class="detail-item" :class="detailActive[0].isactive?'active':''">
             <div class="section">
-              <img src="images/product/imgbox1.jpg" alt="">
+              <img src="images/product/imgbox1.jpg" alt />
             </div>
             <div class="section">
-               <img src="images/product/imgbox2.jpg" alt="">
+              <img src="images/product/imgbox2.jpg" alt />
             </div>
           </div>
           <div class="detail-item" :class="detailActive[1].isactive?'active':''">
             <div class="section">
-              <img src="images/product/imgbox3.jpg" alt="">
+              <img src="images/product/imgbox3.jpg" alt />
             </div>
             <div class="section">
-               <img src="images/product/imgbox4.jpg" alt="">
+              <img src="images/product/imgbox4.jpg" alt />
             </div>
             <div class="section">
-               <img src="images/product/imgbox5.jpg" alt="">
+              <img src="images/product/imgbox5.jpg" alt />
             </div>
           </div>
         </div>
@@ -281,8 +291,7 @@
     </div>
 
     <Footer></Footer>
-  <Tool-bar></Tool-bar>
-
+    <Tool-bar></Tool-bar>
   </div>
 </template>
 
@@ -290,204 +299,272 @@
 import CategoryList from "@/components/Category-list.vue";
 import SwiperProduct from "@/components/Swiper-product.vue";
 import NavbarFix from "@/components/Navbar-fix.vue";
-import ToolBar from '@/components/Tool-bar.vue';
-import {getProductById,getProduct_version,getProduct_color,addCart} from "../util/api/getProduct";
+import ToolBar from "@/components/Tool-bar.vue";
+import {
+  getProductById,
+  getProduct_version,
+  getProduct_color,
+  addCart,
+} from "../util/api/getProduct";
 
 export default {
   data() {
     return {
-      navcategory: true,//是否显示导航栏的"全部商品分类" 该参数将作为props传给子组件，在子组件里面控制插槽slot是否显示
+      navcategory: true, //是否显示导航栏的"全部商品分类" 该参数将作为props传给子组件，在子组件里面控制插槽slot是否显示
+      pid:null,
       // 对应pid的商品信息
-      product:[],
+      product: [],
       // 所有版本参数，服务器返回
-      version:[],
+      version: [],
       // 当前选中的版本
-      selectVersion:{},
+      selectVersion: {},
+      //有的商品没有version,该属性控制版本选择模块是否显示
+      noVersion:true,
       // 当前选中的版本对应的颜色
-      color:[],
+      color: [],
 
       // 该product所有的颜色（虽然目前是每种版本有4种相同的颜色，但也可能出现不同的版本拥有的颜色数不相同），服务器返回
-      allColor:[],
+      allColor: [],
       //选中的颜色
-      selectColor:{},
+      selectColor: {},
       // 选择颜色后传入颜色对应的id，作为props属性传给子组件swiper，改变对应的颜色图片
-      swiperColor:1,
+      swiperColor: 1,
       // 服务选择参数,暂时用假数据
-      serviceOption:[
-        {id:1,selected:false,name:"意外保障服务",price:349,desc:"手机意外碎屏/进水/碾压等损坏",prov:"https://api.jr.mi.com/insurance/document/phone_accidentIns.html?insuranceSku=28006&couponFrom=rule",tips:"https://api.jr.mi.com/insurance/document/phone_accidentIns.html?insuranceSku=28006&couponFrom=question"},
-        {id:1,selected:false,name:"一年碎屏保",price:249,desc:"手机意外碎屏",prov:"https://api.jr.mi.com/insurance/document/phone_accidentIns.html?insuranceSku=28007&couponFrom=rule",tips:"https://api.jr.mi.com/insurance/document/phone_accidentIns.html?insuranceSku=28007&couponFrom=question"}
-        
+      serviceOption: [
+        {
+          id: 1,
+          selected: false,
+          name: "意外保障服务",
+          price: 349,
+          desc: "手机意外碎屏/进水/碾压等损坏",
+          prov:
+            "https://api.jr.mi.com/insurance/document/phone_accidentIns.html?insuranceSku=28006&couponFrom=rule",
+          tips:
+            "https://api.jr.mi.com/insurance/document/phone_accidentIns.html?insuranceSku=28006&couponFrom=question",
+        },
+        {
+          id: 1,
+          selected: false,
+          name: "一年碎屏保",
+          price: 249,
+          desc: "手机意外碎屏",
+          prov:
+            "https://api.jr.mi.com/insurance/document/phone_accidentIns.html?insuranceSku=28007&couponFrom=rule",
+          tips:
+            "https://api.jr.mi.com/insurance/document/phone_accidentIns.html?insuranceSku=28007&couponFrom=question",
+        },
       ],
       // 保修选择参数,暂时用假数据
-      repairOption:[
-        {id:1,selected:false,name:"延长保修服务",price:159,desc:"厂保延一年，性能故障免费维修",prov:"https://api.jr.mi.com/insurance/document/phone_accidentIns.html?insuranceSku=28006&couponFrom=rule",tips:"https://api.jr.mi.com/insurance/document/phone_accidentIns.html?insuranceSku=28006&couponFrom=question"}
+      repairOption: [
+        {
+          id: 1,
+          selected: false,
+          name: "延长保修服务",
+          price: 159,
+          desc: "厂保延一年，性能故障免费维修",
+          prov:
+            "https://api.jr.mi.com/insurance/document/phone_accidentIns.html?insuranceSku=28006&couponFrom=rule",
+          tips:
+            "https://api.jr.mi.com/insurance/document/phone_accidentIns.html?insuranceSku=28006&couponFrom=question",
+        },
       ],
+      // 有些商品没有保修和服务这些选项,控制这两模块的显隐
+      noOption:true,
       // 额外选择的服务（前面选择的service和repair），如果有，就在总金额上方列出这两条信息，没有就为空不显示
-      extra:[{},{}],
+      extra: [{}, {}],
       // 控制最下面商品大图prodcut-detail的tab切换
-      detailActive:[{id:1,isactive:true},{id:2,isactive:false}],
+      detailActive: [
+        { id: 1, isactive: true },
+        { id: 2, isactive: false },
+      ],
     };
   },
-  components: { CategoryList, SwiperProduct,NavbarFix,ToolBar},
+  inject: ["reload"],
+  components: { CategoryList, SwiperProduct, NavbarFix, ToolBar },
   mounted() {
-    this.getcontent(2)
-              
+    this.pid = this.$route.query.pid;
+      this.getcontent(this.pid);
   },
   watch: {
     $route(to, from) {
-      // this.keyword = this.$route.query.pid;
-      
-      // this.getcontent(1);
+      // this.pid = this.$route.query.pid;
+      // this.getcontent(this.pid);
+      this.reload()
     },
   },
-  methods:{
-
-    getcontent(pid){
-        getProductById(pid).then((res)=>{
-          if(res.length>0){
-            console.log(res)
-            this.product=res[0]
+  methods: {
+    getcontent(pid) {
+      if(!pid){pid=1}
+      getProductById(pid)
+        .then((res) => {
+          if (res.length > 0) {
+            this.product = res[0];
             // promiseall获取商品的版本选项和颜色选项
-            return Promise.all([getProduct_version(pid),getProduct_color(pid)])
-          }else{
+            return Promise.all([
+              getProduct_version(pid),
+              getProduct_color(pid),
+            ]);
+          } else {
             this.$message({
-          message: '没有此商品',
-          type: 'error'
-          })
+              message: "没有此商品",
+              type: "error",
+            });
           }
-        }).then((res)=>{
-          // 版本选项
-                this.version=res[0];
-                for(let v of this.version){
-                  // 给version里面的全部对象添加新属性isselected，必须使用$set方法，vue才能监测到数据变化
-                    this.$set(v, "isselected", false)
-                }
-                // 默认选中第二个版本，可以根据需求更改
-                this.version[1].isselected=true;
-                // selectVersion存储当前选中的版本（默认第二个）
-                this.selectVersion=this.version[1];
-
-            // 颜色选项
-            this.allColor=res[1];
-                //默认版本sid=2（前面version中第二个版本所对应的颜色）的颜色存入this.color作为第一次页面加载时显示的颜色选项
-                for(let c of this.allColor){
-                // 给allcolor里的全部对象添加isselected属性作为是否被选中的颜色。
-                  this.$set(c, "isselected", false);
-                    if(c.sid==2){
-                      this.color.push(c);                      
-                    }
-                }
-                  // 默认选中第一个颜色
-                this.color[0].isselected=true;
-                this.selectColor=this.color[0];
-                // 默认选中颜色的图片，这个1是自定义的参数， 1代表第一个颜色，2代表第二个颜色...这个参数将作为props属性传给子组件swiper查询颜色对应的图片，数据库里对应的是product_img表里的cid。
-                this.swiperColor=1;
-
         })
+        .then((res) => {
+          // 版本选项
+          // 该商品的版本和颜色数据没有插入,因为product里面插入了很多假数据，但并没有完全插入对应的版本和颜色图片数据
+          if(!res[0] || !res[1]){
+            this.$message({
+              message: "该商品的完整图片信息暂时没有插入，麻烦在地址栏上改变pid值为1,2,3,9或者24的商品试试",
+              type: "error",
+            });
+            return false
+          }
+          this.version = res[0];
+          for (let v of this.version) {
+            // 给version里面的全部对象添加新属性isselected，必须使用$set方法，vue才能监测到数据变化
+            this.$set(v, "isselected", false);
+          }
+          // 如果版本选项数量大于一个，默认选中第二个版本，只有一个的时候默认选中第一个。这个需求应该后台实现，这里暂定这样。
+          if(this.version.length>1){
+            this.version[1].isselected = true;
+            // selectVersion存储当前选中的版本（默认第二个）
+            this.selectVersion = this.version[1];
+          }else if(this.version.length=1){
+            this.version[0].isselected = true;
+            // selectVersion存储当前选中的版本（默认第1个）
+            this.selectVersion = this.version[0];
+            //如果该商品只有一个版本，而且版本name为null的时候说明该商品没有可选版本。改变noversion参数隐藏版本选择模块
+            if(this.version[0].name==null){this.noVersion=false}
+          }else{return false}
+          
+
+          // 颜色选项
+          this.allColor = res[1];
+          //默认版本sid=1的颜色存入this.color作为第一次页面加载时显示的颜色选项
+          for (let c of this.allColor) {
+            // 给allcolor里的全部对象添加isselected属性作为是否被选中的颜色。
+            this.$set(c, "isselected", false);
+            if (c.sid == this.selectVersion.sid) {
+              this.color.push(c);
+            }
+          }
+          if(this.color.length>0){
+            // 默认选中第一个颜色
+          this.color[0].isselected = true;
+          this.selectColor = this.color[0];
+          // 默认选中颜色的图片，这个1是自定义的参数， 1代表第一个颜色，2代表第二个颜色...这个参数将作为props属性传给子组件swiper查询颜色对应的图片，数据库里对应的是product_img表里的cid。
+          this.swiperColor = 1;
+          }
+        });
+      if(pid==24){
+        // 24号商品门锁是没有服务和保修选项的
+        this.noOption=false
+      }
+    
     },
 
     // 选择版本
-    versionSelect(item){
-        for(let v of this.version){
-          v.isselected=false;
-        }
-        item.isselected=true;
-        this.selectVersion=item;
-        // 调用子组件swiper里的方法重置滚动位置。
-        this.$refs.swiper.slideReset();
+    versionSelect(item) {
+      for (let v of this.version) {
+        v.isselected = false;
+      }
+      item.isselected = true;
+      this.selectVersion = item;
+      // 调用子组件swiper里的方法重置滚动位置。
+      this.$refs.swiper.slideReset();
     },
-    colorSelect(item,i){
-      for(let c of this.color){
-          c.isselected=false;
-        }
-        item.isselected=true;
-        this.selectColor=item;
-        // 这里用下标来获取swipercolor对应的cid，1代表第一个颜色，2代表第二个颜色...
-        this.swiperColor=i+1;
+    colorSelect(item, i) {
+      for (let c of this.color) {
+        c.isselected = false;
+      }
+      item.isselected = true;
+      this.selectColor = item;
+      // 这里用下标来获取swipercolor对应的cid，1代表第一个颜色，2代表第二个颜色...
+      this.swiperColor = i + 1;
     },
     // 服务选择
-    serviceSelect(item){
-        var bool=item.selected?true:false;
-        for(let s of this.serviceOption){
-          s.selected=false;
+    serviceSelect(item) {
+      var bool = item.selected ? true : false;
+      for (let s of this.serviceOption) {
+        s.selected = false;
+      }
+      item.selected = !bool;
+      this.extra[0] = {};
+      for (let s of this.serviceOption) {
+        if (s.selected) {
+          this.extra[0] = { name: s.name, price: s.price };
         }
-        item.selected=!bool;
-        this.extra[0]={}
-        for(let s of this.serviceOption){
-          
-          if(s.selected){
-            this.extra[0]={name:s.name,price:s.price}
-          }
-        }
+      }
     },
     // 保修选择
-    repairSelect(item){
-        var bool=item.selected?true:false;
-        for(let s of this.repairOption){
-          s.selected=false;
+    repairSelect(item) {
+      var bool = item.selected ? true : false;
+      for (let s of this.repairOption) {
+        s.selected = false;
+      }
+      item.selected = !bool;
+      this.extra[1] = {};
+      for (let s of this.repairOption) {
+        if (s.selected) {
+          this.extra[1] = { name: s.name, price: s.price };
         }
-        item.selected=!bool;
-        this.extra[1]={}
-        for(let s of this.repairOption){
-          if(s.selected){
-            this.extra[1]={name:s.name,price:s.price}
-          }
-        }
+      }
     },
-  //加入购物车
-    addProduct(){
-      addCart(1,1).then((data)=>{
-        if(data==1){
+    //加入购物车
+    addProduct() {
+      addCart(1, 1).then((data) => {
+        if (data == 1) {
           this.$message({
-          message: '添加购物车成功',
-          type: 'success'
+            message: "添加购物车成功",
+            type: "success",
           });
         }
-      })
+      });
     },
     // 最下面的商品大图和参数的切换
-    detailSwitch(i){
-      for(let a of this.detailActive){
-        a.isactive=false
+    detailSwitch(i) {
+      for (let a of this.detailActive) {
+        a.isactive = false;
       }
-      this.detailActive[i].isactive=true
-    }
+      this.detailActive[i].isactive = true;
+    },
   },
   computed: {
     // 价格
-    price(){
-      for(let v of this.version){
-        if(v.isselected){
-          return {price:v.price,delprice:v.delprice}
+    price() {
+      for (let v of this.version) {
+        if (v.isselected) {
+          return { price: v.price, delprice: v.delprice };
         }
       }
     },
     // 是否有礼物
-    hasgift:{
-      get(){
-          for(let v of this.version){
-        if(v.isselected){
+    hasgift: {
+      get() {
+        for (let v of this.version) {
+          if (v.isselected) {
             return v.gift;
           }
         }
-      }
-        
+      },
     },
-    
-    totalprice(){
-      var totalprice=this.selectVersion.price;
-      for(let s of this.serviceOption){
-        if(s.selected){
-          totalprice+=s.price
+
+    totalprice() {
+      var totalprice = this.selectVersion.price;
+      for (let s of this.serviceOption) {
+        if (s.selected) {
+          totalprice += s.price;
         }
       }
-      for(let r of this.repairOption){
-        if(r.selected){
-          totalprice+=r.price
+      for (let r of this.repairOption) {
+        if (r.selected) {
+          totalprice += r.price;
         }
-      } 
-      return totalprice;     
-    }
+      }
+      return totalprice;
+    },
   },
   // watch: {
   //   version:{
@@ -497,21 +574,17 @@ export default {
   //           this.color=v.color;
   //         }
   //       }
-      
-      
+
   //   },
   //   deep: true,
   //   immediate: true
   //   }
   // },
-  
 };
 </script>
 
 
 <style>
-
-
 /* 标题条 */
 
 .xm-product-box {
@@ -609,7 +682,7 @@ export default {
   margin-left: 5px;
   color: #b0b0b0;
 }
-.product-con .line{
+.product-con .line {
   margin-top: 12px;
   border-bottom: 1px solid #e0e0e0;
 }
@@ -710,11 +783,11 @@ export default {
   margin-bottom: 15px;
   line-height: 1;
 }
-.product-con .server-item-box .title a{
+.product-con .server-item-box .title a {
   color: #ff6700;
-    font-size: 14px;
-    float: right;
-    line-height: 18px;
+  font-size: 14px;
+  float: right;
+  line-height: 18px;
 }
 .product-con .server-item-box ul li {
   border: 1px solid #e0e0e0;
@@ -724,77 +797,78 @@ export default {
   padding: 30px 0;
   position: relative;
 }
-.product-con .server-item-box ul li.active{
-  border-color:#ff6700 ;
+.product-con .server-item-box ul li.active {
+  border-color: #ff6700;
   z-index: 2;
 }
-.product-con .server-item-box ul li .circle{
+.product-con .server-item-box ul li .circle {
   display: block;
-    width: 12px;
-    height: 12px;
-    border-radius: 50%;
-    line-height: 12px;
-    margin-left: 41px;
-    float: left;
-    font-size: 12px;
-    text-align: center;
-    cursor: pointer;
-    margin-top: 25px;
-    color:#fff;
-    border: 1px solid #b0b0b0;
-    overflow: hidden;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  line-height: 12px;
+  margin-left: 41px;
+  float: left;
+  font-size: 12px;
+  text-align: center;
+  cursor: pointer;
+  margin-top: 25px;
+  color: #fff;
+  border: 1px solid #b0b0b0;
+  overflow: hidden;
 }
-.product-con .server-item-box ul li .circle i{
-   font-size: 12px;
+.product-con .server-item-box ul li .circle i {
+  font-size: 12px;
 }
-.product-con .server-item-box ul li.active .circle{
+.product-con .server-item-box ul li.active .circle {
   color: #fff;
   background-color: #ff6700;
-  border-color:#ff6700 ;
+  border-color: #ff6700;
 }
-.product-con .server-item-box ul li img{
+.product-con .server-item-box ul li img {
   width: 50px;
-    height: 50px;
-    margin-right: 15px;
-    margin-left: 20px;
-    float: left;
-}
-.product-con .server-item-box .box{
+  height: 50px;
+  margin-right: 15px;
+  margin-left: 20px;
   float: left;
 }
-.product-con .server-item-box  h3{
+.product-con .server-item-box .box {
+  float: left;
+}
+.product-con .server-item-box h3 {
   font-size: 18px;
   margin: 0 0 10px 0;
 }
-.product-con .server-item-box ul li.active h3{
+.product-con .server-item-box ul li.active h3 {
   color: #ff6700;
 }
-.product-con .server-item-box  h3 em{
+.product-con .server-item-box h3 em {
   font-style: normal;
-    font-size: 14px;
-    background: #ff6700;
-    display: inline-block;
-    padding: 2px 6px;
-    border-radius: 20px;
-    color: #fff;
-    margin-left: 2px;
-}
-.product-con .server-item-box .desc{
   font-size: 14px;
-    height: 18px;
-    color: #b0b0b0;
-    width: 286px;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    margin-top: 5px;
+  background: #ff6700;
+  display: inline-block;
+  padding: 2px 6px;
+  border-radius: 20px;
+  color: #fff;
+  margin-left: 2px;
 }
-.product-con .server-item-box .agreement-box{
+.product-con .server-item-box .desc {
+  font-size: 14px;
+  height: 18px;
+  color: #b0b0b0;
+  width: 286px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
   margin-top: 5px;
 }
-.product-con .server-item-box .agreement-box .rectangle{
+.product-con .server-item-box .agreement-box {
+  margin-top: 5px;
+}
+.product-con .server-item-box .agreement-box .rectangle {
   display: inline-block;
-  width: 12px;height: 12px;
+  width: 12px;
+  height: 12px;
   line-height: 12px;
   border-radius: 2px;
   overflow: hidden;
@@ -803,158 +877,157 @@ export default {
   transform: translateY(2px);
   /* vertical-align: middle; */
 }
-.product-con .server-item-box .agreement-box i{
+.product-con .server-item-box .agreement-box i {
   display: inline-block;
   font-size: 12px;
   line-height: 12px;
   color: #fff;
 }
-.product-con .server-item-box ul li.active .rectangle{
+.product-con .server-item-box ul li.active .rectangle {
   color: #fff;
   background-color: #ff6700;
-  border-color:#ff6700 ;
+  border-color: #ff6700;
 }
-.product-con .server-item-box .agreement-box a{
+.product-con .server-item-box .agreement-box a {
   display: inline-block;
   color: #ff6700;
   margin: 0 2px;
 }
-.product-con .server-item-box .price{
+.product-con .server-item-box .price {
   position: absolute;
-    right: 20px;
-    bottom: 28px;
-    color: #757575;
+  right: 20px;
+  bottom: 28px;
+  color: #757575;
 }
-.product-con .select-list{
+.product-con .select-list {
   background: #f9f9fa;
-    padding: 30px;
-    margin-bottom: 30px;
+  padding: 30px;
+  margin-bottom: 30px;
 }
-.product-con .select-list ul li{
+.product-con .select-list ul li {
   line-height: 30px;
-    color: #616161;
+  color: #616161;
 }
-.product-con .select-list ul li span{
+.product-con .select-list ul li span {
   float: right;
 }
-.product-con .select-list .total-price{
+.product-con .select-list .total-price {
   color: #ff6700;
-    font-size: 24px;
-    padding-top: 20px;
+  font-size: 24px;
+  padding-top: 20px;
 }
-.product-con .btn-box{
+.product-con .btn-box {
   margin: 10px 0 20px 0;
 }
-.product-con .btn-box .sale-btn{
-      display: inline-block;
-    margin-right: 10px;
+.product-con .btn-box .sale-btn {
+  display: inline-block;
+  margin-right: 10px;
 }
-.product-con .btn-box .sale-btn .btn{
-    width: 298px;
-    height: 52px;
-    line-height: 52px;
-    font-size: 16px;
+.product-con .btn-box .sale-btn .btn {
+  width: 298px;
+  height: 52px;
+  line-height: 52px;
+  font-size: 16px;
 }
-.product-con .btn-box .favorite-btn{
-      display: inline-block;
-    vertical-align: top;
+.product-con .btn-box .favorite-btn {
+  display: inline-block;
+  vertical-align: top;
 }
-.product-con .btn-box .favorite-btn .btn-like{
+.product-con .btn-box .favorite-btn .btn-like {
   display: block;
-    width: 140px;
-    height: 52px;
-    line-height: 52px;
-    padding: 0;
-    margin: 0;
-    border: 1px solid #b0b0b0;
-    text-align: center;
-    cursor: pointer;
-    -webkit-transition: all .4s;
-    transition: all .4s;
-    font-size: 16px;
-    position: relative;
+  width: 140px;
+  height: 52px;
+  line-height: 52px;
+  padding: 0;
+  margin: 0;
+  border: 1px solid #b0b0b0;
+  text-align: center;
+  cursor: pointer;
+  -webkit-transition: all 0.4s;
+  transition: all 0.4s;
+  font-size: 16px;
+  position: relative;
 }
-.product-con .btn-box .favorite-btn .btn-like i{
+.product-con .btn-box .favorite-btn .btn-like i {
   font-size: 22px;
-    line-height: 23px;
-    vertical-align: -2px;
-    margin-right: 5px;
+  line-height: 23px;
+  vertical-align: -2px;
+  margin-right: 5px;
 }
-.product-con .after-sale-info span{
+.product-con .after-sale-info span {
   display: inline-block;
 }
-.product-con .after-sale-info a{
+.product-con .after-sale-info a {
   display: inline-block;
-    margin-right: 15px;
-    line-height: 30px;
-    margin-bottom: 10px;
-    cursor: default;
-    white-space: nowrap;
-    color: #b0b0b0;
+  margin-right: 15px;
+  line-height: 30px;
+  margin-bottom: 10px;
+  cursor: default;
+  white-space: nowrap;
+  color: #b0b0b0;
 }
-.product-con .after-sale-info a i{
+.product-con .after-sale-info a i {
   font-size: 20px;
-    display: inline-block;
-    font-style: normal;
-    vertical-align: middle;
+  display: inline-block;
+  font-style: normal;
+  vertical-align: middle;
 }
-.product-con .after-sale-info a em{
-    font-style: normal;
-    display: inline-block;
-    margin-left: 2px;
-    vertical-align: middle;
+.product-con .after-sale-info a em {
+  font-style: normal;
+  display: inline-block;
+  margin-left: 2px;
+  vertical-align: middle;
 }
 
-.product-detail .detail-banner{
-    text-align: center;
-    padding: 10px 0;
-    background: #fff;
-    border-top: 1px solid #ddd;
+.product-detail .detail-banner {
+  text-align: center;
+  padding: 10px 0;
+  background: #fff;
+  border-top: 1px solid #ddd;
 }
-.product-detail .detail-banner li{
+.product-detail .detail-banner li {
   width: 168px;
-    height: 18px;
-    padding: 20px 0;
-    line-height: 18px;
-    text-align: center;
-    font-size: 18px;
-    color: #424242;
-    display: inline-block;
+  height: 18px;
+  padding: 20px 0;
+  line-height: 18px;
+  text-align: center;
+  font-size: 18px;
+  color: #424242;
+  display: inline-block;
 }
-.product-detail .detail-banner li a{
+.product-detail .detail-banner li a {
   width: 170px;
-    display: block;
-    cursor: pointer;
-    border-right: 1px solid #e0e0e0;
+  display: block;
+  cursor: pointer;
+  border-right: 1px solid #e0e0e0;
 }
-.product-detail .detail-banner li:last-child a{
-  
-    border-right: 0;
+.product-detail .detail-banner li:last-child a {
+  border-right: 0;
 }
-.product-detail .detail-banner li.active a{
+.product-detail .detail-banner li.active a {
   color: #ff6700;
 }
-.product-detail .detail-banner li a:hover{
+.product-detail .detail-banner li a:hover {
   color: #ff6700;
 }
-.product-detail .detail-box .detail-item{
+.product-detail .detail-box .detail-item {
   display: none;
 }
-.product-detail .detail-box .detail-item.active{
+.product-detail .detail-box .detail-item.active {
   display: block;
 }
-.product-detail .detail-box .section{
+.product-detail .detail-box .section {
   position: relative;
-    width: 100%;
-    overflow: hidden;
-    margin: 0 auto;
+  width: 100%;
+  overflow: hidden;
+  margin: 0 auto;
 }
-.product-detail .detail-box .section img{
+.product-detail .detail-box .section img {
   position: relative;
-    left: 50%;
-    top: 0;
-    -webkit-transform: translate3d(-50%,0,0);
-    transform: translate3d(-50%,0,0);
-    height: 100%;
+  left: 50%;
+  top: 0;
+  -webkit-transform: translate3d(-50%, 0, 0);
+  transform: translate3d(-50%, 0, 0);
+  height: 100%;
 }
 </style>

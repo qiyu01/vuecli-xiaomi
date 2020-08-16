@@ -1,12 +1,12 @@
 <template>
     <div class="goods-item">
         <div class="figure figure-img">
-            <router-link to="product">
+            <router-link :to="{name:'Product', query:{pid:item.id}}">
                 <img :src="activeImg.src" alt="">
             </router-link>
         </div>
         <h2 class="title">
-            <router-link to="product">{{item.name}} {{activeImg.colorname}}</router-link>
+            <router-link :to="{name:'Product', query:{pid:item.id}}">{{item.name}} {{activeImg.colorname}}</router-link>
         </h2>
         <p class="price">
             <span>{{item.price}}元</span>

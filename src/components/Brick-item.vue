@@ -1,6 +1,6 @@
 <template>
     <li class="brick-item">
-              <router-link to="product">
+              <router-link :to="{name:'Product', query:{pid:getPid}}">
                 <div class="figure">
                   <img :src="product.img_src" alt />
                 </div>
@@ -19,7 +19,24 @@
 </template>
 <script>
 export default {
-    props:["product"]
+  data() {
+    return {
+      pid:null,
+    }
+  },
+    props:["product","cid"],
+    computed: {
+      getPid(){
+        if(this.cid==1){
+          this.pid=1
+        }else if(this.cid==3){
+          this.pid=9
+        }else{
+          this.pid=24
+        }
+        return this.pid
+      }
+    },
 }
 </script>
 <style scoped>

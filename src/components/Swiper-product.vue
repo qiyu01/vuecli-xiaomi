@@ -1,7 +1,7 @@
 <template>
   <div class="swiper-product swiper-container">
     <div class="swiper-wrapper">
-      <div v-for="el in arrItem" :key="el.id" class="swiper-slide">
+      <div v-for="(el,i) in arrItem" :key="i" class="swiper-slide">
         <img class="img" :src="el.img_src" />
       </div>
     </div>
@@ -14,7 +14,7 @@
 </template>
 
 <script>
-import {getProduct_banner} from "../util/api/getProduct";
+import { getProduct_banner } from "../util/api/getProduct";
 import Swiper from "swiper";
 // import 'swiper/css/swiper.min.css';
 export default {
@@ -26,12 +26,12 @@ export default {
       colorImg: [],
     };
   },
-  props: ["swiperColor","pid"],
+  props: ["swiperColor", "pid"],
   methods: {
     // 重置滚动位置，在product父组件里面切换版本号的时候需要重置图片滚动位置到初始位置。
-    slideReset(){
-        this.swiper.slideTo(1,0)
-    }
+    slideReset() {
+      this.swiper.slideTo(1, 0);
+    },
   },
   watch: {
     swiperColor: {
@@ -83,65 +83,68 @@ export default {
       deep: true,
       // immediate: true,
     },
-    pid:{
-      handler(){
-        if(!this.pid){return false}
-        getProduct_banner(this.pid).then((res)=>{
-        let data = res;
-        //循环动态加载图像
-       data.forEach((item) => {
-        //因为有的文章没有图像，所以无需动态加载图像了
-        //故进行判断操作
-        if (item.img_src != null) {
-          //动态加载图像，此时item中id,subject,description没有发生任何变化
-          //但是图像已经成为了动态加载的图像了
-          item.img_src = require("../assets/images/productcolor/" +
-            item.img_src);
+    pid: {
+      handler() {
+        if (!this.pid) {
+          return false;
         }
-        this.colorImg.push(item);
-      });
-      // 初始化swiper显示颜色图片的数组
-      for (let i of this.colorImg) {
-        // 默认显示的颜色
-        if (i.cid == this.swiperColor) {
-          this.arrItem.push(i);
-        }
-      }
-      // http://www.idangero.us/swiper/
-      // 这个是swiper的正宗官方api，一切以这个为准，百度那个https://www.swiper.com.cn/都是坑！！！
-      // vue里面所有swiper的创建操作都必须放到$nextTick里面，以便swiper在vue的数据改变后异步更新的dom对象更新完毕再操作dom
-      this.$nextTick(function () {
-        this.swiper = new Swiper(".swiper-product", {
-          direction: "horizontal", // 垂直切换选项
-          loop: true, // 循环模式选项
-          speed: 500, //动画速度
-          // observer:true,//修改swiper自己或子元素时，自动初始化swiper
-          // observeParents:true,//修改swiper的父元素时，自动初始化swiper
-          autoplay: {
-            delay: 3000, //5秒切换一次
-            // stopOnLastSlide: true, //最后一个slide停止自动滑动
-            disableOnInteraction: false, //用户操作后继续播放
-          },
-          //   如果需要分页器
-          pagination: {
-            el: ".swiper-pagination",
-            clickable: true,
-          },
+        getProduct_banner(this.pid).then((res) => {
+          let data = res;
+          //循环动态加载图像
+          if(!data){return false}
+          data.forEach((item) => {
+            //因为有的文章没有图像，所以无需动态加载图像了
+            //故进行判断操作
+            if (item.img_src != null) {
+              //动态加载图像，此时item中id,subject,description没有发生任何变化
+              //但是图像已经成为了动态加载的图像了
+              item.img_src = require("../assets/images/productcolor/" +
+                item.img_src);
+            }
+            this.colorImg.push(item);
+          });
+          // 初始化swiper显示颜色图片的数组
+          for (let i of this.colorImg) {
+            // 默认显示的颜色
+            if (i.cid == this.swiperColor) {
+              this.arrItem.push(i);
+            }
+          }
+          // http://www.idangero.us/swiper/
+          // 这个是swiper的正宗官方api，一切以这个为准，百度那个https://www.swiper.com.cn/都是坑！！！
+          // vue里面所有swiper的创建操作都必须放到$nextTick里面，以便swiper在vue的数据改变后异步更新的dom对象更新完毕再操作dom
+          this.$nextTick(function () {
+            this.swiper = new Swiper(".swiper-product", {
+              direction: "horizontal", // 垂直切换选项
+              loop: true, // 循环模式选项
+              speed: 500, //动画速度
+              // observer:true,//修改swiper自己或子元素时，自动初始化swiper
+              // observeParents:true,//修改swiper的父元素时，自动初始化swiper
+              autoplay: {
+                delay: 3000, //5秒切换一次
+                // stopOnLastSlide: true, //最后一个slide停止自动滑动
+                disableOnInteraction: false, //用户操作后继续播放
+              },
+              //   如果需要分页器
+              pagination: {
+                el: ".swiper-pagination",
+                clickable: true,
+              },
 
-          // 如果需要前进后退按钮
-          navigation: {
-            prevEl: ".swiper-button-prev",
-            nextEl: ".swiper-button-next",
-          },
-          effect: "fade",
+              // 如果需要前进后退按钮
+              navigation: {
+                prevEl: ".swiper-button-prev",
+                nextEl: ".swiper-button-next",
+              },
+              effect: "fade",
+            });
+          });
+          // $nextTick   --end--
         });
-        });
-      // $nextTick   --end--
-      })
-    // axiao  --end--
-      },//handler --end--
+        // axiao  --end--
+      }, //handler --end--
       immediate: true,
-    }
+    },
   },
 };
 </script>

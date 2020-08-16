@@ -231,11 +231,7 @@ export default {
   },
   watch: {
     $route(to, from) {
-      this.keyword = this.$route.query.keyword;
-      if (this.keyword == "全部商品") {
-        this.keyword = null;
-      }
-      this.getProduct(this.keyword, null, 1, false);
+      this.reload();
     },
   },
   methods: {

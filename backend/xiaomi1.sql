@@ -184,7 +184,10 @@ insert into product_spec values
 (null,3,'12GB+256GB','5299','5699',true,2),
 (null,1,'32英寸','2999','3299',true,9),
 (null,2,'38英寸','3999','4299',true,9),
-(null,3,'42英寸','4199','4599',false,9);
+(null,3,'42英寸','4199','4599',false,9),
+(null,1,null,'199','259',false,24),
+(null,1,'4GB+64GB','599','699',true,3),
+(null,2,'2GB+32GB','499','599',false,3);
 
 insert into product_color values 
 (null,'国风雅灰',1,1),
@@ -207,7 +210,14 @@ insert into product_color values
 (null,'珍珠白',3,2),
 (null,'灰色',1,9),
 (null,'灰色',2,9),
-(null,'灰色',3,9);
+(null,'灰色',3,9),
+(null,'黑色',1,24),
+(null,'晴空蓝',1,3),
+(null,'砂石黑',1,3),
+(null,'湖光绿',1,3),
+(null,'晴空蓝',2,3),
+(null,'砂石黑',2,3),
+(null,'湖光绿',2,3);
 
 
 insert into product_img values 
@@ -245,7 +255,25 @@ insert into product_img values
 (null,'tv2.jpg',1,9),
 (null,'tv3.jpg',1,9),
 (null,'tv4.jpg',1,9),
-(null,'tv5.jpg',1,9);
+(null,'tv5.jpg',1,9),
+(null,'mensuo1.jpg',1,24),
+(null,'mensuo2.jpg',1,24),
+(null,'mensuo3.jpg',1,24),
+(null,'redmi11.jpg',1,3),
+(null,'redmi12.jpg',1,3),
+(null,'redmi13.jpg',1,3),
+(null,'redmi14.jpg',1,3),
+(null,'redmi15.jpg',1,3),
+(null,'redmi21.jpg',2,3),
+(null,'redmi22.jpg',2,3),
+(null,'redmi23.jpg',2,3),
+(null,'redmi24.jpg',2,3),
+(null,'redmi25.jpg',2,3),
+(null,'redmi31.jpg',3,3),
+(null,'redmi32.jpg',3,3),
+(null,'redmi33.jpg',3,3),
+(null,'redmi34.jpg',3,3),
+(null,'redmi35.jpg',3,3);
 
 
 
