@@ -93,7 +93,11 @@
               :class="[errorElements[1].isactive?'err-border':'','input_wrapper input_wrapper2']"
             >
               <input type="password" class="pwd" placeholder="短信验证码" v-model="code.value" />
-              <label class="label" @click="getCode" :style="{color:code.active?'blue':'#a0a0a0'}">{{code.content}}{{code.seconds}}</label>
+              <label
+                class="label"
+                @click="getCode"
+                :style="{color:code.active?'blue':'#a0a0a0'}"
+              >{{code.content}}{{code.seconds}}</label>
             </div>
             <div class="msg" v-show="errorElements[2].isactive">
               <img :src="img[1].src" alt />
@@ -180,7 +184,7 @@
   </div>
 </template>
 <script>
-import {login,phoneLogin} from '../util/api/getProduct'
+import { login, phoneLogin } from "../util/api/getProduct";
 import { validate, setError } from "../util/validate";
 export default {
   data() {
@@ -236,20 +240,23 @@ export default {
           "请输入密码"
         );
       } else {
-        login(this.uname,this.pwd).then((res)=>{
-            if(res==0){
-                setError(this.errorElements,this.errorElements[0],
-          this.errorElements[1],this.errorElements[2],"账号或者密码错误")
-                
-            }else{
-                console.log(res)
-                this.$store.commit("login",res[0])
-                this.$router.push({name:'Home'});
-            }
-        })
+        login(this.uname, this.pwd).then((res) => {
+          if (res == 0) {
+            setError(
+              this.errorElements,
+              this.errorElements[0],
+              this.errorElements[1],
+              this.errorElements[2],
+              "账号或者密码错误"
+            );
+          } else {
+            this.$store.commit("login", res[0]);
+            this.$router.push({ name: "Home" });
+          }
+        });
       }
     },
-    loginByPhone(){
+    loginByPhone() {
       if (validate(this.phone) === 1) {
         setError(
           this.errorElements,
@@ -275,23 +282,26 @@ export default {
           "请输入验证码"
         );
       } else {
-        phoneLogin(this.phone,this.code.value).then((res)=>{
-            if(res==1){
-                this.$router.push({name:'Home'});
-            }else{
-                setError(
-          null,
-          this.errorElements[1],
-          this.errorElements[0],
-          this.errorElements[2],
-          "验证码错误"
-        );
-            }
-        })
+        phoneLogin(this.phone, this.code.value).then((res) => {
+          if (res == 0) {
+            setError(
+              null,
+              this.errorElements[1],
+              this.errorElements[0],
+              this.errorElements[2],
+              "验证码错误"
+            );
+          } else {
+            this.$store.commit("login", res[0]);
+            this.$router.push({ name: "Home" });
+          }
+        });
       }
     },
     getCode() {
-        if(!this.code.active){return false}
+      if (!this.code.active) {
+        return false;
+      }
       this.code.active = false;
       this.code.content = "再次发送";
       this.code.seconds = "(60)";

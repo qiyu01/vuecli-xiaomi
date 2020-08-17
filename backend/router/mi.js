@@ -426,7 +426,7 @@ router.get("/v1/phoneLogin", (req, res) => {
     pool.query(sql, [phone,code], (err, result) => {
         if (err) throw err;
         if (result.length > 0) {
-            res.send("1");
+            res.send(result);
         } else {
             res.send("0");
         }

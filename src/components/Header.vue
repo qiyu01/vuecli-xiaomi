@@ -46,11 +46,27 @@
                     </div>
                 </div>
                 <div class="topbar-info">
-                    <a href="javascritp:void(0);">登录</a>
+                    <router-link to="login" v-if="!hasLogin">登录</router-link>
+                    <span class="sep" v-if="!hasLogin">|</span>
+                    <a href="javascritp:void(0);" v-if="!hasLogin">注册</a>
+                    <span class="user" v-if="hasLogin">
+                        <a href="javascript:void(0)">
+                            <span class="name">{{$store.state.uid}}</span>
+                            <i class="iconfont	icon-tubiaozhizuo-"></i>
+                        </a>
+                        <ul class="user-menu">
+                            <li><a href="javascript:void(0)">个人中心</a></li>
+                            <li><a href="javascript:void(0)">评价晒单</a></li>
+                            <li><a href="javascript:void(0)">我的喜欢</a></li>
+                            <li><a href="javascript:void(0)">小米账户</a></li>
+                            <li><a href="javascript:void(0)" @click="loginOut">退出登录</a></li>
+                        </ul>
+                    </span>
                     <span class="sep">|</span>
-                    <a href="javascritp:void(0);">注册</a>
-                    <span class="sep">|</span>
-                    <a href="#" class="message">消息通知<i></i></a>
+                    <a href="javascript:void(0)" class="message">消息通知<i></i></a>
+                    <span class="sep" v-if="hasLogin">|</span>
+                    <a href="javascript:void(0)" class="link-order" v-if="hasLogin">我的订单</a>
+
                 </div>
             </div>
 
@@ -63,6 +79,8 @@
     </div>
 </template>
 <script>
+import {mapMutations} from 'vuex';
+import {mapGetters} from 'vuex';
 import HeaderNav from './Header-nav.vue'
 export default {
   name: 'Header',
@@ -71,7 +89,10 @@ export default {
     HeaderNav
   },
   methods: {
-      
+      ...mapMutations(["loginOut"])
+  },
+  computed: {
+      ...mapGetters(["hasLogin"])
   },
 }
 </script>
@@ -86,6 +107,8 @@ export default {
     font-size: 12px;
     background-color: #333;
     height: 40px;
+    z-index: 300;
+    position: relative;
 }
 .header .topbar-nav {
     float: left;
@@ -208,18 +231,63 @@ export default {
     height: 100px;
 }
 
+
+/* topbar-info */
 .header .site-topbar .topbar-info{
     float: right;
     height: 40px;
     line-height: 40px;
     font-size: 12px;
 }
-.header .site-topbar .topbar-info a{
+.header .site-topbar .topbar-info>a,
+.header .site-topbar .topbar-info>span{
     float: left;
     color: #b0b0b0;
     padding: 0 5px;
     text-align: center;
     font-size: 12px;
+}
+.header .site-topbar .topbar-info .user i{
+    font-size: 12px;
+    color: #b0b0b0;
+    margin-left: 10px;
+}
+
+.header .site-topbar .topbar-info .user{
+    display: inline-block;
+    width: 110px;height: 40px;
+    overflow: hidden;
+    padding: 0;
+    box-shadow: 0 2px 10px rgba(0,0,0,.15);
+     transition: height .3s;
+}
+.header .site-topbar .topbar-info .user:hover{
+    background-color: #fff;
+    height: 202px;
+    
+}
+.header .site-topbar .topbar-info .user a{
+    display: inline-block;
+    width: 110px;
+    color: #b0b0b0;
+}
+.header .site-topbar .topbar-info .user:hover .name,
+.header .site-topbar .topbar-info .user:hover i{
+    color: #ff6700;
+}
+.header .site-topbar .topbar-info .user-menu{
+    width: 110px;padding: 7px 0;  
+}
+
+.header .site-topbar .topbar-info .user-menu a{
+    color: #424242;
+    display: block;
+    padding: 3px 0px;
+    line-height: 2;
+}
+.header .site-topbar .topbar-info .user-menu a:hover{
+    background: #f0f0f0;
+    color: #ff6700;
 }
 .header .site-topbar .topbar-info a.message{
     padding: 0 10PX;
@@ -230,6 +298,11 @@ export default {
 .header .site-topbar .topbar-info .sep{
     float: left;
     color: #424242;
+    padding: 0;
+}
+.header .site-topbar .topbar-info .link-order{
+    display: inline-block;
+    width: 70px;
 }
 
 
