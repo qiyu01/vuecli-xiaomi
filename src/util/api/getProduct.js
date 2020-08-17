@@ -73,6 +73,24 @@ function addCart(pid,uid){
         }
     )
 }
+// 登录
+function login(name,pwd){
+    return new Promise((resolve,reject)=>{
+            http.get(URL.login,{name:name,pwd:pwd}).then(data=>{
+                resolve(data)
+            })
+        }
+    )
+}
+//手机验证码登录接口
+function phoneLogin(phone,code){
+    return new Promise((resolve,reject)=>{
+            http.get(URL.phoneLogin,{phone:phone,code:code}).then(data=>{
+                resolve(data)
+            })
+        }
+    )
+}
 
 
 export{
@@ -83,5 +101,7 @@ export{
     searchProduct,
     getImgBg,
     brickProduct,
-    addCart
+    addCart,
+    login,
+    phoneLogin
 }

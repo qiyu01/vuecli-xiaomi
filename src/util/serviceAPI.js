@@ -21,6 +21,10 @@ const URL = {
 
     //加入购物车接口
     addCart:LOCALURL+"/mi/v1/addcart",
+    //登录接口
+    login:LOCALURL+"/mi/v1/login",
+    //手机验证码登录接口
+    phoneLogin:LOCALURL+"/mi/v1/phoneLogin",
     
 }
 export {URL}

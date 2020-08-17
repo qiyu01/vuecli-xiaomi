@@ -370,6 +370,7 @@ export default {
       ],
       // 有些商品没有保修和服务这些选项,控制这两模块的显隐
       noOption:true,
+      noAddCart:true,
       // 额外选择的服务（前面选择的service和repair），如果有，就在总金额上方列出这两条信息，没有就为空不显示
       extra: [{}, {}],
       // 控制最下面商品大图prodcut-detail的tab切换
@@ -409,6 +410,7 @@ export default {
               message: "没有此商品",
               type: "error",
             });
+            this.noAddCart=false
           }
         })
         .then((res) => {
@@ -419,6 +421,7 @@ export default {
               message: "该商品的完整图片信息暂时没有插入，麻烦在地址栏上改变pid值为1,2,3,9或者24的商品试试",
               type: "error",
             });
+            this.noAddCart=false
             return false
           }
           this.version = res[0];
@@ -514,7 +517,8 @@ export default {
     },
     //加入购物车
     addProduct() {
-      addCart(1, 1).then((data) => {
+      if(!this.pid || !this.noAddCart){return false}
+      addCart(this.pid, 1).then((data) => {
         if (data == 1) {
           this.$message({
             message: "添加购物车成功",

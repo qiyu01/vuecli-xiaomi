@@ -30,10 +30,13 @@ a {
     text-decoration: none !important;
     color: #757575;
 }
-img{
+button,img{
     border: 0;
+    outline: 0;
 }
-
+input{
+    outline: 0;
+}
 .container{
     width: 1226px;
     margin: 0 auto;
@@ -57,6 +60,9 @@ img{
     display: none;
 }
 .border-info{
+    border-color: #ff6700!important;
+}
+.err-border {
     border-color: #ff6700!important;
 }
 

@@ -80,7 +80,7 @@ CREATE TABLE user(
   pwd varchar(8),
   email varchar(20),
   phone varchar(20),
-   verifycode int(4) DEFAULT 1314
+  code INT(4) DEFAULT 1314
 );
 
 /**购物车**/

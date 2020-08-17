@@ -385,28 +385,27 @@ router.get("/v1/brick_product", (req, res) => {
 
 
 //使用用户名登录
-router.get("/v1/login_restful/:uname&:upwd", (req, res) => {
-    // 获取参数变量,看见冒号
-    var _uname = req.params.uname;
-    var _upwd = req.params.upwd;
-    // console.log(_uname + "~~~~~" + _upwd);
-    var sql = "select * from xiaomi_user where uname=? and upwd=?";
+router.get("/v1/login", (req, res) => {
+    res.header("Access-Control-Allow-Origin", "http://127.0.0.1:8081");
+    var _uname = req.query.name;
+    var _upwd = req.query.pwd;
+    var sql = "select * from user where name=? and pwd=?";
     pool.query(sql, [_uname, _upwd], (err, result) => {
         if (err) throw err;
         if (result.length > 0) {
-            res.send("1");
+            res.send(result);
         } else {
-            var sql = "select * from xiaomi_user where email=? and upwd=?";
+            var sql = "select * from user where email=? and pwd=?";
             pool.query(sql, [_uname, _upwd], (err, result) => {
                 if (err) throw err;
                 if (result.length > 0) {
-                    res.send("1");
+                    res.send(result);
                 } else {
-                    var sql = "select * from xiaomi_user where phone=? and upwd=?";
+                    var sql = "select * from user where phone=? and pwd=?";
                     pool.query(sql, [_uname, _upwd], (err, result) => {
                         if (err) throw err;
                         if (result.length > 0) {
-                            res.send("1");
+                            res.send(result);
                         } else {
                             res.send("0");
                         }
@@ -419,18 +418,18 @@ router.get("/v1/login_restful/:uname&:upwd", (req, res) => {
     });
 });
 //使用手机号码登录
-router.get("/v1/get_verifycode/:uphone", (req, res) => {
-    var _uphone = req.params.uphone;
-    var sql = "select * from xiaomi_user where phone=?";
-    pool.query(sql, [_uphone], (err, result) => {
+router.get("/v1/phoneLogin", (req, res) => {
+    res.header("Access-Control-Allow-Origin", "http://127.0.0.1:8081");
+    var phone = req.query.phone;
+    var code = req.query.code;
+    var sql = "select * from user where phone=? and code=?";
+    pool.query(sql, [phone,code], (err, result) => {
         if (err) throw err;
         if (result.length > 0) {
-            res.send(result);
+            res.send("1");
         } else {
             res.send("0");
         }
-        // console.log(typeof(result));
-
     });
 });
 

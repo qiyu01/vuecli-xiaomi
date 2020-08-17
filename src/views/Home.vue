@@ -265,6 +265,7 @@ export default {
     FlashCounter,SwiperFade,SwiperSlide,ToolBar,HomeBrick
   },
   mounted() {
+      console.log(this.$store.state.uid)
       brickProduct().then((res)=>{
           if(res.length>0){
               for(let i=0;i<res.length;i++){
