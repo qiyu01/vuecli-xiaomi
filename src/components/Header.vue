@@ -59,7 +59,7 @@
                             <li><a href="javascript:void(0)">评价晒单</a></li>
                             <li><a href="javascript:void(0)">我的喜欢</a></li>
                             <li><a href="javascript:void(0)">小米账户</a></li>
-                            <li><a href="javascript:void(0)" @click="loginOut">退出登录</a></li>
+                            <li><a href="javascript:void(0)" @click="login_out">退出登录</a></li>
                         </ul>
                     </span>
                     <span class="sep">|</span>
@@ -89,7 +89,7 @@ export default {
     HeaderNav
   },
   methods: {
-      ...mapMutations(["loginOut"])
+      ...mapMutations(["login_out"])
   },
   computed: {
       ...mapGetters(["hasLogin"])

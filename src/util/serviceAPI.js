@@ -25,6 +25,17 @@ const URL = {
     login:LOCALURL+"/mi/v1/login",
     //手机验证码登录接口
     phoneLogin:LOCALURL+"/mi/v1/phoneLogin",
+
+    //获取购物车里商品接口
+    getCart:LOCALURL+"/mi/v1/cart",
+
+    //获取购物车里对应商品的信息接口
+    cartProduct:LOCALURL+"/mi/v1/cart_product",
+    //获取购物车里对应商品的服务
+    getService:LOCALURL+"/mi/v1/service",
+    //获取购物页面下方的推荐商品信息
+    getRecommend:LOCALURL+"/mi/v1/recommend",
+
     
 }
 export {URL}

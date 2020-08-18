@@ -95,10 +95,10 @@ router.get("/v1/product_banner", (req, res) => {
 });
 // 根用户id返回购物车所有商品
 router.get("/v1/cart", (req, res) => {
-    // console.log(_uname + "~~~~~" + _upwd);
     res.header("Access-Control-Allow-Origin", "http://127.0.0.1:8081");
-    var sql = "select * from cart where uid=1";
-    pool.query(sql, [], (err, result) => {
+    var _uid = req.query.uid;
+    var sql = "select * from cart where uid=?";
+    pool.query(sql, [_uid], (err, result) => {
         if (err) throw err;
         if (result.length > 0) {
             res.send(result);
@@ -108,17 +108,10 @@ router.get("/v1/cart", (req, res) => {
     });
 });
 // 根用购物车里的商品id返回商品信息
-router.get("/v1/cart_product/:pid", (req, res) => {
+router.get("/v1/cart_product", (req, res) => {
     res.header("Access-Control-Allow-Origin", "http://127.0.0.1:8081");
-    var _pid = req.params.pid;
-    var pid = _pid.split(",");
-    var value = [];
-    for (let i of pid) {
-        value.push("id=" + i)
-    }
-    value = value.join(" or ")
-    // console.log(_uname + "~~~~~" + _upwd);
-    var sql = "select * from product where " + value;
+    var _pidAll = req.query.pidAll;
+    var sql = `select * from product where id in (${_pidAll})`;
     pool.query(sql, [], (err, result) => {
         if (err) throw err;
         if (result.length > 0) {
@@ -130,21 +123,12 @@ router.get("/v1/cart_product/:pid", (req, res) => {
 });
 
 // 根据购物车里的商品id返回这些商品所有的服务
-router.get("/v1/service/:pid", (req, res) => {
+router.get("/v1/service", (req, res) => {
     res.header("Access-Control-Allow-Origin", "http://127.0.0.1:8081");
-    var _pid = req.params.pid;
-    var pid = _pid.split(",");
-    var value = [];
-    for (let i of pid) {
-        value.push("pid=" + i)
-    }
-    value = value.join(" or ")
-    // console.log(value)
-    // console.log(_uname + "~~~~~" + _upwd);
-    var sql = "select * from service where " + value;
+    var _pidAll = req.query.pidAll;
+    var sql = `select * from service where pid in (${_pidAll})`;
     pool.query(sql, [], (err, result) => {
         if (err) throw err;
-
         if (result.length > 0) {
             res.send(result);
         } else {
@@ -158,10 +142,7 @@ router.get("/v1/addcart", (req, res) => {
     res.header("Access-Control-Allow-Origin", "http://127.0.0.1:8081");
     var _pid = req.query.pid;
     var _uid = req.query.uid;
-    // console.log(_pid)
-    // console.log(_uname + "~~~~~" + _upwd);
     var num = 1;
-
     var sql = "select * from cart where pid=? and uid=?";
     pool.query(sql, [_pid, _uid], (err, result) => {
         if (err) throw err;
@@ -224,7 +205,6 @@ router.get("/v1/cart_delete", (req, res) => {
 
 // 返回推荐商品
 router.get("/v1/recommend", (req, res) => {
-    // console.log(_uname + "~~~~~" + _upwd);
     res.header("Access-Control-Allow-Origin", "http://127.0.0.1:8081");
     var sql = "select * from recommend";
     pool.query(sql, [], (err, result) => {

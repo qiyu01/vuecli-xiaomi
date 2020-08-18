@@ -91,6 +91,42 @@ function phoneLogin(phone,code){
         }
     )
 }
+//获取购物车里商品
+function getCart(uid){
+    return new Promise((resolve,reject)=>{
+            http.get(URL.getCart,{uid:uid}).then(data=>{
+                resolve(data)
+            })
+        }
+    )
+}
+//获取购物车里对应商品的信息接口
+function cartProduct(pidAll){
+    return new Promise((resolve,reject)=>{
+            http.get(URL.cartProduct,{pidAll:pidAll}).then(data=>{
+                resolve(data)
+            })
+        }
+    )
+}
+//获取购物车里对应商品的服务
+function getService(pidAll){
+    return new Promise((resolve,reject)=>{
+            http.get(URL.getService,{pidAll:pidAll}).then(data=>{
+                resolve(data)
+            })
+        }
+    )
+}
+//获取购物车里对应商品的服务
+function getRecommend(){
+    return new Promise((resolve,reject)=>{
+            http.get(URL.getRecommend,{}).then(data=>{
+                resolve(data)
+            })
+        }
+    )
+}
 
 
 export{
@@ -103,5 +139,9 @@ export{
     brickProduct,
     addCart,
     login,
-    phoneLogin
+    phoneLogin,
+    getCart,
+    cartProduct,
+    getService,
+    getRecommend
 }

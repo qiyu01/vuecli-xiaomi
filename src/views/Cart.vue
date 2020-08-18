@@ -5,8 +5,8 @@
         <div class="header-logo">
           <router-link to="/" class="logo">
             <span>
-              <img src="images/mi-home.png" alt />
-              <img src="images/mi-logo.png" alt />
+              <img :src="img[0].src" alt />
+              <img :src="img[1].src" alt />
             </span>
           </router-link>
         </div>
@@ -16,7 +16,7 @@
         </div>
         <div class="site-topbar">
           <div class="topbar-info">
-            <span class="user">
+            <span class="user" v-if="hasLogin">
               <router-link to="/" class="user-name">
                 <span class="name">{{$store.state.uid}}</span>
                 <i class="iconfont icon-tubiaozhizuo-"></i>
@@ -36,13 +36,15 @@
                     <router-link to="/">小米账户</router-link>
                   </li>
                   <li>
-                    <router-link to="/">退出登录</router-link>
+                    <router-link to="/" @click.native="login_out">退出登录</router-link>
                   </li>
                 </ul>
               </div>
             </span>
+            <router-link :to="{name:'Login',query:{from:'/cart'}}" class="link login" v-if="!hasLogin">登录</router-link>
             <span class="sep">|</span>
-            <router-link to="/" class="link link-order">我的订单</router-link>
+            <router-link to="/" class="link link-order" v-if="hasLogin">我的订单</router-link>
+            <a href="javascript:void(0)" class="link register" v-if="!hasLogin">注册</a>
           </div>
         </div>
       </div>
@@ -121,7 +123,7 @@
                       >
                         <div class="item service-img">
                           <router-link to="/">
-                            <img src="../static/images/bao.jpg" alt />
+                            <img :src="img[2].src" alt />
                           </router-link>
                         </div>
 
@@ -199,20 +201,7 @@
                   </a>
                 </li>
                 <Rec-brick v-for="(item,i) of recommend" :key="i" :brick="item"></Rec-brick>
-                <!-- <li class="recommend-item" v-for="i of 9" :key="i">
-                                    <router-link to="/">
-                                        <img :src="img[2].src" alt="">
-                                        <div class="recommend-name">米家多功能电煮壶</div>
-                                        <div class="recommend-price">399元</div>
-                                        <div class="recommend-tips">461人好评</div>
-                                    </router-link>
-                                    <div class="recommend-action">
-                                        <a href="javascript:void(0)">加入购物车</a>
-                                    </div>
-                                    <div class="recommend-notice">
-                                        <a href="javascript:void(0)" class="btn">成功加入购物车</a>
-                                    </div>
-                </li>-->
+                
               </ul>
             </div>
           </div>
@@ -224,15 +213,18 @@
   </div>
 </template>
 <script>
+import {mapMutations} from 'vuex';
+import {mapGetters} from 'vuex';
 import RecBrick from "@/components/Recommend-brick.vue";
+import {getCart,cartProduct,getService,getRecommend} from "../util/api/getProduct";
 import qs from "qs";
 export default {
   data() {
     return {
       img: [
-        { id: 1, src: "product2.jpg" },
-        { id: 2, src: "product1.jpg" },
-        { id: 3, src: "product1.jpg" },
+        { id: 1, src: "mi-home.png" },
+        { id: 2, src: "mi-logo.png" },
+        { id: 3, src: "bao.jpg" },
         { id: 4, src: "recommend-ad1.jpg" },
       ],
       cart: [],
@@ -263,12 +255,13 @@ export default {
   },
   components: { RecBrick },
   methods: {
+    ...mapMutations(["login_out"]),
     selectAll() {
       var bool = false;
       for (let i of this.product) {
         if (!i.isselected) {
           //如果找到最少一个商品是没选中的（!i.isselected），那这次点击就是全部选中，后面把全部product的isselected设置为bool=true
-          //如果没有找到一个商品是没选中的，就是全部选中，这里不执行，那bool就还是前面的false，后面把全部product的isselected设置为bool=false，也就是全部不选中
+          //如果没有找到一个商品是没选中的，就是已经全部选中了，这里不执行，那bool就还是前面的false，后面把全部product的isselected设置为bool=false，也就是全部不选中
           bool = true;
           break;
         }
@@ -423,11 +416,11 @@ export default {
     },
   },
   mounted() {
-    this.http
-      .get("/mi/v1/cart")
-      .then((data) => {
+    for(let i of this.img){
+       i.src = require("../assets/images/product/" +i.src)
+    }
+    getCart(this.user_id).then((data) => {
         this.cart = data;
-        // console.log(this.cart)
         for (let i of this.cart) {
           i.img_src = require("../assets/images/product/product80/" +
             i.img_src);
@@ -435,25 +428,22 @@ export default {
         for (let i of this.cart) {
           this.pid.push(i.pid);
         }
-
+        // 将所有需要请求的商品id拼接成字符串
+        var pidAll=null;
+        if(this.pid.length>0){pidAll=this.pid.join()}
+        if(pidAll){
         //请求购物车里商品的主要信息
-        var product = this.http.get("/mi/v1/cart_product/" + this.pid);
         //请求购物车里所有商品的所有服务
-        var service = this.http.get("/mi/v1/service/" + this.pid);
-        //请求购物车里每个商品选中的服务
-        // var service_selected=this.http.get("/mi/v1/service_selected/"+this.pid);
         //并发查询上列接口
-        return Promise.all([product, service]);
-      })
-      .then((data) => {
+        return Promise.all([cartProduct(pidAll),getService(pidAll)]);
+        }
+      }).then((data) => {
         // 储存所有的服务数据条
         this.serviceAll = data[1];
         //对应的选中的数据，一开始是全部没选中的，其实应该从服务器返回以前选中的选项，由于需要增加逻辑运算，这里暂时不做。
         for (let i = 0; i < this.serviceAll.length; i++) {
           this.serviceSelected[i] = null;
         }
-        // console.log(this.serviceSelected);
-
         // 处理商品的数据条
         // 因为服务器查询的商品数据的顺序是按照数据库里商品的id排列的。我们需要按照购物车的pid的顺序进行排列，以便在v-for插入dom时的顺序是按照加入购物车的顺序插入的。
         for (let i = 0; i < this.pid.length; i++) {
@@ -471,11 +461,9 @@ export default {
           }
         }
         this.product.reverse();
-        // console.log(this.product)
       });
-    this.img[3].src = require("../assets/images/product/product180/" +
-      this.img[3].src);
-    this.http.get("/mi/v1/recommend").then((data) => {
+   ;
+    getRecommend().then((data) => {
       for (let i of data) {
         i.img = require("../assets/images/product/product180/" + i.img);
       }
@@ -483,6 +471,7 @@ export default {
     });
   },
   computed: {
+    ...mapGetters(["hasLogin","user_id"]),
     allSelected() {
       for (let i = 0; i < this.product.length; i++) {
         if (!this.product[i].isselected) {
@@ -602,12 +591,12 @@ export default {
   left: -1px;
 }
 
-.header-title {
+.cart-wraper .header-title {
   height: 48px;
   float: left;
   margin-top: 26px;
 }
-.header-title h2 {
+.cart-wraper .header-title h2 {
   float: left;
   line-height: 48px;
   margin-bottom: 0;
@@ -615,7 +604,7 @@ export default {
   font-weight: 400;
   color: #424242;
 }
-.header-title p {
+.cart-wraper .header-title p {
   float: left;
   height: 20px;
   line-height: 20px;
@@ -623,14 +612,15 @@ export default {
   margin-left: 15px;
   color: #757575;
 }
-.site-topbar .topbar-info {
+.cart-wraper .site-topbar .topbar-info {
   position: relative;
   float: right;
   height: 40px;
   line-height: 40px;
   margin-top: 30px;
 }
-.site-topbar .topbar-info .user {
+
+.cart-wraper .site-topbar .topbar-info .user {
   float: left;
   position: relative;
   width: 110px;
@@ -638,7 +628,7 @@ export default {
   white-space: nowrap;
   line-height: 40px;
 }
-.site-topbar .user .user-name {
+.cart-wraper .site-topbar .user .user-name {
   position: relative;
   z-index: 5;
   display: block;
@@ -646,7 +636,7 @@ export default {
   height: 40px;
   text-align: center;
 }
-.site-topbar .user-name .name {
+.cart-wraper .site-topbar .user-name .name {
   display: inline-block;
   width: auto;
   max-width: 75px;
@@ -654,14 +644,14 @@ export default {
   vertical-align: text-bottom;
   overflow: hidden;
 }
-.site-topbar .user-name i {
+.cart-wraper .site-topbar .user-name i {
   font-size: 13px;
   line-height: 13px;
   vertical-align: 13px;
   margin: 0 5px 0 6px;
   -webkit-text-stroke-width: 0.2px;
 }
-.site-topbar .user .user-menu-wrapper {
+.cart-wraper .site-topbar .user .user-menu-wrapper {
   position: absolute;
   height: 0;
   left: 0;
@@ -672,58 +662,66 @@ export default {
   transition: height 0.3s;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.15);
 }
-.site-topbar .user:hover .user-menu-wrapper {
+.cart-wraper .site-topbar .user:hover .user-menu-wrapper {
   height: 164px;
 }
-.site-topbar .user:hover > a {
+.cart-wraper .site-topbar .user:hover > a {
   color: #ff6700;
 }
-.site-topbar .user-menu {
+.cart-wraper .site-topbar .user-menu {
   width: 110px;
   margin: 0;
   padding: 7px 0;
 }
-.site-topbar .user-menu a {
+.cart-wraper .site-topbar .user-menu a {
   display: block;
   padding: 3px 30px;
   line-height: 2;
   color: #424242;
 }
-.site-topbar .user-menu a:hover {
+.cart-wraper .site-topbar .user-menu a:hover {
   color: #ff6700;
 }
-.site-topbar .topbar-info .sep {
+.cart-wraper .site-topbar .topbar-info .sep {
   float: left;
   font-size: 15px;
   margin-right: 15px;
 }
-.site-topbar .topbar-info .link:hover {
+.cart-wraper .site-topbar .topbar-info .link:hover {
   color: #ff6700;
 }
 
+.cart-wraper .site-topbar .topbar-info .login{
+float: left;
+margin-right: 5px;
+}
+.cart-wraper .site-topbar .topbar-info .register{
+float: left;
+margin-left: -10px;
+}
 /* page-main */
 
-.page-main {
+.cart-wraper .page-main {
   padding: 38px 0;
   background: #f5f5f5;
 }
-.page-main .cart-main .cart-goods-list {
+.cart-wraper .page-main .cart-main .cart-goods-list {
   background-color: #fff;
 }
 /* head */
-.cart-main .cart-goods-list .list-head {
+.cart-wraper .cart-main .cart-goods-list .list-head {
   height: 70px;
   line-height: 70px;
   padding-right: 26px;
   color: #424242;
 }
-.cart-main .cart-col {
+.cart-wraper .cart-main .cart-col {
   float: left;
 }
-.cart-main .col-check {
+.cart-wraper .cart-main .col-check {
   width: 110px;
 }
-.cart-main .col-check div {
+.cart-wraper .cart-main .col-check div {
   display: inline-block;
   width: 18px;
   height: 18px;
@@ -732,63 +730,63 @@ export default {
   margin: 0 11px 0 24px;
   cursor: pointer;
 }
-.cart-main .col-check div i {
+.cart-wraper .cart-main .col-check div i {
   line-height: 18px;
   margin-left: 3px;
   font-size: 13px;
   color: #fff;
   vertical-align: top;
 }
-.cart-main .col-check div:hover i {
+.cart-wraper .cart-main .col-check div:hover i {
   color: #757575;
 }
 /* 选中或者全选的时候checkbox的父元素会添加.active */
-.cart-main .active .col-check div {
+.cart-wraper .cart-main .active .col-check div {
   border-color: #ff6700;
   background-color: #ff6700;
   color: #fff;
 }
-.cart-main .active .col-check div i {
+.cart-wraper .cart-main .active .col-check div i {
   color: #fff;
 }
 
-.cart-main .col-img {
+.cart-wraper .cart-main .col-img {
   width: 120px;
   color: #fff;
 }
-.cart-main .col-name {
+.cart-wraper .cart-main .col-name {
   width: 380px;
 }
-.cart-main .col-price {
+.cart-wraper .cart-main .col-price {
   width: 140px;
   padding-right: 18px;
   text-align: center;
 }
-.cart-main .col-num {
+.cart-wraper .cart-main .col-num {
   width: 150px;
   text-align: center;
 }
-.cart-main .col-total {
+.cart-wraper .cart-main .col-total {
   width: 120px;
   padding-right: 81px;
   text-align: right;
 }
-.cart-main .col-action {
+.cart-wraper .cart-main .col-action {
   width: 80px;
   text-align: center;
 }
 /* body */
-.cart-main .list-item {
+.cart-wraper .cart-main .list-item {
   padding: 15px 26px 15px 0;
   border-top: 1px solid #e0e0e0;
 }
-.cart-main .list-item .item-main {
+.cart-wraper .cart-main .list-item .item-main {
   height: 86px;
   line-height: 86px;
   overflow: hidden;
 }
 
-.cart-main .item-main .col-name h3 {
+.cart-wraper .cart-main .item-main .col-name h3 {
   /* line-height: 1; */
   /* margin-top: 8px; */
   margin-bottom: 8px;
@@ -798,16 +796,16 @@ export default {
   white-space: nowrap;
   overflow: hidden;
 }
-.cart-main .item-main .col-name h3 a {
+.cart-wraper .cart-main .item-main .col-name h3 a {
   color: #424242;
 }
-.cart-main .item-main .col-price,
-.cart-main .item-main .col-num,
-.cart-main .item-main .col-total {
+.cart-wraper .cart-main .item-main .col-price,
+.cart-wraper .cart-main .item-main .col-num,
+.cart-wraper .cart-main .item-main .col-total {
   font-size: 16px;
 }
 
-.cart-main .item-main .change-goods-num {
+.cart-wraper .cart-main .item-main .change-goods-num {
   display: inline-block;
   width: 148px;
   height: 38px;
@@ -819,7 +817,7 @@ export default {
   vertical-align: -14px;
   zoom: 1;
 }
-.cart-main .item-main .change-goods-num a {
+.cart-wraper .cart-main .item-main .change-goods-num a {
   float: left;
   width: 38px;
   height: 38px;
@@ -829,14 +827,14 @@ export default {
   -webkit-transition: all 0.3s;
   transition: all 0.3s;
 }
-.cart-main .item-main .change-goods-num a:hover {
+.cart-wraper .cart-main .item-main .change-goods-num a:hover {
   background-color: #e0e0e0;
 }
-.cart-main .item-main .change-goods-num a:first-child {
+.cart-wraper .cart-main .item-main .change-goods-num a:first-child {
   font-size: 28px;
   line-height: 34px;
 }
-.cart-main .item-main .change-goods-num input {
+.cart-wraper .cart-main .item-main .change-goods-num input {
   float: left;
   width: 72px;
   height: 38px;
@@ -848,10 +846,10 @@ export default {
   text-align: center;
   outline: none;
 }
-.cart-main .item-main .col-total {
+.cart-wraper .cart-main .item-main .col-total {
   color: #ff6700;
 }
-.cart-main .item-main .col-action div {
+.cart-wraper .cart-main .item-main .col-action div {
   display: inline-block;
   height: 24px;
   width: 23px;
@@ -863,11 +861,11 @@ export default {
   padding-left: 1px;
   transition: all 0.3s;
 }
-.cart-main .item-main .col-action div:hover {
+.cart-wraper .cart-main .item-main .col-action div:hover {
   background-color: #e53935;
   cursor: pointer;
 }
-.cart-main .item-main .col-action div i {
+.cart-wraper .cart-main .item-main .col-action div i {
   display: inline-block;
   vertical-align: 1px;
   font-weight: bolder;
@@ -879,7 +877,7 @@ export default {
   -webkit-text-stroke-width: 0.2px; /*设置文字边框*/
   -moz-osx-font-smoothing: grayscale；; /*该属性是为了让字体显示的更清晰的作用*/
 }
-.cart-main .item-main .col-action div:hover i {
+.cart-wraper .cart-main .item-main .col-action div:hover i {
   color: #fff;
 }
 .cart-main .list-item.active .service-info-content {

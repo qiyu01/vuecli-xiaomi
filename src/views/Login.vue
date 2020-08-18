@@ -184,11 +184,14 @@
   </div>
 </template>
 <script>
+import {mapMutations} from 'vuex';
 import { login, phoneLogin } from "../util/api/getProduct";
 import { validate, setError } from "../util/validate";
 export default {
   data() {
     return {
+      // from记录从哪个页面跳转到登陆页面的，登陆成功后跳转回去
+      from:null,
       uname: null,
       pwd: null,
       phone: null,
@@ -217,11 +220,13 @@ export default {
     };
   },
   mounted() {
+    this.from=this.$route.query.from
     for (let i of this.img) {
       i.src = require("../assets/images/login/" + i.src);
     }
   },
   methods: {
+    ...mapMutations(["login_in"]),
     unameLogin() {
       if (validate(this.uname) === 1) {
         setError(
@@ -250,8 +255,14 @@ export default {
               "账号或者密码错误"
             );
           } else {
-            this.$store.commit("login", res[0]);
-            this.$router.push({ name: "Home" });
+            res[0].autologin=true
+            this.login_in(res[0]);
+            if(this.from){
+              this.$router.push({ path:this.from});
+            }else{
+              this.$router.push({ path:"/" });
+            }
+            
           }
         });
       }
@@ -292,8 +303,13 @@ export default {
               "验证码错误"
             );
           } else {
-            this.$store.commit("login", res[0]);
-            this.$router.push({ name: "Home" });
+            res[0].autologin=true
+            this.login_in(res[0]);
+            if(this.from){
+              this.$router.push({ path:this.from});
+            }else{
+              this.$router.push({ path:"/" });
+            }
           }
         });
       }

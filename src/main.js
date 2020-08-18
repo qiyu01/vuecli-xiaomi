@@ -30,9 +30,22 @@ axios.defaults.baseURL = "http://127.0.0.1:8080"
 Vue.prototype.axios = axios
 Vue.prototype.$ = $
 
-
+router.beforeEach((to,from,next)=>{
+	if(to.meta.requireAuth){
+    
+		if(parseInt(store.state.isLogin)==1){
+			next()
+		}else{
+			next({path:'/login',query:{from:'/cart'}})
+		}
+	}else{
+		next()
+	}
+})
 new Vue({
   router,
   store,
   render: h => h(App)
 }).$mount('#app')
+
+
