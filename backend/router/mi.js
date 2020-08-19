@@ -121,6 +121,20 @@ router.get("/v1/cart_product", (req, res) => {
         }
     });
 });
+// 根用购物车里的商品id返回商品的800px大图信息,作为header上购物车下拉列表的数据.
+router.get("/v1/header_cart", (req, res) => {
+    res.header("Access-Control-Allow-Origin", "http://127.0.0.1:8081");
+    var _pidAll = req.query.pidAll;
+    var sql = `select * from goods_item_color where pid in (${_pidAll}) GROUP BY pid`;
+    pool.query(sql, [], (err, result) => {
+        if (err) throw err;
+        if (result.length > 0) {
+            res.send(result);
+        } else {
+            res.send("0");
+        }
+    });
+});
 
 // 根据购物车里的商品id返回这些商品所有的服务
 router.get("/v1/service", (req, res) => {

@@ -296,6 +296,7 @@
 </template>
 
 <script>
+import {mapGetters} from 'vuex';
 import CategoryList from "@/components/Category-list.vue";
 import SwiperProduct from "@/components/Swiper-product.vue";
 import NavbarFix from "@/components/Navbar-fix.vue";
@@ -384,7 +385,7 @@ export default {
   components: { CategoryList, SwiperProduct, NavbarFix, ToolBar },
   mounted() {
     this.pid = this.$route.query.pid;
-      this.getcontent(this.pid);
+    this.getcontent(this.pid);
   },
   watch: {
     $route(to, from) {
@@ -517,15 +518,25 @@ export default {
     },
     //加入购物车
     addProduct() {
-      if(!this.pid || !this.noAddCart){return false}
-      addCart(this.pid, 1).then((data) => {
+      if(!this.pid || !this.noAddCart){
+        this.$message({
+              message: "该商品的完整信息暂时没有插入,无法添加购物车，麻烦在地址栏上改变pid值为1,2,3,9或者24的商品试试",
+              type: "error",
+            });
+            return false
+        }
+      if(!this.user_id){this.$router.push({name:'Login',query:{from:'/product',pid:this.pid}});
+      }else{
+        addCart(this.pid,this.user_id).then((data) => {
         if (data == 1) {
           this.$message({
             message: "添加购物车成功",
             type: "success",
           });
         }
-      });
+        });
+      }
+      
     },
     // 最下面的商品大图和参数的切换
     detailSwitch(i) {
@@ -536,6 +547,7 @@ export default {
     },
   },
   computed: {
+    ...mapGetters(["user_id"]),
     // 价格
     price() {
       for (let v of this.version) {

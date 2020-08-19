@@ -20,12 +20,12 @@
       <div class="span4">
         <ul class="brick-promo-list">
           <li :class="[cid==1?'':'brick-item-m','brick-item']">
-                <router-link to="product">
+                <router-link :to="{name:'Product',query:{pid:1}}">
                   <img :src="getpromoImg(cid,0)" alt="">
                 </router-link>
           </li>
           <li class="brick-item brick-item-m" v-if="cid==1?0:1">
-                <router-link to="product">
+                <router-link :to="{name:'Product',query:{pid:1}}">
                   <img :src="getpromoImg(cid,1)" alt="">
                 </router-link>
           </li>

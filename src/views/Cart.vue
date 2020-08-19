@@ -353,7 +353,11 @@ export default {
         if (i.id == item.id) {
           i.num--;
           if (i.num < 1) {
-            alert("已经不能再少啦");
+            this.$message({
+            message: "已经不能再少啦",
+            type: "error",
+          });
+            
             i.num = 1;
           }
         }

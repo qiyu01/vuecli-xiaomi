@@ -134,7 +134,7 @@ import Swiper from 'swiper'
     }
   }
 </script>
-<style>
+<style scoped>
 /* @import '/css/swiper.min.css'; */
 .slide-swiper{
     position: relative;

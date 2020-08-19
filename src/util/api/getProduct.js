@@ -109,6 +109,15 @@ function cartProduct(pidAll){
         }
     )
 }
+// 根用购物车里的商品id返回商品的800px大图信息,作为header上购物车下拉列表的数据.
+function headerCart(pidAll){
+    return new Promise((resolve,reject)=>{
+            http.get(URL.headerCart,{pidAll:pidAll}).then(data=>{
+                resolve(data)
+            })
+        }
+    )
+}
 //获取购物车里对应商品的服务
 function getService(pidAll){
     return new Promise((resolve,reject)=>{
@@ -142,6 +151,7 @@ export{
     phoneLogin,
     getCart,
     cartProduct,
+    headerCart,
     getService,
     getRecommend
 }

@@ -258,7 +258,7 @@ export default {
             res[0].autologin=true
             this.login_in(res[0]);
             if(this.from){
-              this.$router.push({ path:this.from});
+              this.$router.push({ path:this.from,query:this.$route.query});
             }else{
               this.$router.push({ path:"/" });
             }
@@ -306,7 +306,7 @@ export default {
             res[0].autologin=true
             this.login_in(res[0]);
             if(this.from){
-              this.$router.push({ path:this.from});
+              this.$router.push({ path:this.from,query:this.$route.query});
             }else{
               this.$router.push({ path:"/" });
             }
