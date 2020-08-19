@@ -13,7 +13,7 @@
 </div>
 </template>
 
-<script>
+<script scoped>
 import Swiper from 'swiper' 
 // import 'swiper/css/swiper.min.css';
   export default {
@@ -83,7 +83,7 @@ import Swiper from 'swiper'
 .home-hero-swiper img{
     width: 100%;height: 100%;
 }
-.home-hero-swiper .swiper-button-prev{
+.swiper-button-prev{
     left: 234px;
     margin-top:-34px;
     /* background-image: none; */
@@ -95,11 +95,11 @@ import Swiper from 'swiper'
     border-bottom-right-radius: 2px;
     
 }
-.home-hero-swiper .swiper-button-prev:hover{
+.swiper-button-prev:hover{
     background-color:rgba(51,51,51,.8);
     background-image:url("data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg'%20viewBox%3D'0%200%2027%2044'%3E%3Cpath%20d%3D'M0%2C22L22%2C0l2.1%2C2.1L4.2%2C22l19.9%2C19.9L22%2C44L0%2C22L0%2C22L0%2C22z'%20fill%3D'%23fff'%2F%3E%3C%2Fsvg%3E");
 }
-.home-hero-swiper .swiper-button-next{
+.swiper-button-next{
     right: 0;
     background-color:transparent;
     width: 41px;height: 69px;
@@ -109,7 +109,7 @@ import Swiper from 'swiper'
     border-top-left-radius: 2px;
     border-bottom-left-radius: 2px;
 }
-.home-hero-swiper .swiper-button-next:hover{
+.swiper-button-next:hover{
     background-color:rgba(51,51,51,.8);
     background-image:url("data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg'%20viewBox%3D'0%200%2027%2044'%3E%3Cpath%20d%3D'M27%2C22L27%2C22L5%2C44l-2.1-2.1L22.8%2C22L2.9%2C2.1L5%2C0L27%2C22L27%2C22z'%20fill%3D'%23fff'%2F%3E%3C%2Fsvg%3E");
 }
@@ -119,18 +119,18 @@ import Swiper from 'swiper'
     bottom: 20px;
     padding-left: 570px;
 }
-.swiper-container-horizontal>.swiper-pagination-bullets >>> .swiper-pagination-bullet{
+.swiper-pagination-bullet{
     /* float: right; */
     width: 6px;height: 6px;
     opacity: 1;
     background-color: rgba(0,0,0,.4);
     border:2px solid hsla(0,0%,100%,.3);
 }
-.swiper-container-horizontal>.swiper-pagination-bullets >>> .swiper-pagination-bullet-active{
+.home-hero-swiper .swiper-pagination-bullet-active{
     background-color: hsla(0,0%,100%,.4);
     border:2px solid rgba(0,0,0,.4);
 }
-.swiper-container-horizontal>.swiper-pagination-bullets >>> .swiper-pagination-bullet:hover{
+.swiper-pagination-bullet:hover{
     background-color: hsla(0,0%,100%,.4);
     border:2px solid rgba(0,0,0,.4);
 }

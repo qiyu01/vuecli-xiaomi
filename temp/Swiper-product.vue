@@ -210,13 +210,13 @@ export default {
   background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg'%20viewBox%3D'0%200%2027%2044'%3E%3Cpath%20d%3D'M27%2C22L27%2C22L5%2C44l-2.1-2.1L22.8%2C22L2.9%2C2.1L5%2C0L27%2C22L27%2C22z'%20fill%3D'%23fff'%2F%3E%3C%2Fsvg%3E");
 }
 
-.swiper-product  .swiper-pagination-bullets {
+.swiper-product .swiper-pagination-bullets {
   left: 0px !important;
   bottom: 20px !important;
   padding-left: 0;
   /* padding-left: 570px; */
 }
-.swiper-product >>> .swiper-pagination-bullet {
+.swiper-product .swiper-pagination-bullet {
   /* float: right; */
   width: 50px;
   height: 3px;
@@ -226,10 +226,10 @@ export default {
   border: 0;
   margin: 0 4px;
 }
-.swiper-product >>> .swiper-pagination-bullet-active {
+.swiper-product .swiper-pagination-bullet-active {
   background-color: #a3a3a3;
 }
-.swiper-product >>> .swiper-pagination-bullet:hover {
+.swiper-product .swiper-pagination-bullet:hover {
   background-color: #a3a3a3;
 }
 </style>
