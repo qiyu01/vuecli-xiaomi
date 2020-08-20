@@ -78,6 +78,9 @@ export default {
                  method: "get",
                  params: {}
                 }).then(res => {
+                for(let i of res.data){
+                    i.img_src=require("../assets/images/category/" + i.img_src)
+                }
                 this.listItem=res.data;
                 })
               

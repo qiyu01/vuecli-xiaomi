@@ -1,8 +1,8 @@
 <template>
   <div class="home-hero-swiper swiper-container">
 	<div class="swiper-wrapper">
-		<div v-for="el in arrItem" :key="el.name" class="swiper-slide">
-			<img class="img" :src="el.imgUrl">
+		<div v-for="el of arrItem" :key="el.name" class="swiper-slide">
+			<img class="img" :src="el.src">
 		</div>
 	</div>
 	<!-- 如果需要分页器 -->
@@ -22,24 +22,24 @@ import Swiper from 'swiper'
 			arrItem:[
 					{
 							name:'swiperSlide1',
-							imgUrl:'images/home-hero-banner1.webp'
+							src:require("../assets/images/swiper/header-banner0.webp")
 					},
 					{
 							name:'swiperSlide2',
-							imgUrl:'images/header-bannr1.webp'
+							src:require("../assets/images/swiper/header-banner1.webp")
 					},
 					{
 							name:'swiperSlide3',
-							imgUrl:'images/header-bannr2.jpg'
+							src:require("../assets/images/swiper/header-banner2.jpg")
 					},
 					{
 							name:'swiperSlide4',
-							imgUrl:'images/header-bannr3.webp'
+							src:require("../assets/images/swiper/header-banner3.webp")
                     }
                     ,
 					{
 							name:'swiperSlide5',
-							imgUrl:'images/header-bannr4.webp'
+							src:require("../assets/images/swiper/header-banner4.webp")
 					}
 			    ]
 	        }

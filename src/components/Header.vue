@@ -134,7 +134,7 @@ export default {
   mounted() {
     getCart(this.user_id).then((res) => {
       var num = 0;
-      if (res.length > 0) {
+      if (res.length > 0){
         for (let i of res) {
           num += i.num;
         }

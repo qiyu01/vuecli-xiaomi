@@ -32,70 +32,70 @@ import Swiper from 'swiper'
 					{
                             name:'swiperSlide1',
                             color:'#ffac13',
-							imgUrl:'images/flashsale-swiper1.jpg'
+							imgUrl:require("../assets/images/swiper/flashsale-swiper1.jpg")
 					},
 					{
                             name:'swiperSlide2',
                             color:'#83c44e',
-							imgUrl:'images/flashsale-swiper2.jpg'
+							imgUrl:require("../assets/images/swiper/flashsale-swiper2.jpg")
 					},
 					{
                             name:'swiperSlide3',
                             color:'#2196f3',
-							imgUrl:'images/flashsale-swiper3.jpg'
+							imgUrl:require("../assets/images/swiper/flashsale-swiper3.jpg")
 					},
 					{
                             name:'swiperSlide4',
                             color:'#e53935',
-							imgUrl:'images/flashsale-swiper4.jpg'
+							imgUrl:require("../assets/images/swiper/flashsale-swiper4.jpg")
                     }
                     ,
 					{
                             name:'swiperSlide5',
                             color:'#00c0a5',
-							imgUrl:'images/flashsale-swiper1.jpg'
+							imgUrl:require("../assets/images/swiper/flashsale-swiper1.jpg")
                     }
                     ,
 					{
                             name:'swiperSlide6',
                             color:'#ffac13',
-							imgUrl:'images/flashsale-swiper2.jpg'
+							imgUrl:require("../assets/images/swiper/flashsale-swiper2.jpg")
                     }
                     ,
 					{
                             name:'swiperSlide7',
                             color:'#83c44e',
-							imgUrl:'images/flashsale-swiper3.jpg'
+							imgUrl:require("../assets/images/swiper/flashsale-swiper3.jpg")
                     }
                     ,
 					{
                             name:'swiperSlide8',
                             color:'#2196f3',
-							imgUrl:'images/flashsale-swiper4.jpg'
+							imgUrl:require("../assets/images/swiper/flashsale-swiper4.jpg")
                     }
                     ,
 					{
                             name:'swiperSlide9',
                             color:'#e53935',
-							imgUrl:'images/flashsale-swiper1.jpg'
+							imgUrl:require("../assets/images/swiper/flashsale-swiper1.jpg")
                     }
                     ,
 					{
                             name:'swiperSlide10',
                             color:'#00c0a5',
-							imgUrl:'images/flashsale-swiper2.jpg'
+							imgUrl:require("../assets/images/swiper/flashsale-swiper2.jpg")
                     }
                     ,
 					{
                             name:'swiperSlide11',
                             color:'#ffac13',
-							imgUrl:'images/flashsale-swiper3.jpg'
+							imgUrl:require("../assets/images/swiper/flashsale-swiper3.jpg")
                     }
                     ,
 					{
                             name:'swiperSlide12',
                             color:'#83c44e',
-							imgUrl:'images/flashsale-swiper4.jpg'
+							imgUrl:require("../assets/images/swiper/flashsale-swiper4.jpg")
                     }
                     
 			    ]
