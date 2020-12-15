@@ -13,7 +13,6 @@ mysql -uroot<xiaomi.sql
 按照顺序插入数据 xiaomi.sql -> xiami1.sql 
 
 然后运行
-npm install
 node app.js
 ```
 
