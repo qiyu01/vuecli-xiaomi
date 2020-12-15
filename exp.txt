@@ -1,30 +1,21 @@
- 1    npm 淘宝镜像 npm --registry https://registry.npm.taobao.org install express
+ 1    npm 娣樺疂闀滃儚 npm --registry https://registry.npm.taobao.org install express
 
 
 
- 2   安装nodemon实时更新server.js
+ 2   瀹夎nodemon瀹炴椂鏇存柊server.js
 
-全局安装 npm install nodemon -g
+鍏ㄥ眬瀹夎 npm install nodemon -g
 
-然后用nodemon server.js 替代之前的node server.js
+鐒跺悗鐢╪odemon server.js 鏇夸唬涔嬪墠鐨刵ode server.js
 
-就可以实时监测了,
+灏卞彲浠ュ疄鏃剁洃娴嬩簡,
 
 desktopshare 176.114.20.219
 
-176.114.0.22    用户名 WEB   
-
-项目经理章哥:
-ip地址：176.114.0.22
-
-项目经理章哥:
-账号：web2004
-
-项目经理章哥:
-密码：web2004e
+176.114.0.22    
 
 
-…or create a new repository on the command line
+鈥r create a new repository on the command line
 echo "# vuecli-xiaomi" >> README.md
 git init
 git add README.md
@@ -32,10 +23,10 @@ git commit -m "first commit"
 git remote add origin https://github.com/qiyu01/vuecli-xiaomi.git
 git push -u origin master
                 
-…or push an existing repository from the command line
+鈥r push an existing repository from the command line
 git remote add origin https://github.com/qiyu01/vuecli-xiaomi.git
 git push -u origin master
-…or import code from another repository
+鈥r import code from another repository
 You can initialize this repository with code from a Subversion, Mercurial, or TFS project.
 
 warning: LF will be replaced by CRLF
