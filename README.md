@@ -7,9 +7,10 @@ npm install
 ```
 # backend start firstly
 ```
-先去backend文件夹打开终端输入
+先去backend文件夹找到xiaomi.sql和xiaomi1.sql文件
+打开xammpp，启动mysql和apache，打开数据库终端输入
 mysql -uroot<xiaomi.sql
-按照顺序插入数据 xiaomi.sql -> insert1.sql -> insert2.sql -> insert3.sql -> insert4.sql
+按照顺序插入数据 xiaomi.sql -> xiami1.sql 
 
 然后运行
 node app.js
