@@ -13,12 +13,14 @@ mysql -uroot<xiaomi.sql
 按照顺序插入数据 xiaomi.sql -> xiami1.sql 
 
 然后运行
+npm install
 node app.js
 ```
 
 ### Compiles and hot-reloads for development
 ```
 记得返回xiaomi-cli目录
+npm install
 npm run serve
 ```
 打开浏览器输入http://127.0.0.1:8081/
